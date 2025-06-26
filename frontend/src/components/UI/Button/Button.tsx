@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { StyledButton, type ButtonRadius, type ButtonSize, type ButtonStyleType } from "./Button.styles";
-import type { ButtonColors } from "@/styles/color";
+import type { ButtonColors } from "@/styles/paletteMapping";
 import type { ButtonVariant } from "@/components/UI/Button/Button.config";
 import { ButtonVariantStyleMap } from "@/components/UI/Button/Button.config";
 

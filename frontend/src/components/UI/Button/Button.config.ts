@@ -1,4 +1,4 @@
-import type { ButtonColors, TextColors } from "@/styles/color";
+import type { ButtonColors, TextColors } from "@/styles/paletteMapping";
 import type { ButtonRadius, ButtonSize, ButtonStyleType } from "./Button.styles";
 
 export type ButtonVariant = 'default' | 'diaryMenu';
