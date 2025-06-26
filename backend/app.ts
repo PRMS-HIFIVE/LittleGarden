@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
-import dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
 import { StatusCodes } from 'http-status-codes';
 import http from 'http';
 
+import dotenv from 'dotenv';
 dotenv.config();
 
 const PORT = process.env.PORT || 5000;
@@ -14,7 +14,11 @@ app.use(cors({
     origin: process.env.FRONT_SERVER_URL || "http://localhost:5173",
     credentials: true,
 }));
+
 app.use(express.json());
+
+import usersRouter from "./router/users";
+app.use("/users", usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req : Request, res : Response) {
