@@ -6,3 +6,12 @@ export interface IUser {
     nickName : string,
     createdAt : number
 }
+
+export interface post {
+    userId : string,
+    title: string,
+    content: string,
+    is_health?:string,
+    state?:number,
+    plantTag?: string[]
+}

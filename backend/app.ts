@@ -18,7 +18,9 @@ app.use(cors({
 app.use(express.json());
 
 import usersRouter from "./router/users";
+import postsRouter from "./router/posts";
 app.use("/users", usersRouter);
+app.use("/posts",postRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req : Request, res : Response) {
