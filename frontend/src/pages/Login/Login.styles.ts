@@ -1,19 +1,23 @@
 import styled from "styled-components";
-import { backgroundColors, textColors, inputBorderColors } from "@/styles/paletteMapping";
+import {
+  backgroundColors,
+  textColors,
+  inputBorderColors,
+} from "@/styles/paletteMapping";
 
 export const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  max-width: 393px; 
+  max-width: 393px;
   margin: 0 auto;
   background-color: ${backgroundColors.green};
 `;
 
 export const FormWrapper = styled.div`
   width: 100%;
-  max-width: 320px; 
+  max-width: 320px;
   padding: 2rem;
   border-radius: 12px;
 `;
@@ -50,9 +54,17 @@ export const Input = styled.input`
   }
 `;
 
+export const Button = styled.div`
+  background-color: none;
+  border: none;
+  margin: 0 auto;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: ${textColors.primary};
+`;
+
 export const ButtonWrapper = styled.div`
   display: flex;
-  justify-content: center;  
+  justify-content: center;
   margin-top: 1rem;
-  
 `;

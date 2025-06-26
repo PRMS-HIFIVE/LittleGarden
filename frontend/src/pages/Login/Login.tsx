@@ -34,9 +34,14 @@ const Login = () => {
             textColor="primary"
           />
 
+          <S.Button>
+            회원가입
+          </S.Button>
+
           <S.ButtonWrapper>
             <LoginButton />
           </S.ButtonWrapper>
+
         </S.Form>
       </S.FormWrapper>
     </S.Container>
