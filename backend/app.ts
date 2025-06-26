@@ -19,8 +19,9 @@ app.use(express.json());
 
 import usersRouter from "./router/users";
 import postsRouter from "./router/posts";
+
 app.use("/users", usersRouter);
-app.use("/posts",postRouter);
+app.use("/posts",postsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req : Request, res : Response) {

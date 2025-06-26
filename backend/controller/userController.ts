@@ -67,17 +67,16 @@ export const login = async (req: TypedRequest<IUserRequestBody>, res: Response) 
             return;
         }
 
-        // TODO : jwt 에러 수정 후 주석 해제
-        // const token = jwt.sign(
-        //     { 
-        //         id: loginUser[0].id, 
-        //         email: loginUser[0].email
-        //     }, 
-        //     JWT_SECRET as Secret,
-        //     {
-        //         expiresIn: process.env.JWT_EXPIRES_IN || "1h"
-        //     } 
-        // );
+        const token = jwt.sign(
+            { 
+                id: loginUser[0].id, 
+                email: loginUser[0].email
+            }, 
+            JWT_SECRET!,
+            {
+                expiresIn: process.env.JWT_EXPIRES_IN || "1h"
+            } 
+        );
 
         res.status(StatusCodes.OK).json({
             loginUser : loginUser[0],
