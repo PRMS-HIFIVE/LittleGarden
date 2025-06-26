@@ -16,6 +16,9 @@ app.use(cors({
 }));
 app.use(express.json());
 
+const postRouter = require('./router/posts');
+app.use("/posts",postRouter);
+
 // catch 404 and forward to error handler
 app.use(function(req : Request, res : Response) {
     res.status(StatusCodes.NOT_FOUND).end();
