@@ -3,19 +3,23 @@ import { StatusCodes } from "http-status-codes";
 import postService from "../service/postService";
 import { Request, Response } from "express";
 
-const postPosts = async (req:Request<{},{},post>, res:Response) => {
-    const { userId, title, content, tag } = req.body;
-    if (!userId || !title || !content || !tag) {
+const postPosts = async (req:Request, res:Response) => {
+    const { userId, title, content, plantTag } = req.body;
+    if (!userId || !title || !content || !plantTag) {
         return res.status(StatusCodes.BAD_REQUEST).json({
             message: " 모든 데이터를 입력해주세요. 데이터 누락"
         })
     }
 
+    const cleanedTags = plantTag.map((tag:string) => tag.replace(/^#/, ''));
+
     try {
-        const newPost = await postService.posts({userId, title, content, tag});
+        const newPost = await postService.posts({userId, title, content});
+        const newtag = await postService.tags(newPost.insertId,cleanedTags);
         return res.status(StatusCodes.CREATED).json({
             message : "게시글이 성공적으로 작성되었습니다.",
-            data : newPost
+            postData : newPost,
+            tagData : newtag
         })
     } catch (error){
         console.error("Error creating post:", error);
@@ -26,9 +30,9 @@ const postPosts = async (req:Request<{},{},post>, res:Response) => {
 };
 
 const getPosts = async (req:Request, res:Response) => {
-    // 필터 기능 추가 예정
+    const { plantTag } =  req.body?req.body:0;
     try {
-        const newPost = await postService.getPosts();
+        const newPost = await postService.getPosts(plantTag);
         return res.status(StatusCodes.CREATED).json({
             message : "게시글이 성공적으로 조회되었습니다.",
             data : newPost
@@ -42,22 +46,21 @@ const getPosts = async (req:Request, res:Response) => {
 };
 
 const updatePosts = async (req:Request, res:Response) => {
-    // 어떻게 수정할지 고민중
-    // 제목만 수정한다거나 태그만 수정한다거나를 한번에 하고싶어서 고민...
-    // 고민 1. 수정할때 원래의 데이터를 호출하고 변경되는 곳만 수정후 전부다 update
-    // 고민 2. 그래도 타입스크립트인데 하나씩만 받을수있으려나...?
-    const { userId, title, content, tag } = req.body;
-    if (!userId || !title || !content || !tag) {
+    const { postId , userId, title, content, plantTag } = req.body;
+    if (!userId || !title || !content || !plantTag) {
         return res.status(StatusCodes.BAD_REQUEST).json({
             message: " 모든 데이터를 입력해주세요. 데이터 누락"
         })
     }
+    
+    const cleanedTags = plantTag.map((tag:string) => tag.replace(/^#/, ''));
 
     try {
-        const newPost = await postService.updateposts({userId, title, content, tag});
+        const updatePost = await postService.updatePosts(postId,{userId, title, content});
+        const updateTag = await postService.updateTags(postId,cleanedTags);
         return res.status(StatusCodes.CREATED).json({
             message : "게시글이 성공적으로 수정되었습니다.",
-            data : newPost
+            data : updatePost
         })
     } catch (error){
         console.error("Error updating post:", error);

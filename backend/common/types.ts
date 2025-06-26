@@ -6,5 +6,5 @@ export interface post {
     content: string,
     is_health?:string,
     state?:number,
-    tag?: string[]
+    plantTag?: string[]
 }
