@@ -1,4 +1,11 @@
-// 인터페이스 작성
+export interface IUser {
+    id : number,
+    email : string,
+    password : string,
+    salt : string,
+    nickName : string,
+    createdAt : number
+}
 
 export interface post {
     userId : string,
