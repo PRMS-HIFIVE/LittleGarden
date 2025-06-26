@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { buttonColors, buttonTextColorMap, textColors, type ButtonColors } from "@/styles/color";
+import { buttonColors, buttonTextColorMap, textColors, type ButtonColors } from "@/styles/paletteMapping";
 
 export type ButtonSize = 'small' | 'medium' | 'large' | string;
 export type ButtonStyleType = 'filled' | 'outline' | 'clear';
@@ -9,7 +9,7 @@ export const buttonSizeMap = {
     small: {width: '100px', height: '35px'},
     medium: {width: '185px', height: '50px'},
     large: {width: '200px', height: '40px'},
-    full: {width: '100%', height: '50px;'}
+    full: {width: '100%', height: '50px'}
 };
 
 export const StyledButton = styled.button<{ 

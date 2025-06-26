@@ -1,4 +1,4 @@
-import { inputBorderColor, type inputBorderColors, type TextColors } from "@/styles/color";
+import { inputBorderColors, type InputBorderColors, type TextColors } from "@/styles/paletteMapping";
 import styled from "styled-components";
 
 export type BorderRadius = '0px' | '2px' | '4px' | '8px' | string;
@@ -7,7 +7,7 @@ interface StyledInputProps {
     width?: string;
     height?: string;
     padding?: string;
-    borderColor?: inputBorderColors;
+    borderColor?: InputBorderColors;
     radius?: BorderRadius;
     textAlign?: 'left' | 'center' | 'right';
     textColor?: TextColors;
@@ -19,8 +19,8 @@ export const StyledInput = styled.input<StyledInputProps>`
     height: ${({height}) => height || '40px'};
     padding: ${({padding}) => padding || '4px 8px'};
     border: 1px solid ${({ borderColor }) =>
-      borderColor && inputBorderColor[borderColor] !== 'none'
-        ? inputBorderColor[borderColor]
+      borderColor && inputBorderColors[borderColor] !== 'none'
+        ? inputBorderColors[borderColor]
         : '#95A5A6'};
     border-radius: ${({ radius }) => radius || '4px'};
     text-align: ${({textAlign}) => textAlign || 'left'};

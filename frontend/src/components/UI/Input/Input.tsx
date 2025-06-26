@@ -1,5 +1,5 @@
 import { StyledInput, type BorderRadius } from "@/components/UI/Input/Input.styles";
-import type { inputBorderColors, TextColors } from "@/styles/color";
+import type { InputBorderColors, TextColors } from "@/styles/paletteMapping";
 
 export interface InputProps {
     type?: string;
@@ -8,12 +8,12 @@ export interface InputProps {
     width?: string;
     height?: string;
     padding?: string;
-    borderColor?: inputBorderColors;
+    borderColor?: InputBorderColors;
     radius?: BorderRadius;
     textAlign?: 'left' | 'center' | 'right';
     textColor?: TextColors;
     fontSize?: string;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     
 }
 
