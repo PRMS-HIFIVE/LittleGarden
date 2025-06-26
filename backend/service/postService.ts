@@ -1,4 +1,4 @@
-import { post } from './../common/types';
+import { post } from '../types/types';
 import { executeQuery } from '../utils/executeQuery';
 
 interface IFilterPost {
