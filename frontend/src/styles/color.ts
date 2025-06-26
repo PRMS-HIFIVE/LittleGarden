@@ -43,3 +43,12 @@ export const buttonTextColorMap : Record<ButtonColors, TextColors> = {
     navyBlueDarker: 'white',
     warning: 'white',
 }
+/* 인풋 경계색 */
+export const inputBorderColor = {
+    claer: 'none',
+    primary: '#2C3E50',
+    secondary: '#95A5A6',
+    tertiary: '#ECF0F1',
+    warning: '#FE6D51',
+} as const;
+export type inputBorderColors = keyof typeof inputBorderColor;
