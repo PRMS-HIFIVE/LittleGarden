@@ -15,4 +15,4 @@ router.route("/")
     .put(updatePosts)
     .delete(deletePosts);
 
-module.exports = router;
+export default router;
