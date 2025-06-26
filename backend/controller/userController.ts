@@ -74,7 +74,7 @@ export const login = async (req: TypedRequest<IUserRequestBody>, res: Response) 
             }, 
             JWT_SECRET!,
             {
-                expiresIn: process.env.JWT_EXPIRES_IN || "1h"
+                expiresIn : "1h"
             } 
         );
 
