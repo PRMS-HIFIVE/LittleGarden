@@ -1,6 +1,6 @@
 import Button, { type ButtonProps } from "@/components/UI/Button/Button";
 
-const LoginButton = (props: ButtonProps) => {
+const SignUpButton = (props: ButtonProps) => {
     return (
         <Button
             variant='default'
@@ -8,9 +8,9 @@ const LoginButton = (props: ButtonProps) => {
             color='primary'
             {...props}
         >
-            로그인
+            회원가입
         </Button>
     )
 }
 
-export default LoginButton;
+export default SignUpButton;

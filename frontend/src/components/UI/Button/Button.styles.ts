@@ -1,38 +1,50 @@
 import styled from "styled-components";
 import { buttonColors, buttonTextColorMap, textColors, type ButtonColors } from "@/styles/color";
 
-export type ButtonSize = 'small' | 'normal' | 'large' | string;
+export type ButtonSize = 'small' | 'medium' | 'large' | string;
 export type ButtonStyleType = 'filled' | 'outline' | 'clear';
 export type ButtonRadius = 'square' | 'semiRound' | 'round' | 'pill' | string;
+
+export const buttonSizeMap = {
+    small: {width: '100px', height: '35px'},
+    medium: {width: '185px', height: '50px'},
+    large: {width: '200px', height: '40px'},
+    full: {width: '100%', height: '50px;'}
+};
 
 export const StyledButton = styled.button<{ 
     color: ButtonColors; 
     buttonSize: ButtonSize; 
     styleType?: ButtonStyleType; 
-    radius?: ButtonRadius 
+    radius?: ButtonRadius;
+    width?: string;
+    height?: string;
 }>`
     background-color: ${({color, styleType}) =>
         styleType === 'filled' 
         ? buttonColors[color]
+        : styleType === 'outline'
+        ? 'transparent'
         : styleType === 'clear' 
         ? 'transparent'
         : buttonColors[color]
     };
 
-    color: ${({color}) => textColors[buttonTextColorMap[color]]};
+  ${({ buttonSize = 'medium', width, height }) => {
+    const size = buttonSizeMap[buttonSize as keyof typeof buttonSizeMap] || {};
+    return `
+      width: ${width && width !=='' ? width : size.width ?? 'auto'};
+      height: ${height && height!== '' ? height : size.height ?? 'auto'};
+    `;
+  }}
+
+    color: ${({color, styleType}) => 
+      styleType === 'outline'
+      ? buttonColors[color]
+      : textColors[buttonTextColorMap[color]]};
 
     border: ${({color, styleType}) =>
         styleType === 'outline' ? `2px solid ${buttonColors[color]}` : 'none'
-    };
-
-    padding: ${({buttonSize}) =>
-        buttonSize === 'small'
-        ? '4px 8px'
-        : buttonSize === 'large'
-        ? '12px 24px'
-        : buttonSize === 'normal'
-        ? '8px 24px'
-        : buttonSize
     };
 
     border-radius: ${({radius}) => 
@@ -46,6 +58,11 @@ export const StyledButton = styled.button<{
         ? '999px'
         : radius
     };
+
+    padding: 8px 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 
     cursor: pointer;
 `;

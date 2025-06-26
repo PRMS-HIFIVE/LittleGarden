@@ -8,9 +8,11 @@ export interface ButtonProps {
     variant?: ButtonVariant;
     color?: ButtonColors;
     buttonSize?: ButtonSize;
+    width?: string;
+    height?: string;
     styleType?: ButtonStyleType;
     radius?: ButtonRadius;
-    children: ReactNode;
+    children?: ReactNode;
     onClick?: () => void;
     type?: 'button' | 'submit' | 'reset';
 }
@@ -19,6 +21,8 @@ const Button = ({
     variant = 'default',
     color,
     buttonSize,
+    width,
+    height,
     styleType,
     radius,
     children,
@@ -31,6 +35,8 @@ const Button = ({
         <StyledButton
             color = {color ?? variantStyle.color}
             buttonSize = {buttonSize ?? variantStyle.buttonSize}
+            width = {width}
+            height = {height}
             styleType = {styleType ?? variantStyle.styleType}
             radius = {radius ?? variantStyle.radius}
             onClick = {onClick}
