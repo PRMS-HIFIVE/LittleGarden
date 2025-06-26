@@ -4,16 +4,13 @@ import crypto from "crypto";
 import userService from "../service/userService";
 import dotenv from "dotenv";
 import jwt, { Secret } from "jsonwebtoken";
+import { TypedRequest } from '../types/types';
 dotenv.config();
 
 interface IUserRequestBody {
     email: string;
     pwd: string;
     nickName?: string
-}
-
-interface TypedRequest<T> extends Request {
-    body: T;
 }
 
 export const join = async (req: TypedRequest<IUserRequestBody>, res: Response) : Promise<void> => {
