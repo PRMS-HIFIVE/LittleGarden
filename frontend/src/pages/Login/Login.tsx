@@ -3,13 +3,18 @@ import * as S from "./Login.styles";
 import Input from "@/components/UI/Input/Input";
 import LoginButton from "@/components/UI/Button/ButtonVaraints/LoginButton";
 import { FaUser, FaLock } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const [loginId, setLoginId] = useState("");
   const [password, setPassword] = useState("");
 
-  const register = () => {};
-  const resetPassword = () => {};
+  const handleJoin = () => {
+    navigate("/join");
+  };
+  const handleResetPassword = () => {};
 
   return (
     <S.Container>
@@ -49,8 +54,8 @@ const Login = () => {
           </S.InputWrapper>
 
           <S.RowWrapper>
-            <S.Register onClick={register}>회원가입</S.Register>
-            <S.resetPassword onClick={resetPassword}>
+            <S.Join onClick={handleJoin}>회원가입</S.Join>
+            <S.resetPassword onClick={handleResetPassword}>
               비밀번호 찾기
             </S.resetPassword>
           </S.RowWrapper>

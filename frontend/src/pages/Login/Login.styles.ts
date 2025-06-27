@@ -54,7 +54,7 @@ export const RowWrapper = styled.div`
   justify-content: space-around;
 `;
 
-export const Register = styled.div`
+export const Join = styled.div`
   background-color: none;
   border: none;
   font-size: 0.7rem;
