@@ -2,7 +2,6 @@ import styled from "styled-components";
 import {
   backgroundColors,
   textColors,
-  inputBorderColors,
 } from "@/styles/paletteMapping";
 
 export const Container = styled.div`
@@ -36,23 +35,19 @@ export const Form = styled.form`
   gap: 1.25rem;
 `;
 
-export const Input = styled.input`
-  padding: 0.75rem 1rem;
-  font-size: 1rem;
-  border: 1px solid ${inputBorderColors.primary};
-  border-radius: 8px;
-  color: ${textColors.primary};
-  background-color: ${backgroundColors.white};
-
-  &::placeholder {
-    color: ${textColors.secondary};
-  }
-
-  &:focus {
-    outline: none;
-    border-color: ${inputBorderColors.tertiary};
-  }
+export const InputWrapper = styled.div`
+  position: relative;
+  width: 100%;
 `;
+
+export const IconWrapper = styled.div`
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: ${textColors.green};
+`;
+
 
 export const RowWrapper = styled.div`
   display: flex;
@@ -89,5 +84,5 @@ export const resetPassword = styled.div`
 export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 1rem;
+  margin-top: 0.3rem;
 `;
