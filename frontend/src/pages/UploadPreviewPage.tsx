@@ -1,0 +1,34 @@
+import { useLocation, useNavigate } from 'react-router-dom';
+import * as S from './UploadPreview.style';
+
+function UploadPreviewPage() {
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const imageFile = location.state?.imageFile as File | undefined;
+
+    if (!imageFile) {
+        navigate('/');
+        return null;
+    }
+
+    const handleRegisterClick = () => {
+        navigate('/register-plant', { state: { imageFile: imageFile } });
+    };
+
+    return (
+        <S.UploadPreviewWrapper>
+            <header>
+                헤더 영역 (미리보기 페이지)
+            </header>
+            <S.ImageContainer>
+                <S.ImagePreview src={URL.createObjectURL(imageFile)} alt="선택한 식물 이미지 미리보기" />
+            </S.ImageContainer>
+            <S.ButtonWrapper>
+                <S.RegisterButton onClick={handleRegisterClick}>등록하기</S.RegisterButton>
+            </S.ButtonWrapper>
+        </S.UploadPreviewWrapper>
+    );
+}
+
+export default UploadPreviewPage;
