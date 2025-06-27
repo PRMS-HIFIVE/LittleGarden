@@ -1,4 +1,3 @@
-import { post } from '../types/types';
 import { StatusCodes } from "http-status-codes";
 import postService from "../service/postService";
 import { Request, Response } from "express";
