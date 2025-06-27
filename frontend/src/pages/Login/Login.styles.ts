@@ -54,11 +54,30 @@ export const Input = styled.input`
   }
 `;
 
-export const Button = styled.div`
+export const RowWrapper = styled.div`
+  display: flex;
+  justify-content: space-around;
+`;
+
+export const Register = styled.div`
   background-color: none;
   border: none;
-  margin: 0 auto;
   font-size: 0.7rem;
+  display: flex;
+  font-weight: 600;
+  color: ${textColors.primary};
+  cursor: pointer;
+  &:hover {
+    color: ${textColors.tertiary}; 
+  }
+`;
+
+export const resetPassword = styled.div`
+  background-color: none;
+  border: none;
+  font-size: 0.7rem;
+  display: inline-block;
+  display: flex;
   font-weight: 600;
   color: ${textColors.primary};
   cursor: pointer;

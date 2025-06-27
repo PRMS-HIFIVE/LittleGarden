@@ -8,6 +8,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   const register = () => {};
+  const resetPassword = () => {};
 
   return (
     <S.Container>
@@ -35,15 +36,14 @@ const Login = () => {
             radius="8px"
             textColor="primary"
           />
-
-          <S.Button onClick={register}>
-            회원가입
-          </S.Button>
+          <S.RowWrapper>
+            <S.Register onClick={register}>회원가입</S.Register>
+            <S.resetPassword onClick={resetPassword}>비밀번호 찾기</S.resetPassword>
+          </S.RowWrapper>
 
           <S.ButtonWrapper>
             <LoginButton />
           </S.ButtonWrapper>
-
         </S.Form>
       </S.FormWrapper>
     </S.Container>
