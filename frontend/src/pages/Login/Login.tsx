@@ -7,10 +7,12 @@ const Login = () => {
   const [loginId, setLoginId] = useState("");
   const [password, setPassword] = useState("");
 
+  const register = () => {};
+
   return (
     <S.Container>
       <S.FormWrapper>
-        <S.Title>LOGO</S.Title>
+        <S.Title>Little Garden</S.Title>
         <S.Form>
           <Input
             placeholder="아이디"
@@ -34,7 +36,7 @@ const Login = () => {
             textColor="primary"
           />
 
-          <S.Button>
+          <S.Button onClick={register}>
             회원가입
           </S.Button>
 

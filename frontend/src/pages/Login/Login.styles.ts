@@ -61,6 +61,10 @@ export const Button = styled.div`
   font-size: 0.7rem;
   font-weight: 600;
   color: ${textColors.primary};
+  cursor: pointer;
+  &:hover {
+    color: ${textColors.tertiary}; 
+  }
 `;
 
 export const ButtonWrapper = styled.div`
