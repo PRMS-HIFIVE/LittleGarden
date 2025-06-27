@@ -5,7 +5,9 @@ const SignUpButton = (props: ButtonProps) => {
         <Button
             variant='default'
             buttonSize="medium"
-            color='primary'
+            color='tertiary'
+            radius='round'
+            font-size='medium'
             {...props}
         >
             회원가입

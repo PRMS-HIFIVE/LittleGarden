@@ -16,6 +16,16 @@ const Login = () => {
   };
   const handleResetPassword = () => {};
 
+  const handleLogin = async () => {
+    // 로그인 로직
+    if (loginId && password) {
+      alert("로그인 성공!");
+      navigate("/"); 
+    } else {
+      alert("아이디와 비밀번호를 입력해주세요.");
+    }
+  };
+
   return (
     <S.Container>
       <S.FormWrapper>
@@ -61,7 +71,7 @@ const Login = () => {
           </S.RowWrapper>
 
           <S.ButtonWrapper>
-            <LoginButton />
+            <LoginButton onClick={handleLogin}/>
           </S.ButtonWrapper>
         </S.Form>
       </S.FormWrapper>
