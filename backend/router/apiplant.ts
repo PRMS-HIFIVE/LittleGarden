@@ -16,7 +16,7 @@ const plandId = async (req:Request, res:Response) : Promise<void> => {
     const imagePath3 = path.join(__dirname, '../img/흰꽃.jpg');
 
     const health_assessment = async () => {
-        const imageBuffer = fs.readFileSync(imagePath2);
+        const imageBuffer = fs.readFileSync(imagePath3);
         const base64Image = imageBuffer.toString('base64');
         const detail = "?details=local_name"
 
@@ -64,8 +64,7 @@ const plandId = async (req:Request, res:Response) : Promise<void> => {
 
 
         const response = await fetch(API_IDENTIFY_URL
-                                    + detail
-                                    + "&language=ko"
+                                    + "?language=ko"
             , {
             method: 'POST',
             headers: {

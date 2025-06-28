@@ -77,7 +77,7 @@ export const login = async (req: TypedRequest<IUserRequestBody>, res: Response) 
 
         res.status(StatusCodes.OK).json({
             loginUser : loginUser[0],
-            // token : token
+            token : token
         });
         return;
 
