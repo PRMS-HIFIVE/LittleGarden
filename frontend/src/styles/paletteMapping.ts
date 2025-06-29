@@ -47,6 +47,14 @@ export const inputBorderColors = {
 } as const;
 export type InputBorderColors = keyof typeof inputBorderColors;
 
+export const sidebarBorderColors = {
+    clear: palette.none,
+    primary: palette.lightGray,
+    secondary: palette.gray,
+    tertiary: palette.navyBlue,
+} as const;
+export type SidebarBorderColors = keyof typeof sidebarBorderColors;
+
 export const buttonTextColorMap : Record<ButtonColors, TextColors> = {
     primary: 'white',
     secondary: 'white',
