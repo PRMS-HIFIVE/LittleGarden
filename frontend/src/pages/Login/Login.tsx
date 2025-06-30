@@ -4,6 +4,7 @@ import Input from "@/components/UI/Input/Input";
 import LoginButton from "@/components/UI/Button/ButtonVaraints/LoginButton";
 import { FaUser, FaLock } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import LOGO from "@/assets/images/logo.svg";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -29,7 +30,8 @@ const Login = () => {
   return (
     <S.Container>
       <S.FormWrapper>
-        <S.Title>Little Garden</S.Title>
+        <S.Logo src={LOGO} alt="Little Garden" />
+
         <S.Form>
           <S.InputWrapper>
             <S.IconWrapper>

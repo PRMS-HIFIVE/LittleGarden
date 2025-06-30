@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import {
   backgroundColors,
-  textColors,
 } from "@/styles/paletteMapping";
 
 export const Container = styled.div`
@@ -21,18 +20,11 @@ export const FormWrapper = styled.div`
   border-radius: 12px;
 `;
 
-export const Title = styled.h2`
-  text-align: center;
-  font-size: 1.8rem;
-  font-weight: 600;
-  margin-bottom: 2rem;
-  color: ${textColors.primary};
-`;
-
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 0.7rem;
+  margin-top: 10px;
 `;
 
 export const ButtonWrapper = styled.div`
@@ -43,4 +35,11 @@ export const ButtonWrapper = styled.div`
 
 export const EmailRow = styled.div`
   display: block;
+`;
+
+export const Logo = styled.img`
+  display: block;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
 `;

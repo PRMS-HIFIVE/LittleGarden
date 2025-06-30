@@ -4,6 +4,7 @@ import Input from "@/components/UI/Input/Input";
 import SignUpButton from "@/components/UI/Button/ButtonVaraints/SignUp";
 import Button from "@/components/UI/Button/Button";
 import { useNavigate } from "react-router-dom";
+import LOGO from "@/assets/images/logo.svg";
 
 const Join = () => {
   const navigate = useNavigate();
@@ -28,11 +29,11 @@ const Join = () => {
 
     //   if (!response.ok) throw new Error("회원가입 실패");
 
-    if(email && nickname && password && confirmPassword) {
+    if (email && nickname && password && confirmPassword) {
       alert("회원가입이 완료되었습니다!");
-      navigate("/login"); 
-    }else{
-        alert("모든 필드를 입력해주세요.");
+      navigate("/login");
+    } else {
+      alert("모든 필드를 입력해주세요.");
     }
     // } catch (error) {
     //   alert("회원가입에 실패했습니다.");
@@ -47,7 +48,7 @@ const Join = () => {
   return (
     <S.Container>
       <S.FormWrapper>
-        <S.Title>Little Garden</S.Title>
+        <S.Logo src={LOGO} alt="Little Garden" />
         <S.Form>
           <S.EmailRow>
             <Input

@@ -21,18 +21,11 @@ export const FormWrapper = styled.div`
   border-radius: 12px;
 `;
 
-export const Title = styled.h2`
-  text-align: center;
-  font-size: 1.8rem;
-  font-weight: 600;
-  margin-bottom: 2rem;
-  color: ${textColors.primary};
-`;
-
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
+  margin-top: 10px;
 `;
 
 export const InputWrapper = styled.div`
@@ -85,4 +78,11 @@ export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   margin-top: 0.3rem;
+`;
+
+export const Logo = styled.img`
+  display: block;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
 `;
