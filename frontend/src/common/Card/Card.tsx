@@ -2,7 +2,7 @@ import { CardContainer, CardContent, CardDate, CardHeader, CardProfile, CardThum
 import Tag from "@/components/UI/Tag/Tag";
 import { TagContainer } from "@/components/UI/Tag/Tag.styles";
 
-interface CardProps {
+export interface CardProps {
     title: string;
     content: string;
     date: string;

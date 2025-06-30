@@ -10,6 +10,7 @@ export const textColors = {
     primary: palette.navyBlue,
     secondary: palette.gray,
     tertiary: palette.lightGray,
+    point: palette.yellow,
     white: palette.white,
     green: palette.green,
     warning:palette.warning,
