@@ -15,7 +15,7 @@ export const authenticateToken = (req : Request, res : Response, next : NextFunc
     try {
         if(process.env.JWT_SECRET) {
             const decoded = jwt.verify(authorization, process.env.JWT_SECRET);
-            // req.user = decoded;
+            req.user = decoded;
         } else {
             throw new Error("JWT_SECRET 환경 변수가 설정되지 않았습니다.");
         }
