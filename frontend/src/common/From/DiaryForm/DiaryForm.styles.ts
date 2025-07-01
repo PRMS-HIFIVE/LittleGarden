@@ -25,6 +25,7 @@ export const DiaryHeaderTitle = styled.h3<{
     color: ${({textColor = 'primary'}) => textColors[textColor] || textColors.primary};
     font-size: 1rem;
     font-weight: bold;
+    margin: 0px;
 `;
 
 export const DiaryStyledForm = styled.form`

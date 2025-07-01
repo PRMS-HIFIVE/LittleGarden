@@ -18,9 +18,9 @@ const DiaryForm =({
             <DiaryContainer>
                 <DiaryStyledForm>
                     <DiaryHeaderTitle>{formTitle}</DiaryHeaderTitle>
-                    <Input placeholder="제목을 입력해주세요" radius="8px"/>
+                    <Input placeholder="제목을 입력해주세요" radius="8px" margin='0px 0px 10px 0px'/>
                     <DiaryStyledTextarea></DiaryStyledTextarea>
-                    <Input placeholder="태그" radius="8px"/>
+                    <Input placeholder="태그" radius="8px" margin='0px 0px 10px 0px'/>
 
                     <ImageUploadBox />
 

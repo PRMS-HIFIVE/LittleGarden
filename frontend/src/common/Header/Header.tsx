@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import type { BackgroundColors, TextColors } from "../../styles/paletteMapping";
 import { HeaderCenter, HeaderContainer, HeaderSide, StyledHeader, type HeaderBorderBottomStyles } from './Header.styles';
-import { palette } from '@/styles/palette';
+//import { palette } from '@/styles/palette';
 
 
 export interface HeaderProps {
@@ -45,7 +45,7 @@ const Header = ({
 }: HeaderProps) => {
 
     return (
-        <HeaderContainer style={{borderBottom: `1px solid ${palette.gray}`}}>
+        <HeaderContainer /*style={{borderBottom: `1px solid ${palette.gray}`}}*/>
             <StyledHeader
                 backgroundColor={backgroundColor}
                 width={width}

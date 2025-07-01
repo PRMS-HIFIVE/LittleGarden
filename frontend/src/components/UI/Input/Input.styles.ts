@@ -7,6 +7,7 @@ interface StyledInputProps {
     width?: string;
     height?: string;
     padding?: string;
+    margin?: string;
     borderColor?: InputBorderColors;
     radius?: BorderRadius;
     textAlign?: 'left' | 'center' | 'right';
@@ -18,6 +19,7 @@ export const StyledInput = styled.input<StyledInputProps>`
     width: ${({width}) => width || '100%'};
     height: ${({height}) => height || '40px'};
     padding: ${({padding}) => padding || '4px 8px'};
+    margin: ${({margin}) => margin || '0'};
     border: 1px solid ${({ borderColor }) =>
       borderColor && inputBorderColors[borderColor] !== 'none'
         ? inputBorderColors[borderColor]

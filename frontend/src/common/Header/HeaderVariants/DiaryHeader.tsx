@@ -27,7 +27,7 @@ const DiaryHeader = ({...rest}: HeaderProps) => {
                     <Header
                         padding='80px 16px 10px 16px'
                         backgroundColor='white'
-                        borderBottom='primary'
+                        //borderBottom='primary'
                         minWidth='393px'
                         maxWidth='600px'
                         margin='0 auto'

@@ -8,6 +8,7 @@ export interface InputProps {
     width?: string;
     height?: string;
     padding?: string;
+    margin?: string;
     borderColor?: InputBorderColors;
     radius?: BorderRadius;
     textAlign?: 'left' | 'center' | 'right';
@@ -24,6 +25,7 @@ const Input = ({
     width,
     height,
     padding,
+    margin,
     borderColor,
     radius,
     textAlign,
@@ -41,6 +43,7 @@ const Input = ({
             width={width}
             height={height}
             padding={padding}
+            margin={margin}
             borderColor={borderColor}
             radius={radius}
             textAlign={textAlign}
