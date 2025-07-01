@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import {
   backgroundColors,
+  textColors
 } from "@/styles/paletteMapping";
 
 export const Container = styled.div`
@@ -20,11 +21,38 @@ export const FormWrapper = styled.div`
   border-radius: 12px;
 `;
 
+export const Logo = styled.img`
+  display: block;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+`;
+
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 0.7rem;
   margin-top: 10px;
+`;
+
+export const PasswordWrapper = styled.div`
+  position: relative;
+  width: 100%;
+`;
+
+export const IconWrapper = styled.div`
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: ${textColors.green};
+  cursor: pointer;
+`;
+
+export const ErrorText = styled.p`
+  color: red;
+  font-size: 0.75rem;
+  margin-left: 4px;
 `;
 
 export const ButtonWrapper = styled.div`
@@ -37,9 +65,4 @@ export const EmailRow = styled.div`
   display: block;
 `;
 
-export const Logo = styled.img`
-  display: block;
-  width: 200px;
-  height: 200px;
-  margin: 0 auto;
-`;
+
