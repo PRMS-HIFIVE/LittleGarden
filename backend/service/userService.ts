@@ -1,6 +1,6 @@
-import pool from "../db/mariadb";
 import crypto from "crypto";
-import { IUser } from "../types/types";
+import { executeQuery } from "../utils/executeQuery";
+import { ResultSetHeader, RowDataPacket } from "mysql2";
 
 const joinUser = async (email : string, pwd : string, nickName : string) => {
     const salt = crypto.randomBytes(10).toString('base64');
@@ -8,43 +8,19 @@ const joinUser = async (email : string, pwd : string, nickName : string) => {
 
     const sql = `INSERT INTO users (email, password, salt, nickname) VALUES (?, ?, ?, ?)`;
     const values = [email, hashPassword, salt, nickName];
-    
-    const connection = await pool.getConnection();
-    try {
-        const [results] = await connection.query(sql, values);
-        return results;
-    } catch (error) {
-        throw error;
-    } finally {
-        connection.release();
-    }
+    return await executeQuery<ResultSetHeader>(sql, values);
 };
 
 const findUserByLoginId = async (email : string) => {
     const sql = `SELECT * FROM users WHERE email = ?`;
-    const connection = await pool.getConnection();
-    try {
-        const [results] = await connection.query(sql, email);
-        return results as IUser[];
-    } catch (error) {
-        throw error;
-    } finally {
-        connection.release();
-    }
+    const values = [email];
+    return await executeQuery<RowDataPacket[]>(sql, values);
 };
 
 const updateNickName = async (userId : number, nickName : string) => {
     const sql = `UPDATE users SET nickName = ? WHERE id = ?`;
     const values = [nickName, userId];
-    const connection = await pool.getConnection();
-    try {
-        const [results] = await connection.query(sql, values);
-        return results;
-    } catch (error) {
-        throw error;
-    } finally {
-        connection.release();
-    }
+    return await executeQuery<ResultSetHeader>(sql, values);
 };
 
 const userService = {

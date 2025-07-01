@@ -9,7 +9,7 @@ export interface IUser {
     createdAt : number
 }
 
-export interface post {
+export interface IPost {
     userId : string,
     title: string,
     content: string,

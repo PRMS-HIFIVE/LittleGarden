@@ -3,7 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import crypto from "crypto";
 import userService from "../service/userService";
 import dotenv from "dotenv";
-import jwt, { Secret } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { TypedRequest } from '../types/types';
 dotenv.config();
 
@@ -77,7 +77,7 @@ export const login = async (req: TypedRequest<IUserRequestBody>, res: Response) 
 
         res.status(StatusCodes.OK).json({
             loginUser : loginUser[0],
-            // token : token
+            token : token
         });
         return;
 
