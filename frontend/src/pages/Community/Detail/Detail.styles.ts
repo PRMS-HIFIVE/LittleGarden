@@ -104,12 +104,12 @@ export const CommentList = styled.ul`
   gap: 0.5rem;
 `;
 
-export const CommentItem = styled.li`
-  background-color: #f9f9f9;
-  padding: 0.6rem 0.8rem;
-  border-radius: 8px;
-  list-style: none;
-`;
+// export const CommentItem = styled.li`
+//   background-color: #f9f9f9;
+//   padding: 0.6rem 0.8rem;
+//   border-radius: 8px;
+//   list-style: none;
+// `;
 
 
 export const CommentInput = styled.input`
@@ -143,3 +143,43 @@ export const CommentButton = styled.button`
     background-color: #27ae60;
   }
 `;
+
+
+export const CommentItem = styled.li`
+  margin-bottom: 1rem;
+  list-style: none;
+`;
+
+export const CommentHeader = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+`;
+
+export const ProfileImage = styled.img`
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+`;
+
+export const AuthorBadge = styled.span`
+  margin-left: 0.5rem;
+  font-size: 0.75rem;
+  color: white;
+  background-color: ${buttonColors.primary};
+  padding: 2px 6px;
+  border-radius: 4px;
+`;
+
+export const CommentText = styled.p`
+  margin-left: 3.5rem;
+  margin-top: 0.25rem;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  padding: 0.5rem;
+  border-radius: 10px;
+`;
+

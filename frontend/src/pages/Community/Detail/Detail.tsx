@@ -1,19 +1,55 @@
 import { useState } from "react";
 import * as S from "./Detail.styles";
 
+interface CommentData {
+  id: number;
+  nickname: string;
+  content: string;
+  profileImage: string;
+  isAuthor: "1" | "0";
+}
+
 const CommunityDetail = () => {
   const [comment, setComment] = useState("");
-  const [comments, setComments] = useState<string[]>([]);
+  // const [comments, setComments] = useState<string[]>([]);
+  const [comments, setComments] = useState<CommentData[]>([
+    // 작성자가 아닌 유저의 댓글 확인용 데이터
+    {
+      id: 2,
+      nickname: "유저2",
+      content: "저도 몬스테라 키우고 있어요!",
+      profileImage: "https://via.placeholder.com/40",
+      isAuthor: "0",
+    },
+  ]);
+
+  // const handleCommentSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   if (comment.trim()) {
+  //     setComments([...comments, comment]);
+  //     setComment("");
+  //   }
+  // };
 
   const handleCommentSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (comment.trim()) {
-      setComments([...comments, comment]);
-      setComment("");
-    }
-  };
+  e.preventDefault();
 
-  // 더미 데이터
+  if (comment.trim()) {
+    const newComment: CommentData = {
+      id: comments.length + 1, 
+      nickname: "현재유저", 
+      content: comment,
+      profileImage: "https://via.placeholder.com/40", 
+      isAuthor: "1", 
+    };
+
+    setComments([...comments, newComment]);
+    setComment("");
+  }
+};
+
+
+  // 더미 데이터 (추후 API로 대체 예정)
   const post = {
     nickname: "닉네임",
     title: "제목제목제목제목제목제목",
@@ -70,9 +106,28 @@ const CommunityDetail = () => {
           {comments.length === 0 ? (
             <S.EmptyComment>아직 댓글이 없습니다.</S.EmptyComment>
           ) : (
+            // <S.CommentList>
+            //   {comments.map((cmt, idx) => (
+            //     <S.CommentItem key={idx}>{cmt}</S.CommentItem>
+            //   ))}
+            // </S.CommentList>
             <S.CommentList>
-              {comments.map((cmt, idx) => (
-                <S.CommentItem key={idx}>{cmt}</S.CommentItem>
+              {comments.map((cmt) => (
+                <S.CommentItem key={cmt.id}>
+                  <S.CommentHeader>
+                    <S.ProfileImage
+                      src={cmt.profileImage}
+                      alt={`${cmt.nickname} 프로필`}
+                    />
+                    <S.Nickname>
+                      {cmt.nickname}
+                      {cmt.isAuthor === "1" && (
+                        <S.AuthorBadge>작성자</S.AuthorBadge>
+                      )}
+                    </S.Nickname>
+                  </S.CommentHeader>
+                  <S.CommentText>{cmt.content}</S.CommentText>
+                </S.CommentItem>
               ))}
             </S.CommentList>
           )}
