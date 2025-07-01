@@ -3,8 +3,8 @@ import postService from "../service/postService";
 import { Request, Response } from "express";
 
 export const postPosts = async (req:Request, res:Response) : Promise<void> => {
-    const { userId, title, content, plantTag } = req.body;
-    if (!userId || !title || !content || !plantTag) {
+    const { userId, title, content, plantTag, state } = req.body;
+    if (!userId || !title || !content || !plantTag || !state) {
         res.status(StatusCodes.BAD_REQUEST).json({
             message: " 모든 데이터를 입력해주세요. 데이터 누락"
         })
@@ -14,7 +14,7 @@ export const postPosts = async (req:Request, res:Response) : Promise<void> => {
     const cleanedTags = plantTag.map((tag:string) => tag.replace(/^#/, ''));
 
     try {
-        const newPost = await postService.posts({userId, title, content});
+        const newPost = await postService.posts({userId, title, content,state});
         const newtag = await postService.tags(newPost.insertId,cleanedTags);
         res.status(StatusCodes.CREATED).json({
             message : "게시글이 성공적으로 작성되었습니다.",
@@ -32,9 +32,10 @@ export const postPosts = async (req:Request, res:Response) : Promise<void> => {
 };
 
 export const getPosts = async (req:Request, res:Response) : Promise<void> => {
-    const { plantTag } =  req.body?req.body:0;
+    const { plantTag, state } =  req.body?req.body:0;
+
     try {
-        const newPost = await postService.getPosts(plantTag);
+        const newPost = await postService.getPosts(plantTag,state);
         res.status(StatusCodes.CREATED).json({
             message : "게시글이 성공적으로 조회되었습니다.",
             data : newPost
@@ -50,8 +51,8 @@ export const getPosts = async (req:Request, res:Response) : Promise<void> => {
 };
 
 export const updatePosts = async (req:Request, res:Response) : Promise<void> => {
-    const { postId , userId, title, content, plantTag } = req.body;
-    if (!userId || !title || !content || !plantTag) {
+    const { postId , userId, title, content, plantTag,state } = req.body;
+    if (!userId || !title || !content || !plantTag ||!state) {
         res.status(StatusCodes.BAD_REQUEST).json({
             message: " 모든 데이터를 입력해주세요. 데이터 누락"
         })
@@ -61,7 +62,7 @@ export const updatePosts = async (req:Request, res:Response) : Promise<void> => 
     const cleanedTags = plantTag.map((tag:string) => tag.replace(/^#/, ''));
 
     try {
-        const updatePost = await postService.updatePosts(postId,{userId, title, content});
+        const updatePost = await postService.updatePosts(postId,{userId, title, content,state});
         const updateTag = await postService.updateTags(postId,cleanedTags);
         res.status(StatusCodes.CREATED).json({
             message : "게시글이 성공적으로 수정되었습니다.",

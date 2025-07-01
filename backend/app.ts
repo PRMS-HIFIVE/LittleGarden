@@ -19,12 +19,12 @@ app.use(express.json());
 
 import usersRouter from "./router/users";
 import postsRouter from "./router/posts";
-import plantsRouter from "./router/plants";
+import apiplantsRouter from "./router/apiplant";
 import commentsRouter from "./router/comments";
 
 app.use("/users", usersRouter);
 app.use("/posts", postsRouter);
-app.use("/plants", plantsRouter);
+app.use("/plantidapi", apiplantsRouter);
 app.use("/comments", commentsRouter);
 
 // catch 404 and forward to error handler
