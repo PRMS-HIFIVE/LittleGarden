@@ -7,7 +7,7 @@ interface IFilterPost {
     state?: number
 }
 
-const posts = async (post: post) => {
+const posts = async (post: IPost) => {
     const sql = "INSERT INTO posts (user_id, title, content, state) VALUES (?, ?, ?, ?)";
     const values = [post.userId, post.title, post.content, post.state];
     return await executeQuery(sql, values);
@@ -35,11 +35,11 @@ const getPosts = async (plantTag?:IFilterPost,state?:IFilterPost) => {
     }
 };
 
-const updatePosts = async (postId:number,post: post) => {
+const updatePosts = async (postId:number,post: IPost) => {
     const sql = "UPDATE posts SET user_id=?,title=?,content=?,state=? WHERE id=?";
     const values = [post.userId, post.title, post.content,post.state,postId];
     return await executeQuery(sql, values);
-
+}
 
 const deletePosts = async (postId:number) => {
     const sql = "DELETE FROM posts WHERE id = ?";
