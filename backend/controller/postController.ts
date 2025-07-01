@@ -4,13 +4,8 @@ import postService from "../service/postService";
 import { Request, Response } from "express";
 
 export const postPosts = async (req:Request, res:Response) : Promise<void> => {
-    const { userId, title, content, plantTag } = req.body;
-    if (!userId || !title || !content || !plantTag) {
-        res.status(StatusCodes.BAD_REQUEST).json({
-            message: " 모든 데이터를 입력해주세요. 데이터 누락"
-        })
-        return;
-    }
+    const userId = req.user?.id;
+    const { title, content, plantTag } = req.body;
 
     const cleanedTags = plantTag.map((tag:string) => tag.replace(/^#/, ''));
 
@@ -21,7 +16,7 @@ export const postPosts = async (req:Request, res:Response) : Promise<void> => {
             message : "게시글이 성공적으로 작성되었습니다.",
             postData : newPost,
             tagData : newtag
-        })
+        });
         return;
     } catch (error){
         console.error("Error creating post:", error);
@@ -51,14 +46,10 @@ export const getPosts = async (req:Request, res:Response) : Promise<void> => {
 };
 
 export const updatePosts = async (req:Request, res:Response) : Promise<void> => {
-    const { postId , userId, title, content, plantTag } = req.body;
-    if (!userId || !title || !content || !plantTag) {
-        res.status(StatusCodes.BAD_REQUEST).json({
-            message: " 모든 데이터를 입력해주세요. 데이터 누락"
-        })
-        return;
-    }
-    
+    const userId = req.user?.id;
+    const postId = parseInt(req.params.postId);
+    const { title, content, plantTag } = req.body;
+
     const cleanedTags = plantTag.map((tag:string) => tag.replace(/^#/, ''));
 
     try {
@@ -79,13 +70,7 @@ export const updatePosts = async (req:Request, res:Response) : Promise<void> => 
 };
 
 export const deletePosts = async (req:Request, res:Response) : Promise<void> => {
-    const { userId, postId } = req.body;
-    if (!userId || !postId) {
-        res.status(StatusCodes.BAD_REQUEST).json({
-            message: " 모든 데이터를 입력해주세요. 데이터 누락"
-        })
-        return;
-    }
+    const postId = parseInt(req.params.postId);
 
     try {
         const newPost = await postService.deletePosts(postId);

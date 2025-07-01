@@ -89,8 +89,8 @@ export const login = async (req: TypedRequest<IUserRequestBody>, res: Response) 
 }
 
 export const updateNickName = async (req: Request, res: Response): Promise<void> => {
-    const {userId, nickName} = req.body;
-    // TODO : req.user 해결되면 auth에서 userId 가져오기
+    const userId = req.user?.id;
+    const {nickName} = req.body;
     try {
         await userService.updateNickName(userId, nickName);
         res.status(StatusCodes.OK).json({ message : "닉네임이 변경되었습니다. "});
