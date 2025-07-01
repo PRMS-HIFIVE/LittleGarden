@@ -2,29 +2,41 @@ import { post } from '../types/types';
 import { executeQuery } from '../utils/executeQuery';
 
 interface IFilterPost {
-    plantTag?: string
+    plantTag?: string;
+    state?: number
 }
 
 const posts = async (post: post) => {
-    const sql = "INSERT INTO posts (user_id, title, content) VALUES (?, ?, ?)";
-    const values = [post.userId, post.title, post.content];
+    const sql = "INSERT INTO posts (user_id, title, content, state) VALUES (?, ?, ?, ?)";
+    const values = [post.userId, post.title, post.content, post.state];
     return await executeQuery(sql, values);
 };
 
-const getPosts = async (plantTag?:IFilterPost) => {
+const getPosts = async (plantTag?:IFilterPost,state?:IFilterPost) => {
     let sql;
-    if(plantTag){
+    let values=[];
+    if(plantTag && state){
+        sql = "SELECT * FROM plant.posts INNER JOIN posts_tag ON posts.id = posts_tag.post_id WHERE plant_id = ? AND state = ?;";
+        values.push(plantTag,state);
+        return await executeQuery(sql, values);
+    }if(plantTag){
         sql = "SELECT * FROM plant.posts INNER JOIN posts_tag ON posts.id = posts_tag.post_id WHERE plant_id = ?;";
-        return await executeQuery(sql, plantTag);
-    }else{
+        values.push(plantTag);
+        return await executeQuery(sql, values);
+    }if(state){
+        sql = "SELECT * FROM plant.posts INNER JOIN posts_tag ON posts.id = posts_tag.post_id WHERE state = ?;";
+        values.push(state);
+        return await executeQuery(sql, values);
+    }
+    else{
         sql = "SELECT * FROM posts";
         return await executeQuery(sql, []);
     }
 };
 
 const updatePosts = async (postId:number,post: post) => {
-    const sql = "UPDATE posts SET user_id=?,title=?,content=? WHERE id=?";
-    const values = [post.userId, post.title, post.content,postId];
+    const sql = "UPDATE posts SET user_id=?,title=?,content=?,state=? WHERE id=?";
+    const values = [post.userId, post.title, post.content,post.state,postId];
     return await executeQuery(sql, values);
 };
 
