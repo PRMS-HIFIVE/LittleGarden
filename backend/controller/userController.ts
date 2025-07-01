@@ -3,7 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import crypto from "crypto";
 import userService from "../service/userService";
 import dotenv from "dotenv";
-import jwt, { Secret } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { TypedRequest } from '../types/types';
 dotenv.config();
 
