@@ -1,19 +1,22 @@
 import express from "express";
-import { userValidator } from '../middleware/validator';
 import {
     postPosts,
     getPosts,
     updatePosts,
     deletePosts
     } from '../controller/postController';
+import { authenticateToken } from "../middleware/authMiddleware";
+import { deletePostValidator, postPostsValidator, updatePostValidator } from "../middleware/validator";
 
 const router = express.Router();
-// 조회를 제외한 API는 헤더에 토큰 추가 예정
 
-router.route("/")
-    .post(postPosts)
-    .get(getPosts)
-    .put(updatePosts)
-    .delete(deletePosts);
+router.route('/')
+    .post(authenticateToken, postPostsValidator, postPosts)
+    .get(authenticateToken, getPosts)
+
+router.route('/:postId')
+    .put(authenticateToken, updatePostValidator, updatePosts)
+    .delete(authenticateToken, deletePostValidator, deletePosts);
+
 
 export default router;

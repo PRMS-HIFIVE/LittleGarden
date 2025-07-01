@@ -6,9 +6,8 @@ import { IComment, TypedRequest } from '../types/types';
 type commentRequestBody = Pick<IComment, 'postId' | 'userId' | 'content'>;
 
 export const getComments = async (req: Request, res: Response) : Promise<void> => {
-    // TODO : req.user 해결되면 auth에서 userId 가져오기
+    const userId = req.user?.id;
     const postId = parseInt(req.query.postId as string, 10);
-    const userId = parseInt(req.query.userId as string, 10);
 
     try {
         const comments = await commentService.getComments(postId, userId);
@@ -22,7 +21,8 @@ export const getComments = async (req: Request, res: Response) : Promise<void> =
 }
 
 export const createComment = async (req: TypedRequest<commentRequestBody>, res: Response) : Promise<void> => {
-    const {postId, userId, content} = req.body;
+    const userId = req.user?.id;
+    const {postId, content} = req.body;
 
     try {
         await commentService.createComment(postId, userId, content);
