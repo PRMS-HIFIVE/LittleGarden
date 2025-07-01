@@ -22,9 +22,13 @@ export const StyledInput = styled.input<StyledInputProps>`
       borderColor && inputBorderColors[borderColor] !== 'none'
         ? inputBorderColors[borderColor]
         : '#95A5A6'};
-    border-radius: ${({ radius }) => radius || '4px'};
+    border-radius: ${({ radius }) => radius || '8px'};
     text-align: ${({textAlign}) => textAlign || 'left'};
     color: ${({textColor}) => textColor || '#2C3E50'};
     font-size: ${({fontSize}) => fontSize || '1rem'};
     box-sizing: border-box;
+    &:focus {
+        outline: none;
+        border: 1px solid ${({borderColor = 'tertiary'}) => inputBorderColors[borderColor] || inputBorderColors.tertiary}
+    };
 `

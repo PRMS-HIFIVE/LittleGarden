@@ -45,6 +45,8 @@ export const inputBorderColors = {
     secondary: palette.lightGray,
     tertiary: palette.navyBlue,
     warning: palette.warning,
+    lightGreen: palette.lightGreen,
+    green: palette.green,
 } as const;
 export type InputBorderColors = keyof typeof inputBorderColors;
 

@@ -50,6 +50,6 @@ export const DiaryStyledTextarea = styled.textarea`
 
     &:focus {
         outline: none;
-        border: 2px solid ${palette.green};
-    }
+        border: 1px solid ${palette.navyBlue};
+    };
 `;
