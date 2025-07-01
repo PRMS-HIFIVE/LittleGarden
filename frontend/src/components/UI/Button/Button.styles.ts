@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { buttonColors, buttonTextColorMap, textColors, type ButtonColors } from "@/styles/paletteMapping";
 
-export type ButtonSize = 'small' | 'medium' | 'large' | string;
+export type ButtonSize = 'small' | 'medium' | 'large' | 'full' | string;
 export type ButtonStyleType = 'filled' | 'outline' | 'clear';
 export type ButtonRadius = 'square' | 'semiRound' | 'round' | 'pill' | string;
 
@@ -19,6 +19,8 @@ export const StyledButton = styled.button<{
     radius?: ButtonRadius;
     width?: string;
     height?: string;
+    padding?: string;
+    margin?: string;
 }>`
     background-color: ${({color, styleType}) =>
         styleType === 'filled' 
@@ -59,10 +61,16 @@ export const StyledButton = styled.button<{
         : radius
     };
 
-    padding: 8px 24px;
+    padding: ${({ padding }) => typeof padding === 'string' && padding.trim() !== ''
+    ? padding
+    : '8px 24px'};
+    margin: ${({ margin }) => typeof margin === 'string' && margin.trim() !== ''
+    ? margin
+    : '0'};
     display: inline-flex;
     align-items: center;
     justify-content: center;
 
     cursor: pointer;
+    box-sizing: border-box;
 `;

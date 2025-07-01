@@ -1,26 +1,39 @@
+import { IconArrowLeft, IconBell, IconMenu } from "@/assets/icons/IconList";
 import Header, { type HeaderProps } from "@/common/Header/Header"
-import { HeaderBottomRow, HeaderTopRow } from "@/common/Header/Header.styles";
+import { HeaderTopRow } from "@/common/Header/Header.styles";
 
 
-const DiaryHeader = ({title, ...rest}: HeaderProps) => {
+const DiaryHeader = ({...rest}: HeaderProps) => {
+
+    const handleBack = () => {
+
+    };
+    const handleBell = () => {
+
+    };
+    const handleMenu = () => {
+
+    }
+
     return (
         <>
             <HeaderTopRow>
-                <Header
-                    padding='80px 0px 0px 0px'
-                >
-                </Header>
+                    <Header
+                        padding='80px 16px 10px 16px'
+                        backgroundColor='white'
+                        borderBottom='primary'
+                        minWidth='393px'
+                        maxWidth='600px'
+                        margin='0 auto'
+                        {...rest}
+                        left={<IconArrowLeft onClick={handleBack} />}
+                        right={<>
+                            <IconBell onClick={handleBell}/>
+                            <IconMenu onClick={handleMenu}/>
+                        </>}
+                    >
+                    </Header>
             </HeaderTopRow>
-
-            <HeaderBottomRow>
-                <Header
-                    padding='8px 0px 36px 0px'
-                    {...rest}
-                    left={<h1>{title}</h1>}
-                >
-                </Header>
-
-            </HeaderBottomRow>
         </>
     )
 }
