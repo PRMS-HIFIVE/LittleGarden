@@ -8,11 +8,11 @@ export const ModalContainer = styled.div<{
     width?: string;
     borderColor?: BackgroundColors;
 }>`
-    color: ${({textColor = 'primary'}) => textColors[textColor] ?? textColors.primary};
-    background-color: ${({backgroundColor = 'white'}) => backgroundColors[backgroundColor] ?? backgroundColors.primary};
+    color: ${({textColor = 'primary'}) => textColors[textColor] || textColors.primary};
+    background-color: ${({backgroundColor = 'white'}) => backgroundColors[backgroundColor] || backgroundColors.primary};
     padding: ${({padding}) => padding || '0px 0px 0px 0px'};
     width: ${({width}) => width || '300px'};
-    border: 2px solid ${({borderColor ='green'}) => backgroundColors[borderColor] ?? backgroundColors.green};
+    border: 2px solid ${({borderColor ='green'}) => backgroundColors[borderColor] || backgroundColors.green};
     border-radius: 10px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
     display: flex;
@@ -22,8 +22,8 @@ export const ModalContainer = styled.div<{
 `;
 
 export const ModalTitle = styled.h3<{textColor?: TextColors; backgroundColor?: BackgroundColors;}>`
-    color: ${({textColor = 'white'}) => textColors[textColor] ?? textColors.white};
-    background-color: ${({backgroundColor = 'green'}) => backgroundColors[backgroundColor] ?? backgroundColors.primary};
+    color: ${({textColor = 'white'}) => textColors[textColor] || textColors.white};
+    background-color: ${({backgroundColor = 'green'}) => backgroundColors[backgroundColor] || backgroundColors.primary};
     width: 100%;
     font-size: 1.1 rem;
     font-weight: bold;
@@ -33,7 +33,7 @@ export const ModalTitle = styled.h3<{textColor?: TextColors; backgroundColor?: B
 `;
 
 export const ModalContent = styled.p<{textColor?: TextColors;}>`
-    color: ${({textColor = 'primary'}) => textColors[textColor] ?? textColors.primary};
+    color: ${({textColor = 'primary'}) => textColors[textColor] || textColors.primary};
     max-width: 240px;
     font-size: 1rem;
     font-weight: 500;

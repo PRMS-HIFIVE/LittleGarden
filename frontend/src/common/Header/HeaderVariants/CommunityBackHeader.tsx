@@ -11,7 +11,7 @@ const CommunityBackHeader = ({...rest}: HeaderProps) => {
                     backgroundColor='white'
                     borderBottom='primary'
                     {...rest}
-                    left={<h1>뒤로가기 아이콘</h1>}
+                    left={<h1>아이콘위치</h1>}
                 >
                 </Header>
             </HeaderTopRow>

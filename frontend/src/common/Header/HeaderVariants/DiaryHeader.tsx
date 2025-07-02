@@ -28,8 +28,8 @@ const DiaryHeader = ({...rest}: HeaderProps) => {
                         padding='80px 16px 10px 16px'
                         backgroundColor='white'
                         //borderBottom='primary'
-                        minWidth='393px'
-                        maxWidth='600px'
+                        minWidth='360px'
+                        maxWidth='393px'
                         margin='0 auto'
                         {...rest}
                         left={<IconArrowLeft onClick={handleBack} />}

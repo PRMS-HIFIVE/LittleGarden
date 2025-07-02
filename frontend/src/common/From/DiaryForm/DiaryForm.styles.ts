@@ -6,8 +6,8 @@ export const DiaryContainer = styled.div<{
     backgroundColor?: BackgroundColors;
 }>`
     width: 100%;
-    min-width: 393px;
-    max-width: 600px;
+    min-width: 360px;
+    max-width: 393px;
     max-height: 100vh;
     margin: 0 auto;
     padding: 20px 16px;
