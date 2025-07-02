@@ -32,25 +32,25 @@ const CommunityDetail = () => {
   // };
 
   const handleCommentSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  if (comment.trim()) {
-    const newComment: CommentData = {
-      id: comments.length + 1, 
-      nickname: "현재유저", 
-      content: comment,
-      profileImage: "https://via.placeholder.com/40", 
-      isAuthor: "1", 
-    };
+    if (comment.trim()) {
+      const newComment: CommentData = {
+        id: comments.length + 1,
+        nickname: post.nickname,
+        content: comment,
+        profileImage: post.profileImage,
+        isAuthor: "1",
+      };
 
-    setComments([...comments, newComment]);
-    setComment("");
-  }
-};
-
+      setComments([...comments, newComment]);
+      setComment("");
+    }
+  };
 
   // 더미 데이터 (추후 API로 대체 예정)
   const post = {
+    profileImage: "https://via.placeholder.com/40",
     nickname: "닉네임",
     title: "제목제목제목제목제목제목",
     content: `작성한 내용 작성한 내용의 일부 작성한 내용 작성한 내용의 일부
@@ -75,9 +75,12 @@ const CommunityDetail = () => {
     <S.Container>
       <S.ScrollArea>
         <S.SectionDivider />
-
         <S.PostHeader>
-          <p>프로필</p>
+          <S.ProfileImage
+            src={post.profileImage}
+            alt={`${post.nickname} 프로필`}
+          />
+
           <S.Nickname>{post.nickname}</S.Nickname>
         </S.PostHeader>
 

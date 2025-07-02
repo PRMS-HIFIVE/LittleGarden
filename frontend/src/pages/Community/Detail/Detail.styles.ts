@@ -20,6 +20,7 @@ export const Nickname = styled.span`
   font-weight: 600;
   color: ${textColors.primary};
   margin-left: 15px;
+  margin-top: 5px;
 `;
 
 export const Date = styled.span`
