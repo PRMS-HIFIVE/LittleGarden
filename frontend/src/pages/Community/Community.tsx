@@ -2,10 +2,20 @@ import React from "react";
 import * as S from "./Community.styles";
 import Button from "@/components/UI/Button/Button";
 import DiaryHeader from "@/common/Header/HeaderVariants/DiaryHeader";
-import Footer from "@/common/Footer";
+import { useNavigate } from "react-router-dom";
+// import Footer from "@/common/Footer";
 
 
 const Community = () => {
+  const navigate = useNavigate();
+
+  const handleViewLatestPosts = () => {}
+  const handleViewMyPosts = () => {}
+  const handleWritePost = () => {
+    navigate("/community/write");
+  }
+
+
   return (
     <>
       <S.Container>
@@ -15,7 +25,7 @@ const Community = () => {
           <Button
             variant="diaryMenu"
             width="50%"
-            // onClick={}
+            onClick={handleViewLatestPosts}
           >
             최신순
           </Button>
@@ -24,7 +34,7 @@ const Community = () => {
             variant="diaryMenu"
             width="50%"
             color="white"
-            // onClick={}
+            onClick={handleViewMyPosts}
           >
             내 글 보기
           </Button>
@@ -33,7 +43,7 @@ const Community = () => {
             variant="diaryMenu"
             width="50%"
             color="navyBlue"
-            // onClick={}
+            onClick={handleWritePost}
           >
             글쓰기
           </Button>
