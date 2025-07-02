@@ -1,5 +1,4 @@
-const pool = require("../db/mariadb");
-const { executeQuery } = require("../utils/executeQuery");
+import { executeQuery } from "../utils/executeQuery";
 
 
 const likePost = async (postId:number, userId:number) => {
