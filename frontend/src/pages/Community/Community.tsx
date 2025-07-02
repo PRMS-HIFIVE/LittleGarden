@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import * as S from "./Community.styles";
 import Button from "@/components/UI/Button/Button";
 import DiaryHeader from "@/common/Header/HeaderVariants/DiaryHeader";
