@@ -73,7 +73,6 @@ const Join = () => {
             <S.ButtonWrapper>
               <Button
                 variant="default"
-                buttonSize="small"
                 color="tertiary"
                 width="100%"
                 radius="round"
