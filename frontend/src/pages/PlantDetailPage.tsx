@@ -13,7 +13,7 @@ function PlantDetailPage ({ plants }: PlantDetailPageProps) {
     const plant = plants.find(p => p.id === plantId);
 
     const handleGoBack = () => {
-        navigate(-1); // 이전 페이지로 돌아가기
+        navigate(-1);
     };
 
     if (!plant) {
