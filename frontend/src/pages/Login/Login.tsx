@@ -15,7 +15,10 @@ const Login = () => {
   const handleJoin = () => {
     navigate("/join");
   };
-  const handleResetPassword = () => {};
+
+  const handleFindPassword = () => {
+    navigate("/password")
+  };
 
   const handleLogin = async () => {
     // 로그인 로직
@@ -69,7 +72,7 @@ const Login = () => {
           <S.RowWrapper>
             <S.Join onClick={handleJoin}>회원가입</S.Join>
             
-            <S.resetPassword onClick={handleResetPassword}>
+            <S.resetPassword onClick={handleFindPassword}>
               비밀번호 찾기
             </S.resetPassword>
           </S.RowWrapper>
