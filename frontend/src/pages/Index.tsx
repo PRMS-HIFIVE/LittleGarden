@@ -8,7 +8,7 @@ interface IndexProps {
     setPlants: React.Dispatch<React.SetStateAction<PlantInfo[]>>;
 }
 
-function Index({ plants, setPlants }: IndexProps) {
+function Index({ plants }: IndexProps) {
 
     return (
         <IndexWrapper>
