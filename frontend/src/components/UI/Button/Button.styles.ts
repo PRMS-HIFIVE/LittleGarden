@@ -19,26 +19,6 @@ export const buttonSizeMap = {
   full: { width: "100%", height: "50px" },
 };
 
-/*
-export const StyledButton = styled.button<{ 
-    color: ButtonColors; 
-    buttonSize: ButtonSize; 
-    styleType?: ButtonStyleType; 
-    radius?: ButtonRadius;
-    width?: string;
-    height?: string;
-    padding?: string;
-    margin?: string;
-}>`
-    background-color: ${({color, styleType}) =>
-        styleType === 'filled' 
-        ? buttonColors[color]
-        : styleType === 'outline'
-        ? 'transparent'
-        : styleType === 'clear' 
-        ? 'transparent'
-        : buttonColors[color]
-    };*/
 
 // 버튼 텍스트 크기 설정
 const buttonFontSizeMap = {
