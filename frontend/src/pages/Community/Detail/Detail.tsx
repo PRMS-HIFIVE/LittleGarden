@@ -1,6 +1,7 @@
 import { useState } from "react";
 import * as S from "./Detail.styles";
 import CommunityBackHeader from "@/common/Header/HeaderVariants/CommunityBackHeader";
+import Tag from "@/components/UI/Tag/Tag";
 
 interface CommentData {
   id: number;
@@ -97,9 +98,11 @@ const CommunityDetail = () => {
         </S.ImageWrapper>
 
         <S.TagWrapper>
-          {post.plantTags.map((tag, idx) => (
+          {/* {post.plantTags.map((tag, idx) => (
             <S.Tag key={idx}>{tag}</S.Tag>
-          ))}
+          ))} */}
+          <Tag>#화분 </Tag>
+          <Tag>#식물 </Tag>
         </S.TagWrapper>
 
         <S.Date>{post.createdAt}</S.Date>
