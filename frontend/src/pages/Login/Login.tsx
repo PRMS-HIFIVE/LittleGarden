@@ -1,7 +1,7 @@
 import { useState } from "react";
 import * as S from "./Login.styles";
 import Input from "@/components/UI/Input/Input";
-import LoginButton from "@/components/UI/Button/ButtonVaraints/LoginButton";
+import LoginButton from "@/components/UI/Button/ButtonVariants/LoginButton";
 import { FaUser, FaLock } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import LOGO from "@/assets/images/logo.svg";

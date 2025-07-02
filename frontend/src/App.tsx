@@ -1,6 +1,6 @@
 import Index from "./pages/Index"
 import GlobalStyle from "@/styles/globalStyles"
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { Routes, Route } from "react-router-dom"
 import UploadPreviewPage from './pages/UploadPreviewPage';
 import PlantRegistrationPage from './pages/PlantRegistrationPage';
 import { useState, useEffect } from 'react';
@@ -32,7 +32,6 @@ function App() {
     <>
 
       <GlobalStyle />
-      <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index plants={plants} setPlants={setPlants} />} />
           <Route path="/login" element={<Login />} />
@@ -44,7 +43,6 @@ function App() {
           <Route path="/detail" element={<CommunityDetail />} />
           <Route path="/Community" element={<Community />} />
         </Routes>
-      </BrowserRouter>
     
     </>
 

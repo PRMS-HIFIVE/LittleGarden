@@ -1,7 +1,7 @@
 import { useState } from "react";
 import * as S from "./Join.styles";
 import Input from "@/components/UI/Input/Input";
-import SignUpButton from "@/components/UI/Button/ButtonVaraints/SignUp";
+import SignUpButton from "@/components/UI/Button/ButtonVariants/SignUp";
 import Button from "@/components/UI/Button/Button";
 import { useNavigate } from "react-router-dom";
 import LOGO from "@/assets/images/logo.svg";
