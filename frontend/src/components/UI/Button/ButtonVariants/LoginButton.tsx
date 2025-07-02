@@ -5,7 +5,9 @@ const LoginButton = (props: ButtonProps) => {
         <Button
             variant='default'
             buttonSize="medium"
-            color='primary'
+            color='tertiary'
+            radius='round'
+            font-size='medium'
             {...props}
         >
             로그인
