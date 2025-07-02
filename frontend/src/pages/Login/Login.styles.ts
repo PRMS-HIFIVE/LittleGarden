@@ -21,6 +21,13 @@ export const FormWrapper = styled.div`
   border-radius: 12px;
 `;
 
+export const Logo = styled.img`
+  display: block;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+`;
+
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
@@ -41,10 +48,9 @@ export const IconWrapper = styled.div`
   color: ${textColors.green};
 `;
 
-
 export const RowWrapper = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
 `;
 
 export const Join = styled.div`
@@ -77,12 +83,5 @@ export const resetPassword = styled.div`
 export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 0.3rem;
 `;
 
-export const Logo = styled.img`
-  display: block;
-  width: 200px;
-  height: 200px;
-  margin: 0 auto;
-`;

@@ -48,6 +48,7 @@ const Login = () => {
               textColor="primary"
             />
           </S.InputWrapper>
+
           <S.InputWrapper>
             <S.IconWrapper>
               <FaLock />
@@ -67,6 +68,7 @@ const Login = () => {
 
           <S.RowWrapper>
             <S.Join onClick={handleJoin}>회원가입</S.Join>
+            
             <S.resetPassword onClick={handleResetPassword}>
               비밀번호 찾기
             </S.resetPassword>
