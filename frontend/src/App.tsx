@@ -28,6 +28,7 @@ function App() {
 
   return (
     <>
+
       <GlobalStyle />
       <BrowserRouter>
         <Routes>
@@ -42,6 +43,7 @@ function App() {
       </BrowserRouter>
     
     </>
+
   )
 }
 
