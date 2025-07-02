@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import type { PlantInfo } from '../App';
+import type { PlantInfo } from '../../App';
 import * as S from './PlantDetailPage.style';
 import Footer from '@/common/Footer';
 

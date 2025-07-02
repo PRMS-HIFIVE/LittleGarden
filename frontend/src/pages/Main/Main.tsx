@@ -1,7 +1,7 @@
 import * as S from './Main.style'
-import Star from '../assets/icons/Star.svg?react';
-import Droplet from '../assets/icons/Droplet.svg?react';
-import type { PlantInfo } from '../App';
+import Star from '../../assets/icons/Star.svg?react';
+import Droplet from '../../assets/icons/Droplet.svg?react';
+import type { PlantInfo } from '../../App';
 import { useNavigate } from 'react-router-dom';
 
 interface MainProps {

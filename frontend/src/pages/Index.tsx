@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Main from "./Main";
+import Main from "./Main/Main";
 import Footer from "@/common/Footer";
 import type { PlantInfo } from '../App';
 

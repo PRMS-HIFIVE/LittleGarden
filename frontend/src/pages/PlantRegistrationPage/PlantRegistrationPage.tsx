@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import * as S from './PlantRegistrationPage.style';
-import type { PlantInfo } from '../App';
+import type { PlantInfo } from '../../App';
 
 interface PlantRegistrationPageProps {
     setPlants: React.Dispatch<React.SetStateAction<PlantInfo[]>>;

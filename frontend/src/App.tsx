@@ -1,10 +1,10 @@
 import Index from "./pages/Index"
 import GlobalStyle from "@/styles/globalStyles"
 import { Routes, Route } from "react-router-dom"
-import UploadPreviewPage from './pages/UploadPreviewPage';
-import PlantRegistrationPage from './pages/PlantRegistrationPage';
+import UploadPreviewPage from './pages/UploadPreview/UploadPreviewPage';
+import PlantRegistrationPage from './pages/PlantRegistrationPage/PlantRegistrationPage';
 import { useState, useEffect } from 'react';
-import PlantDetailPage from "./pages/PlantDetailPage";
+import PlantDetailPage from "./pages/PlantDetailPage/PlantDetailPage";
 import Login from './pages/Login/Login'
 import Join from './pages/Join/Join'
 import CommunityDetail from './pages/Community/Detail/Detail'
