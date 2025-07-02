@@ -1,5 +1,6 @@
 import { useState } from "react";
 import * as S from "./Detail.styles";
+import CommunityBackHeader from "@/common/Header/HeaderVariants/CommunityBackHeader";
 
 interface CommentData {
   id: number;
@@ -74,6 +75,7 @@ const CommunityDetail = () => {
   return (
     <S.Container>
       <S.ScrollArea>
+        <CommunityBackHeader/>
         <S.SectionDivider />
         <S.PostHeader>
           <S.ProfileImage

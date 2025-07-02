@@ -7,9 +7,9 @@ const CommunityBackHeader = ({...rest}: HeaderProps) => {
         <>
             <HeaderTopRow>
                 <Header
-                    padding='80px 0px 10px 0px'
+                    padding='8px 0px 0px 0px'
                     backgroundColor='white'
-                    borderBottom='primary'
+                    borderBottom='none'
                     {...rest}
                     left={<h1>아이콘위치</h1>}
                 >
