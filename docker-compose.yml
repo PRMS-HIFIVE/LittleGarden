@@ -1,0 +1,25 @@
+services:
+  backend: 
+    build: ./backend
+    ports:
+      - "5000:5000"
+    networks:
+      - mynetwork
+    env_file:
+      - ./backend/.env
+    # extra_hosts:
+    #   - "host.docker.internal:host-gateway"
+
+  frontend:
+   build: ./frontend
+   ports:
+     - "5173:80"
+   networks:
+      - mynetwork
+   depends_on:
+     - backend 
+
+networks:
+  mynetwork:
+    driver: bridge
+
