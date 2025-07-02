@@ -1,0 +1,34 @@
+import { DiaryContainer, DiaryHeaderTitle, DiaryStyledForm, DiaryStyledTextarea } from "@/common/From/DiaryForm/DiaryForm.styles";
+import ImageUploadBox from "@/common/From/DiaryForm/ImageUploadBox/ImageUploadBox";
+import DiaryHeader from "@/common/Header/HeaderVariants/DiaryHeader";
+import Button from "@/components/UI/Button/Button";
+import Input from "@/components/UI/Input/Input";
+
+interface DiaryFormProps {
+    formTitle?: string;
+}
+
+const DiaryForm =({
+    formTitle = '작성하기',
+}: DiaryFormProps) => {
+
+    return (
+        <>
+            <DiaryHeader></DiaryHeader>
+            <DiaryContainer>
+                <DiaryStyledForm>
+                    <DiaryHeaderTitle>{formTitle}</DiaryHeaderTitle>
+                    <Input placeholder="제목을 입력해주세요" radius="8px" margin='0px 0px 10px 0px'/>
+                    <DiaryStyledTextarea></DiaryStyledTextarea>
+                    <Input placeholder="태그" radius="8px" margin='0px 0px 10px 0px'/>
+
+                    <ImageUploadBox />
+
+                    <Button color="navyBlue" type="submit" width='220px' height='35px' radius="30px" margin="20px 0px 80px 0px">올리기</Button>
+                </DiaryStyledForm>
+            </DiaryContainer>
+        </>
+    );
+};
+
+export default DiaryForm;
