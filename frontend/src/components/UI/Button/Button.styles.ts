@@ -6,9 +6,11 @@ import {
   type ButtonColors,
 } from "@/styles/paletteMapping";
 
-export type ButtonSize = "small" | "medium" | "large" | string;
-export type ButtonStyleType = "filled" | "outline" | "clear";
-export type ButtonRadius = "square" | "semiRound" | "round" | "pill" | string;
+
+export type ButtonSize = 'small' | 'medium' | 'large' | 'full' | string;
+export type ButtonStyleType = 'filled' | 'outline' | 'clear';
+export type ButtonRadius = 'square' | 'semiRound' | 'round' | 'pill' | string;
+
 
 export const buttonSizeMap = {
   small: { width: "100px", height: "35px" },
@@ -16,6 +18,7 @@ export const buttonSizeMap = {
   large: { width: "200px", height: "40px" },
   full: { width: "100%", height: "50px" },
 };
+
 
 // 버튼 텍스트 크기 설정
 const buttonFontSizeMap = {
@@ -25,6 +28,7 @@ const buttonFontSizeMap = {
   full: "16px",
 };
 
+
 export const StyledButton = styled.button<{
   color: ButtonColors;
   buttonSize: ButtonSize;
@@ -32,15 +36,18 @@ export const StyledButton = styled.button<{
   radius?: ButtonRadius;
   width?: string;
   height?: string;
+  padding?: string;
+  margin?: string;
 }>`
   background-color: ${({ color, styleType }) =>
-    styleType === "filled"
+    styleType === 'filled' 
       ? buttonColors[color]
-      : styleType === "outline"
-      ? "transparent"
-      : styleType === "clear"
-      ? "transparent"
-      : buttonColors[color]};
+      : styleType === 'outline'
+      ? 'transparent'
+      : styleType === 'clear' 
+      ? 'transparent'
+      : buttonColors[color]
+    };
 
   ${({ buttonSize = "medium", width, height }) => {
     const size = buttonSizeMap[buttonSize as keyof typeof buttonSizeMap] || {};
@@ -72,13 +79,19 @@ export const StyledButton = styled.button<{
       ? "999px"
       : radius};
 
-  padding: 8px 24px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+    padding: ${({ padding }) => typeof padding === 'string' && padding.trim() !== ''
+    ? padding
+    : '8px 24px'};
+    margin: ${({ margin }) => typeof margin === 'string' && margin.trim() !== ''
+    ? margin
+    : '0'};
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 
-  cursor: pointer;
+    cursor: pointer;
+    box-sizing: border-box;
 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  font-weight: 600;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-weight: 600;
 `;

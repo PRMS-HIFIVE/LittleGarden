@@ -10,6 +10,8 @@ export interface ButtonProps {
     buttonSize?: ButtonSize;
     width?: string;
     height?: string;
+    padding?: string;
+    margin?: string;
     styleType?: ButtonStyleType;
     radius?: ButtonRadius;
     children?: ReactNode;
@@ -23,6 +25,8 @@ const Button = ({
     buttonSize,
     width,
     height,
+    padding,
+    margin,
     styleType,
     radius,
     children,
@@ -37,6 +41,8 @@ const Button = ({
             buttonSize = {buttonSize ?? variantStyle.buttonSize}
             width = {width}
             height = {height}
+            padding = {padding}
+            margin = {margin}
             styleType = {styleType ?? variantStyle.styleType}
             radius = {radius ?? variantStyle.radius}
             onClick = {onClick}
