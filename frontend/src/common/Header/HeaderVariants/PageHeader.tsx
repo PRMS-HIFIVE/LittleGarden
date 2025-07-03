@@ -11,7 +11,6 @@ const PageHeader = ({title, ...rest}: HeaderProps) => {
                 >
                 </Header>
             </HeaderTopRow>
-
             <HeaderBottomRow>
                 <Header
                     padding='8px 0px 36px 0px'
