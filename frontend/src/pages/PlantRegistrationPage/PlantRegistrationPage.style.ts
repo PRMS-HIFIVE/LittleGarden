@@ -18,6 +18,7 @@ export const RegistrationWrapper = styled.div`
 export const RegistrationHeader = styled.header`
     display: flex;
     flex-direction: row-reverse;
+    padding-top: 12px;
 
     svg{
         width: 24px;
@@ -31,7 +32,18 @@ export const FormContainer = styled.div`
     flex-direction: column;
     gap: 20px;
     padding-top: 20px;
+
+    button{
+        margin-bottom: 20px;
+    }
 `;
+
+export const FormWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0;
+    gap: 2rem;
+`
 
 export const FormGroup = styled.div`
     display: flex;
