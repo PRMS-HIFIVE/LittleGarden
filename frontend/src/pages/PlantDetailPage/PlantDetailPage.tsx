@@ -2,6 +2,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import type { PlantInfo } from '../../App';
 import * as S from './PlantDetailPage.style';
 import Footer from '@/common/Footer';
+import Button from '@/components/UI/Button/Button';
+import Header from '@/common/Header/Header';
 
 interface PlantDetailPageProps {
     plants: PlantInfo[];
@@ -22,9 +24,7 @@ function PlantDetailPage ({ plants }: PlantDetailPageProps) {
 
     return(
         <S.DetailWrapper>
-            <header>
-                헤더 영역
-            </header>
+            <Header />
             <S.DetailHeader>🌱 식물 키우기</S.DetailHeader>
             <S.DetailBody>
                 <S.WeatherInfo>
@@ -33,12 +33,12 @@ function PlantDetailPage ({ plants }: PlantDetailPageProps) {
                 <S.DetailImageContainer>
                     <img src={plant.thumbnailUrl} alt={plant.name}/>
                 </S.DetailImageContainer>
-                <button>물주기</button>
+                <Button buttonSize='medium' radius='round'>물 주기</Button>
             </S.DetailBody>
             <S.InfoWrapper>
 
             </S.InfoWrapper>
-            <Footer />
+            <Footer type='camera'/>
         </S.DetailWrapper>
     );
 }

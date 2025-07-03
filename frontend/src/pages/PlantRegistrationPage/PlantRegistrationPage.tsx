@@ -4,6 +4,7 @@ import * as S from './PlantRegistrationPage.style';
 import type { PlantInfo } from '../../App';
 import { IoClose as CloseButton } from "react-icons/io5";
 import Button from '@/components/UI/Button/Button';
+import Input from '@/components/UI/Input/Input';
 
 interface PlantRegistrationPageProps {
     setPlants: React.Dispatch<React.SetStateAction<PlantInfo[]>>;
@@ -61,29 +62,26 @@ function PlantRegistrationPage({ setPlants }: PlantRegistrationPageProps) {
             </S.RegistrationHeader>
             <S.FormContainer>
                 {previewUrl && <S.ImageThumbnail src={previewUrl} alt="식물 썸네일" />}
-                <div>
-                <S.FormGroup>
-                    <S.Label htmlFor="plantName">🌱 식물 이름</S.Label>
-                    <S.Input
-                        id="plantName"
-                        type="text"
-                        value={plantName}
-                        onChange={(e) => setPlantName(e.target.value)}
-                        placeholder="예: 몬스테라"
-                    />
-                </S.FormGroup>
-                <S.FormGroup>
-                    <S.Label htmlFor="wateringCycle">💧 물 주기 (며칠에 한 번)</S.Label>
-                    <S.Input
-                        id="wateringCycle"
-                        type="number"
-                        value={wateringCycle}
-                        onChange={(e) => setWateringCycle(e.target.value)}
-                        placeholder="예: 7"
-                    />
-                </S.FormGroup>
-
-                </div>
+                <S.FormWrapper>
+                    <S.FormGroup>
+                        <S.Label htmlFor="plantName">🌱 식물 이름</S.Label>
+                        <Input
+                            type='text'
+                            placeholder='식물 이름을 입력해주세요!'
+                            value={plantName}
+                            onChange={(e) => setPlantName(e.target.value)}
+                        />
+                    </S.FormGroup>
+                    <S.FormGroup>
+                        <S.Label htmlFor="wateringCycle">💧 물 주기 (며칠에 한 번)</S.Label>
+                        <Input 
+                            type='number'
+                            value={wateringCycle}
+                            onChange={(e) => setWateringCycle(e.target.value)}
+                            placeholder='예: 7'
+                        />
+                    </S.FormGroup>
+                </S.FormWrapper>
                 <Button buttonSize='full' radius='round' onClick={handleAddPlant}>
                     식물 추가하기
                 </Button>
