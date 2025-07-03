@@ -15,7 +15,7 @@ function Index({ plants }: IndexProps) {
         <IndexWrapper>
             <Header />
             <Main plants={plants} />
-            <Footer />
+            <Footer type="camera" />
 
         </IndexWrapper>
     )

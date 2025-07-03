@@ -28,12 +28,15 @@ function Main({ plants }: MainProps){
                         {plants.map(plant => (
                             <S.PlantsList key={plant.id} onClick={() => handleDetailClick(plant.id)}>
                                 <Star />
-                                <img src={plant.thumbnailUrl} alt={plant.name} style={{ width: '50px', height: '50px', borderRadius: '5px' }} />
-                                <p>{plant.name}</p>
-                                <S.PlantInfoWrapper>
-                                    <Droplet />
-                                    {plant.wateringCycle}일 주기
-                                </S.PlantInfoWrapper>
+                                <S.PlantWrapper>
+                                    <S.PlantNameArea>
+                                        <img src={plant.thumbnailUrl} alt={plant.name} />
+                                        <p>{plant.name}</p>
+                                    </S.PlantNameArea>
+                                    <S.PlantInfoWrapper>
+                                        <Droplet /> D - {plant.wateringCycle}
+                                    </S.PlantInfoWrapper>
+                                </S.PlantWrapper>
                             </S.PlantsList>
                         ))}
                     </S.PlantsListWrapper>
