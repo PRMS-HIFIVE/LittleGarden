@@ -1,5 +1,5 @@
 import * as S from "./Loading.style";
-import loadingImg from "@/assets/images/image.png";
+import loadingImg from "@/assets/images/Loading.png";
 
 const LoadingPage = () => {
   return (
