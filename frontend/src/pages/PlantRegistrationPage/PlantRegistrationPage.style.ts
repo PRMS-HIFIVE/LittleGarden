@@ -15,6 +15,16 @@ export const RegistrationWrapper = styled.div`
     }
 `;
 
+export const RegistrationHeader = styled.header`
+    display: flex;
+    flex-direction: row-reverse;
+
+    svg{
+        width: 24px;
+        height: 24px;
+    }
+`
+
 export const FormContainer = styled.div`
     flex: 1 1 0;
     display: flex;
@@ -68,11 +78,8 @@ export const AddPlantButton = styled.button`
     cursor: pointer;
     transition: background-color 0.2s;
     margin-bottom: 4vh;
-
-    &:hover {
-        background-color: #27AE60;
-    }
-    &:active {
+    
+    &:hover, &:active {
         background-color: #27AE60;
     }
 `;

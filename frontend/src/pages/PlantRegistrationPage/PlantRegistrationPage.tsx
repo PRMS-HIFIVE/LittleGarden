@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import * as S from './PlantRegistrationPage.style';
 import type { PlantInfo } from '../../App';
+import { IoClose as CloseButton } from "react-icons/io5";
+import Button from '@/components/UI/Button/Button';
 
 interface PlantRegistrationPageProps {
     setPlants: React.Dispatch<React.SetStateAction<PlantInfo[]>>;
@@ -54,11 +56,12 @@ function PlantRegistrationPage({ setPlants }: PlantRegistrationPageProps) {
 
     return (
         <S.RegistrationWrapper>
-            <nav>
-                <button>X</button>
-            </nav>
+            <S.RegistrationHeader>
+                <CloseButton onClick={() => navigate('/')} />
+            </S.RegistrationHeader>
             <S.FormContainer>
                 {previewUrl && <S.ImageThumbnail src={previewUrl} alt="식물 썸네일" />}
+                <div>
                 <S.FormGroup>
                     <S.Label htmlFor="plantName">🌱 식물 이름</S.Label>
                     <S.Input
@@ -79,10 +82,12 @@ function PlantRegistrationPage({ setPlants }: PlantRegistrationPageProps) {
                         placeholder="예: 7"
                     />
                 </S.FormGroup>
+
+                </div>
+                <Button buttonSize='full' radius='round' onClick={handleAddPlant}>
+                    식물 추가하기
+                </Button>
             </S.FormContainer>
-            <S.AddPlantButton onClick={handleAddPlant}>
-                식물 추가하기
-            </S.AddPlantButton>
         </S.RegistrationWrapper>
     );
 }
