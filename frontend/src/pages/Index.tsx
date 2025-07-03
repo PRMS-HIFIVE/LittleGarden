@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Main from "./Main/Main";
 import Footer from "@/common/Footer";
 import type { PlantInfo } from '../App';
+import Header from "@/common/Header/Header";
 
 interface IndexProps {
     plants: PlantInfo[];
@@ -12,9 +13,7 @@ function Index({ plants }: IndexProps) {
 
     return (
         <IndexWrapper>
-            <header>
-                헤더 영역
-            </header>
+            <Header />
             <Main plants={plants} />
             <Footer />
 
