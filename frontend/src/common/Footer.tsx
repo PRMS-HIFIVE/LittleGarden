@@ -9,7 +9,7 @@ function Footer () {
     const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if(file){
-            navigate('/upload-preview', { state: { imageFile: file } });
+            navigate('/register-plant', { state: { imageFile: file } });
         }
         event.target.value = '';
     }
