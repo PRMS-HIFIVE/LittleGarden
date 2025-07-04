@@ -19,7 +19,7 @@ const MainpageHeader = () => {
         <Header
             backgroundColor='primary'
             borderBottom='none'
-            padding='72px 25px 20px 25px'
+            padding='20px 16px'
             left={<IconArrowLeft onClick={handleBack} />}
             right={<>
                 <IconBell onClick={handleNotice} />

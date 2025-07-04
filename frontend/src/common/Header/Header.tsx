@@ -28,7 +28,7 @@ const Header = ({
     width,
     minWidth,
     maxWidth = '100%',
-    height = '114px',
+    height,
     padding,
     leftPadding,
     rightPadding,

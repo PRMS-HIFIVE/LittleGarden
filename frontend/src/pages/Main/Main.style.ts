@@ -4,6 +4,9 @@ export const MainWrap = styled.div`
     display: flex;
     flex-direction: column;
     flex: 1 1 0;
+
+    padding-top: 10vh;
+    padding-bottom: 70px;
 `
 
 export const MainTitle = styled.h1`
