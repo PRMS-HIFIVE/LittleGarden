@@ -4,6 +4,21 @@ export interface SignUpRequest {
   nickName: string;
 }
 
+export interface LoginRequest {
+  email: string;
+  pwd: string;
+}
+
+export interface LoginResponse {
+  loginUser: {
+    id: number;
+    email: string;
+    nickName: string;
+  };
+  token: string;
+}
+
+
 export const signup = async (data: SignUpRequest) => {
   const response = await fetch("/users/join", {
     method: "POST",
@@ -16,6 +31,23 @@ export const signup = async (data: SignUpRequest) => {
   if (!response.ok) {
     const result = await response.json();
     throw new Error(result.message || "회원가입 실패");
+  }
+
+  return response.json();
+};
+
+export const login = async (data: LoginRequest): Promise<LoginResponse> => {
+  const response = await fetch("/users/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    const result = await response.json();
+    throw new Error(result.message || "로그인 실패");
   }
 
   return response.json();
