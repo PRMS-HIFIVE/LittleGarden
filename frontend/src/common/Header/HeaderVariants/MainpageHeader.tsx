@@ -17,7 +17,7 @@ const MainpageHeader = () => {
     }
     return (
         <Header
-            backgroundColor='white'
+            backgroundColor='primary'
             borderBottom='none'
             padding='72px 25px 20px 25px'
             left={<IconArrowLeft onClick={handleBack} />}

@@ -1,12 +1,11 @@
 import { IconArrowLeft, IconBell, IconMenu } from "@/assets/icons/IconList";
 import Header, { type HeaderProps } from "@/common/Header/Header"
 import { HeaderTopRow } from "@/common/Header/Header.styles";
-import Sidebar from "@/common/Sidebar/Sidebar";
-import { useState } from "react";
+import useSidebarStore from "@/store/sidebarStore";
 
 
 const DiaryHeader = ({...rest}: HeaderProps) => {
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const toggleSidebar = useSidebarStore((state) => state.toggleSidebar);
 
     const handleBack = () => {
 
@@ -15,10 +14,7 @@ const DiaryHeader = ({...rest}: HeaderProps) => {
 
     };
     const handleMenu = () => {
-        setIsSidebarOpen(true);
-    }
-    const handleMenuClose = () => {
-        setIsSidebarOpen(false);
+        toggleSidebar();
     }
 
     return (
@@ -39,7 +35,6 @@ const DiaryHeader = ({...rest}: HeaderProps) => {
                         </>}
                     >
                     </Header>
-                    <Sidebar isOpen={isSidebarOpen} onClose={handleMenuClose} />
             </HeaderTopRow>
         </>
     )
