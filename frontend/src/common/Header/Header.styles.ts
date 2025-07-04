@@ -29,6 +29,7 @@ export const StyledHeader = styled.div<{
     margin: ${({margin = '0'}) => margin};
     border-bottom: ${({borderBottom = 'none'}) => headerBorderBottomStyles[borderBottom]};
     box-sizing: border-box;
+    overflow: hidden;
 `
 
 export const HeaderContainer = styled.div`
@@ -37,13 +38,14 @@ export const HeaderContainer = styled.div`
 
     display: flex;
     flex-direction: column;
+    box-sizing: border-box;
 `
 export const HeaderCenter = styled.div`
     display: flex;
     flex: 2;
     align-items: center;
     justify-content: center;
-    min-width: 120px;
+    min-width: 30px;
     min-height: 30px;
 `
 export const HeaderSide =styled.div<{position?: 'left' | 'right', padding?: string}>`
@@ -51,7 +53,7 @@ export const HeaderSide =styled.div<{position?: 'left' | 'right', padding?: stri
     flex: 1;
     align-items: center;
     justify-content: ${({position = 'center'}) => position === 'left' ? 'flex-start' : position === 'right' ? 'flex-end' :'center'};
-    min-width: 120px;
+    min-width: 40px;
     min-height: 30px;
     gap: 20px;
     padding: ${({padding = '0'}) => padding || '0'};
