@@ -1,13 +1,6 @@
-import Index from "./pages/Index"
-import GlobalStyle from "@/styles/globalStyles"
-import { BrowserRouter, Routes, Route } from "react-router-dom"
-import UploadPreviewPage from './pages/UploadPreviewPage';
-import PlantRegistrationPage from './pages/PlantRegistrationPage';
-import { useState, useEffect } from 'react';
-import PlantDetailPage from "./pages/PlantDetailPage";
-import Login from './pages/Login/Login'
-import Join from './pages/Join/Join'
-import CommunityDetail from './pages/Community/Detail/Detail'
+import GlobalStyle from "@/styles/globalStyles";
+import AppRouter from "@/router/router"; 
+import { useEffect, useState } from "react";
 
 export interface PlantInfo {
   id: string;
@@ -28,23 +21,10 @@ function App() {
 
   return (
     <>
-
       <GlobalStyle />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index plants={plants} setPlants={setPlants} />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/join" element={<Join />} />
-          <Route path="/upload-preview" element={<UploadPreviewPage />} />
-          <Route path="/register-plant" element={<PlantRegistrationPage setPlants={setPlants} />} />
-          <Route path="/detail/:plantId" element={<PlantDetailPage plants={plants} />} />
-          <Route path="/detail" element={<CommunityDetail />} />
-        </Routes>
-      </BrowserRouter>
-    
+      <AppRouter plants={plants} setPlants={setPlants} />
     </>
-
-  )
+  );
 }
 
-export default App
+export default App;

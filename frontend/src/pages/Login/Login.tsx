@@ -5,25 +5,35 @@ import LoginButton from "@/components/UI/Button/ButtonVariants/LoginButton";
 import { FaUser, FaLock } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import LOGO from "@/assets/images/logo.svg";
+import { useAuth } from "@/hooks/useAuth";
 
 const Login = () => {
   const navigate = useNavigate();
 
-  const [loginId, setLoginId] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const { handleLogin } = useAuth();
 
   const handleJoin = () => {
     navigate("/join");
   };
-  const handleResetPassword = () => {};
 
-  const handleLogin = async () => {
-    // 로그인 로직
-    if (loginId && password) {
-      alert("로그인 성공!");
-      navigate("/"); 
-    } else {
-      alert("아이디와 비밀번호를 입력해주세요.");
+  const handleFindPassword = () => {
+    navigate("/password");
+  };
+
+  const onSubmit = async () => {
+    if (!email || !password) {
+      alert("모든 필드를 입력해주세요.");
+      return;
+    }
+
+    try {
+      await handleLogin({ email, pwd: password });
+    } catch (err) {
+      console.error(err);
+      alert("로그인 중 오류가 발생했습니다.");
     }
   };
 
@@ -39,8 +49,8 @@ const Login = () => {
             </S.IconWrapper>
             <Input
               placeholder="아이디"
-              value={loginId}
-              onChange={(e) => setLoginId(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               width="100%"
               height="48px"
               padding="4px 32px"
@@ -68,14 +78,14 @@ const Login = () => {
 
           <S.RowWrapper>
             <S.Join onClick={handleJoin}>회원가입</S.Join>
-            
-            <S.resetPassword onClick={handleResetPassword}>
+
+            <S.resetPassword onClick={handleFindPassword}>
               비밀번호 찾기
             </S.resetPassword>
           </S.RowWrapper>
 
           <S.ButtonWrapper>
-            <LoginButton onClick={handleLogin}/>
+            <LoginButton onClick={onSubmit} />
           </S.ButtonWrapper>
         </S.Form>
       </S.FormWrapper>

@@ -3,12 +3,11 @@ import * as S from "./Join.styles";
 import Input from "@/components/UI/Input/Input";
 import SignUpButton from "@/components/UI/Button/ButtonVariants/SignUp";
 import Button from "@/components/UI/Button/Button";
-import { useNavigate } from "react-router-dom";
 import LOGO from "@/assets/images/logo.svg";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { useAuth } from "@/hooks/useAuth";
 
 const Join = () => {
-  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
@@ -20,31 +19,19 @@ const Join = () => {
     setShowConfirmPassword((prev) => !prev);
   };
 
-  const handleSignUp = async () => {
-    // if (password !== confirmPassword) {
-    //   alert("비밀번호가 일치하지 않습니다.");
-    //   return;
-    // }
-    // try {
-    //   const response = await fetch("/api/join", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({ email, nickname, password }),
-    //   });
+  const { handleSignup } = useAuth();
 
-    //   if (!response.ok) throw new Error("회원가입 실패");
-
-    if (email && nickname && password && confirmPassword) {
-      alert("회원가입이 완료되었습니다!");
-      navigate("/login");
-    } else {
+  const onSubmit = () => {
+    if (!email || !nickname || !password || !confirmPassword) {
       alert("모든 필드를 입력해주세요.");
+      return;
     }
-    // } catch (error) {
-    //   alert("회원가입에 실패했습니다.");
-    // }
+    if (password !== confirmPassword) {
+      alert("비밀번호가 일치하지 않습니다.");
+      return;
+    }
+
+    handleSignup({ email, pwd: password, nickName: nickname });
   };
 
   const handleEmailVerify = () => {
@@ -73,7 +60,6 @@ const Join = () => {
             <S.ButtonWrapper>
               <Button
                 variant="default"
-                buttonSize="small"
                 color="tertiary"
                 width="100%"
                 radius="round"
@@ -134,7 +120,7 @@ const Join = () => {
           )}
 
           <S.ButtonWrapper>
-            <SignUpButton onClick={handleSignUp} />
+            <SignUpButton onClick={onSubmit} />
           </S.ButtonWrapper>
         </S.Form>
       </S.FormWrapper>
