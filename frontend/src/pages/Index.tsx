@@ -13,7 +13,7 @@ function Index({ plants }: IndexProps) {
 
     return (
         <IndexWrapper>
-            <MainpageHeader />
+            <MainpageHeader></MainpageHeader>
             <Main plants={plants} />
             <Footer type="camera" />
 

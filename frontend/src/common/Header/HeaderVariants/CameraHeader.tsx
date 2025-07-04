@@ -1,9 +1,8 @@
 import { IconCloseX } from "@/assets/icons/IconList";
 import Header from "@/common/Header/Header";
-import useSidebarStore from "@/store/sidebarStore";
 
 
-const MainpageHeader = () => {
+const CameraHeader = () => {
     const handleClose = () => {
         
     }
@@ -21,4 +20,4 @@ const MainpageHeader = () => {
     )
 }
 
-export default MainpageHeader;
+export default CameraHeader;
