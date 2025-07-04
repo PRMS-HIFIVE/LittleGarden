@@ -3,6 +3,7 @@ import { SidebarMenuItem, type SidebarWidth } from "@/common/Sidebar/Sidebar.sty
 import { SidebarProfile, SidebarProfileImage, SidebarProfileName } from "@/common/Sidebar/SidebarProfile";
 import type { BackgroundColors, SidebarBorderColors, TextColors } from "@/styles/paletteMapping";
 import type { ReactNode } from "react";
+import useSidebarStore from "@/store/sidebarStore";
 
 
 interface MenuItemsType {
@@ -14,8 +15,8 @@ interface MenuItemsType {
 }
 
 interface SidebarProps {
-    isOpen?: boolean;
-    onClose?: () => void;
+    //isOpen?: boolean;
+    //onClose?: () => void;
     menuItems?: MenuItemsType[];
     width?: SidebarWidth;
     padding?: string;
@@ -32,8 +33,8 @@ const menuItemList: MenuItemsType[] = [
 
 
 const Sidebar = ({
-    isOpen = false,
-    onClose = () => {},
+    //isOpen = false,
+    //onClose = () => {},
     menuItems = menuItemList,
     width = '60%',
     backgroundColor = 'white',
@@ -41,6 +42,9 @@ const Sidebar = ({
     //borderColor = 'primary',
     padding = "0px",
 }: SidebarProps) => {
+    const isOpen = useSidebarStore((state) => state.isSidebarOpen);
+    const toggleSidebar = useSidebarStore((state) => state.toggleSidebar);
+
     const handleLogout = () => {
 
     };
@@ -49,7 +53,7 @@ const Sidebar = ({
         <>
             {isOpen && (
                 <div
-                    onClick={onClose}
+                    onClick={toggleSidebar}
                     style={{
                         position: 'fixed',
                         top: 0,
@@ -69,7 +73,7 @@ const Sidebar = ({
                 padding={padding}
             >
                 <button
-                    onClick={onClose}
+                    onClick={toggleSidebar}
                     aria-label="닫기"
                     style={{
                     background: "none",
