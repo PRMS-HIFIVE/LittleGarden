@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Main from "./Main/Main";
 import Footer from "@/common/Footer";
 import type { PlantInfo } from '../App';
-import Header from "@/common/Header/Header";
+import MainpageHeader from "@/common/Header/HeaderVariants/MainpageHeader";
 
 interface IndexProps {
     plants: PlantInfo[];
@@ -13,7 +13,7 @@ function Index({ plants }: IndexProps) {
 
     return (
         <IndexWrapper>
-            <Header />
+            <MainpageHeader />
             <Main plants={plants} />
             <Footer type="camera" />
 
