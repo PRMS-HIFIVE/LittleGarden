@@ -1,19 +1,16 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import type { PlantInfo } from '../../App';
+import { usePlantStore } from '@/store/plantStore';
 import * as S from './PlantDetailPage.style';
 import Footer from '@/common/Footer';
 import Button from '@/components/UI/Button/Button';
 import Header from '@/common/Header/Header';
 
-interface PlantDetailPageProps {
-    plants: PlantInfo[];
-}
-
-function PlantDetailPage ({ plants }: PlantDetailPageProps) {
+function PlantDetailPage () {
     const { plantId } = useParams<{ plantId: string }>();
     const navigate = useNavigate();
-    const plant = plants.find(p => p.id === plantId);
 
+    const plants = usePlantStore((state) => state.plants);
+    const plant = plants.find(p => p.id === plantId);
     const handleGoBack = () => {
         navigate(-1);
     };

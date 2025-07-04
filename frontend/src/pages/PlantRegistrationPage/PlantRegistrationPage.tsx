@@ -1,18 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { usePlantStore, type Plant } from '@/store/plantStore';
 import * as S from './PlantRegistrationPage.style';
-import type { PlantInfo } from '../../App';
 import { IoClose as CloseButton } from "react-icons/io5";
 import Button from '@/components/UI/Button/Button';
 import Input from '@/components/UI/Input/Input';
 
-interface PlantRegistrationPageProps {
-    setPlants: React.Dispatch<React.SetStateAction<PlantInfo[]>>;
-}
-
-function PlantRegistrationPage({ setPlants }: PlantRegistrationPageProps) {
+function PlantRegistrationPage() {
     const location = useLocation();
     const navigate = useNavigate();
+    const addPlant = usePlantStore((state) => state.addPlant);
     const imageFile = location.state?.imageFile as File | undefined;
     const [plantName, setPlantName] = useState('');
     const [wateringCycle, setWateringCycle] = useState('');
@@ -43,14 +40,14 @@ function PlantRegistrationPage({ setPlants }: PlantRegistrationPageProps) {
 
         const base64Thumbnail = await toBase64(imageFile);
 
-        const newPlant: PlantInfo = {
+        const newPlant: Plant = {
             id: Date.now().toString(),
             name: plantName,
             wateringCycle: parseInt(wateringCycle, 10),
             thumbnailUrl: base64Thumbnail, // Base64 URL을 저장
         };
 
-        setPlants(prevPlants => [...prevPlants, newPlant]);
+        addPlant(newPlant);
         alert('식물이 성공적으로 추가되었습니다!');
         navigate('/');
     };

@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
 
 export interface Plant{
     id: string;
@@ -13,10 +14,16 @@ interface PlantState{
     addPlant: (plant: Plant) => void;
 }
 
-export const usePlantStore = create<PlantState>((set) => ({
-    plants: [],
-    // 서버에서 식물 목록을 불러와 상태를 설정하는 액션
-    setPlants: (plants) => set({ plants }),
-    // 새로운 식물을 목록에 추가하는 액션
-    addPlant: (plant) => set((state) => ({ plants: [...state.plants, plant] })),
-}));
+export const usePlantStore = create<PlantState>()(
+    persist(
+        (set) => ({
+            plants: [],
+            setPlants: (plants) => set({ plants }),
+            addPlant: (plant) => set((state) => ({ plants: [...state.plants, plant] })),
+        }),
+        {
+            name: 'plant-storage',
+            storage: createJSONStorage(() => sessionStorage),
+        }
+    )
+);
