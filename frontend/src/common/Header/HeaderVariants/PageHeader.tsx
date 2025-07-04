@@ -2,7 +2,7 @@ import Header, { type HeaderProps } from "@/common/Header/Header"
 import { HeaderBottomRow, HeaderTopRow } from "@/common/Header/Header.styles";
 
 
-const PageHeader = ({title, ...rest}: HeaderProps) => {
+const PageHeader = ({...rest}: HeaderProps) => {
     return (
         <>
             <HeaderTopRow>
@@ -15,7 +15,7 @@ const PageHeader = ({title, ...rest}: HeaderProps) => {
                 <Header
                     padding='8px 0px 36px 0px'
                     {...rest}
-                    left={<h1>{title}</h1>}
+                    left={<></>}
                 >
                 </Header>
 
