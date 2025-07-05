@@ -1,29 +1,27 @@
 import { ResultSetHeader, RowDataPacket } from "mysql2";
 import { executeQuery } from "../utils/executeQuery";
 import { IPlantRequestBody } from "../controller/plantController";
+import { getWatercycleColumn } from "../utils/utils";
 
-const getPlants = async (userId : number) => {
-    const month = new Date().getMonth() + 1; 
-    let watercycleColumn = '';
+const getPlants = async (userId : number, plantId : number | undefined) => {
+    const currentMonth = new Date().getMonth() + 1;
+    const watercycleColumn = getWatercycleColumn(currentMonth);
 
-    if (month >= 3 && month <= 5) {
-        watercycleColumn = 'watercycleSprngCode'; // 봄: 3~5월
-    } else if (month >= 6 && month <= 8) {
-        watercycleColumn = 'watercycleSummerCode'; // 여름: 6~8월
-    } else if (month >= 9 && month <= 11) {
-        watercycleColumn = 'watercycleAutumnCode'; // 가을: 9~11월
-    } else {
-        watercycleColumn = 'watercycleWinterCode'; // 겨울: 12~2월
-    }
-
-    const sql = `
+    let sql = `
         SELECT P.*, W.watercycleNm
         FROM plants P
         LEFT JOIN watercycle W
             ON P.${watercycleColumn} = W.watercycleCode
         WHERE P.user_id = ?
     `;
+
     const values = [userId];
+    
+    if (plantId) {
+        sql += ' AND P.id = ?';
+        values.push(plantId);
+    }
+    
     return await executeQuery<RowDataPacket[]>(sql, values);
 }
 

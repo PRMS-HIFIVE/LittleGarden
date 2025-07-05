@@ -30,9 +30,10 @@ export interface IPlantRequestBody {
 
 export const getPlants = async (req: Request, res: Response) : Promise<void> => {
     const userId = req.user?.id;
+    const plantId = req.query.plantId ? Number(req.query.plantId) : undefined;
 
     try {
-        const plants = await plantService.getPlants(userId);
+        const plants = await plantService.getPlants(userId, plantId);
         res.status(StatusCodes.OK).json(plants);
         return;
     } catch(err) {

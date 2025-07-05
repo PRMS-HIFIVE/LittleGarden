@@ -15,7 +15,6 @@ interface IUserRequestBody {
 
 export const join = async (req: TypedRequest<IUserRequestBody>, res: Response) : Promise<void> => {
     const {email, pwd, nickName} = req.body;
-    console.log("회원가입 요청", email, pwd, nickName);
     
     try {
         const loginUser = await userService.findUserByLoginId(email);
@@ -88,12 +87,67 @@ export const login = async (req: TypedRequest<IUserRequestBody>, res: Response) 
     }
 }
 
+export const emailCertify = async (req: Request, res: Response): Promise<void> => {
+    const {email} = req.body;
+    try {
+        const user = await userService.findUserByLoginId(email);
+        if (user[0]) {
+            res.status(StatusCodes.CONFLICT).json({ message : "이미 가입된 이메일입니다." });
+            return;
+        }
+
+        const certCode = await userService.emailCertify(email);
+        res.status(StatusCodes.OK).json({ message: "인증 코드가 이메일로 전송되었습니다.", certCode });
+        return;
+    } catch (err) {
+        console.log(err);
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message : "서버에서 오류가 발생했습니다. 관리자에게 문의해주세요." });
+        return;
+    }
+}
+
 export const updateNickName = async (req: Request, res: Response): Promise<void> => {
     const userId = req.user?.id;
     const {nickName} = req.body;
     try {
         await userService.updateNickName(userId, nickName);
         res.status(StatusCodes.OK).json({ message : "닉네임이 변경되었습니다. "});
+        return;
+    } catch(err) {
+        console.log(err)
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message : "서버에서 오류가 발생했습니다. 관리자에게 문의해주세요." })
+        return;
+    }
+}
+
+export const requestResetPassword = async (req: Request, res: Response): Promise<void> => {
+    const {email} = req.body;
+
+    try {
+        const user = await userService.findUserByLoginId(email);
+        if (!user[0]) {
+            res.status(StatusCodes.NOT_FOUND).json({ message : "해당 이메일로 가입된 사용자가 없습니다." });
+            return;
+        }
+
+        await userService.requestResetPassword(user[0].email, user[0].id);
+        // 토큰 제거 / 로그아웃 처리 할지?
+        res.status(StatusCodes.OK).json({ message: "임시 비밀번호가 이메일로 전송되었습니다." });
+
+    } catch(err) {
+        console.log(err)
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message : "서버에서 오류가 발생했습니다. 관리자에게 문의해주세요." })
+        return;
+    }
+}
+
+export const resetPassword = async (req: Request, res: Response): Promise<void> => {
+    const userId = req.user?.id;
+    const {newPassword} = req.body;
+
+    try {
+        await userService.updatePassword(newPassword, userId);
+        res.status(StatusCodes.OK).json({ message : "비밀번호가 성공적으로 변경되었습니다." });
         return;
     } catch(err) {
         console.log(err)
