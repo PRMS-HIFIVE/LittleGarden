@@ -38,3 +38,9 @@ export interface ICommnetWithUser extends IComment {
 export interface TypedRequest<T> extends Request {
     body: T;
 }
+
+export interface MailSendResult {
+    success: boolean;
+    message: string;
+    result?: any;
+}
