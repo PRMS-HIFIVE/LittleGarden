@@ -36,9 +36,30 @@ export const PlantsList = styled.div`
     box-shadow: 0px 2px 6px 0px rgb(0 0 0 / 20%);
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    padding: 20px;
+    padding: 8px 20px;
     align-items: center;
+    gap: 6px;
+
+    img{
+        width: 80px;
+        height: 80px;
+        border-radius: 10px;
+    }
+`
+
+export const PlantWrapper = styled.div`
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+`
+
+export const PlantNameArea = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
 `
 
 export const PlantInfoWrapper = styled.div`

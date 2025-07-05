@@ -73,6 +73,7 @@ export const SidebarLogoutButton = styled(SidebarMenuItem)<{
 }>`
     color: ${({ textColor = 'secondary'}) => textColors[textColor]}; 
     background-color: ${({backgroundColor = 'primary'}) => backgroundColors[backgroundColor] || 'primary'};
+    justify-content: center;
     &:hover {
         color: ${({ textColor = 'white'}) => textColors[textColor]};
         background-color: ${({backgroundColor = 'gray'}) => backgroundColors[backgroundColor] || 'gray'};
@@ -83,7 +84,7 @@ export const SidebarDivider = styled.hr<{
     borderColor?: SidebarBorderColors;
 }>`
     width: 100%;
-    margin: 10px 0px 40px 0px;
+    margin: 15px 0px 40px 0px;
     padding: 0 20px;
     border: none;
     border-top: 1px solid ${({borderColor = 'primary'}) => sidebarBorderColors[borderColor] ?? sidebarBorderColors.primary};

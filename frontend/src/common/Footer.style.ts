@@ -15,4 +15,9 @@ export const FooterWrapper = styled.footer`
     background-color: white;
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
+
+    .back-arrow{
+        position: absolute;
+        left: 16px;
+    }
 `

@@ -16,18 +16,18 @@ export const CardHeader = styled.div`
     gap: 14px;
 `;
 export const CardTitle = styled.h3<{titleColor?: TextColors;}>`
-    color: ${({titleColor = 'primary'}) => textColors[titleColor] ?? textColors.primary};
+    color: ${({titleColor = 'primary'}) => textColors[titleColor] || textColors.primary};
     font-size: 1rem;
     font-weight: bold;
     margin: 0px;
 `;
 export const CardDate = styled.span<{dateColor?: TextColors;}>`
-    color: ${({dateColor = 'secondary'}) => textColors[dateColor] ?? textColors.secondary};
+    color: ${({dateColor = 'secondary'}) => textColors[dateColor] || textColors.secondary};
     font-size: 0.8rem;
     font-weight: 300;
 `;
 export const CardContent = styled.p<{contentColor?: TextColors;}>`
-    color: ${({contentColor = 'primary'}) => textColors[contentColor] ?? textColors.primary};
+    color: ${({contentColor = 'primary'}) => textColors[contentColor] || textColors.primary};
     font-size: 0.8rem;
     font-weight: 400;
     display: -webkit-box;

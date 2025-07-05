@@ -1,4 +1,4 @@
-# EscapeRoom
+# Little Garden
 데브코스_최종프로젝트
 
 ### Git 컨벤션
