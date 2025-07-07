@@ -1,20 +1,14 @@
 import styled from "styled-components";
 import Main from "./Main/Main";
 import Footer from "@/common/Footer";
-import type { PlantInfo } from '../App';
 import MainpageHeader from "@/common/Header/HeaderVariants/MainpageHeader";
 
-interface IndexProps {
-    plants: PlantInfo[];
-    setPlants: React.Dispatch<React.SetStateAction<PlantInfo[]>>;
-}
-
-function Index({ plants }: IndexProps) {
+function Index() {
 
     return (
         <IndexWrapper>
             <MainpageHeader></MainpageHeader>
-            <Main plants={plants} />
+            <Main/>
             <Footer type="camera" />
 
         </IndexWrapper>

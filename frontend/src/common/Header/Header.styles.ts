@@ -24,7 +24,7 @@ export const StyledHeader = styled.div<{
     width: ${({width}) => width || '100%'};
     min-width: ${({minWidth}) => minWidth || 'auto'};
     max-width: ${({maxWidth}) => maxWidth || 'auto'};
-    height: ${({height}) => height || '114px'};
+    height: ${({height}) => height || '10vh'};
     padding: ${({padding = '0'}) => padding};
     margin: ${({margin = '0'}) => margin};
     border-bottom: ${({borderBottom = 'none'}) => headerBorderBottomStyles[borderBottom]};
@@ -39,6 +39,11 @@ export const HeaderContainer = styled.div`
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    
 `
 export const HeaderCenter = styled.div`
     display: flex;
