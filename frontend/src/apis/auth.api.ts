@@ -52,3 +52,20 @@ export const login = async (data: LoginRequest): Promise<LoginResponse> => {
 
   return response.json();
 };
+
+export const requestResetPassword = async (email: string) => {
+  const response = await fetch("/users/reset", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email }),
+  });
+
+  if (!response.ok) {
+    const result = await response.json();
+    throw new Error(result.message || "임시 비밀번호 발급 실패");
+  }
+
+  return response.json();
+};

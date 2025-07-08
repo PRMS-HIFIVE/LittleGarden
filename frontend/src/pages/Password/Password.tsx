@@ -1,38 +1,20 @@
 import { useState } from "react";
 import * as S from "./Password.style";
 import Input from "@/components/UI/Input/Input";
-import { useNavigate } from "react-router-dom";
 import LOGO from "@/assets/images/logo.svg";
 import Button from "@/components/UI/Button/Button";
+import { useAuth } from "@/hooks/useAuth";
 
 const Password = () => {
-  const navigate = useNavigate();
   const [loginId, setLoginId] = useState("");
+  const { handleRequestResetPassword } = useAuth();
 
   const handleTemporaryPassword = async () => {
     if (!loginId.trim()) {
       alert("이메일을 입력해주세요.");
       return;
     }
-
-    // try {
-    //   const response = await fetch("/api/auth/temporary-password", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({ email: loginId }),
-    //   });
-
-    //   if (!response.ok) {
-    //     throw new Error("임시 비밀번호 발급 실패");
-    //   }
-
-    alert("입력하신 이메일로 임시 비밀번호를 보냈습니다.");
-    navigate("/login");
-    // } catch (error) {
-    //   alert("임시 비밀번호 발급에 실패했습니다. 다시 시도해주세요.");
-    // }
+    await handleRequestResetPassword(loginId);
   };
 
   return (

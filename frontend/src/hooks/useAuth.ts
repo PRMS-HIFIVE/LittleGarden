@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { login, signup } from "@/apis/auth.api";
+import { login, signup, requestResetPassword } from "@/apis/auth.api";
 import type { LoginRequest, SignUpRequest } from "@/apis/auth.api";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "@/store/authStore";
@@ -61,9 +61,31 @@ export function useAuth() {
     }
   };
 
+  const handleRequestResetPassword = async (email: string) => {
+    setLoading(true);
+    setError(null);
+    try {
+      await requestResetPassword(email);
+      alert("임시 비밀번호가 이메일로 전송되었습니다.");
+      navigate("/login");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error(error.message);
+        alert(error.message);
+        setError(error.message);
+      } else {
+        console.error("예상치 못한 에러", error);
+        alert("예상치 못한 에러가 발생했습니다.");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     handleSignup,
     handleLogin,
+    handleRequestResetPassword,
     loading,
     error,
   };
