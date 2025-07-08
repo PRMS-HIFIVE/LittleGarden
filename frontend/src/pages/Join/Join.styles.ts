@@ -21,6 +21,11 @@ export const FormWrapper = styled.div`
   border-radius: 12px;
 `;
 
+export const InputWrapper = styled.div`
+  position: relative;
+  width: 100%;
+`;
+
 export const Logo = styled.img`
   display: block;
   width: 200px;

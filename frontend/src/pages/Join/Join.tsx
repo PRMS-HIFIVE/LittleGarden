@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as S from "./Join.styles";
 import Input from "@/components/UI/Input/Input";
 import SignUpButton from "@/components/UI/Button/ButtonVariants/SignUp";
 import Button from "@/components/UI/Button/Button";
 import LOGO from "@/assets/images/logo.svg";
-import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { FaCheckCircle, FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { useAuth } from "@/hooks/useAuth";
+import { useSearchParams } from "react-router-dom";
 
 const Join = () => {
   const [email, setEmail] = useState("");
@@ -15,11 +16,27 @@ const Join = () => {
 
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  const [searchParams] = useSearchParams();
+  const emailVerified = searchParams.get("emailYn") === "Y";
+
   const handleConfirmToggle = () => {
     setShowConfirmPassword((prev) => !prev);
   };
 
   const { handleSignup } = useAuth();
+
+  // 로컬스토리지에서 이메일 불러오기
+  useEffect(() => {
+    const storedEmail = localStorage.getItem("signupEmail");
+    if (storedEmail) setEmail(storedEmail);
+  }, []);
+
+  // 이메일 변경될 때마다 저장
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newEmail = e.target.value;
+    setEmail(newEmail);
+    localStorage.setItem("signupEmail", newEmail);
+  };
 
   const onSubmit = () => {
     if (!email || !nickname || !password || !confirmPassword) {
@@ -35,8 +52,8 @@ const Join = () => {
   };
 
   const handleEmailVerify = () => {
-    // 이메일 인증 로직
     console.log("이메일 인증 요청:", email);
+    alert("이메일 인증 요청이 전송되었습니다. 이메일을 확인해주세요.");
   };
 
   return (
@@ -46,16 +63,23 @@ const Join = () => {
 
         <S.Form>
           <S.EmailRow>
-            <Input
-              placeholder="아이디(이메일 주소)"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              width="100%"
-              height="48px"
-              padding="4px 16px"
-              radius="8px"
-              textColor="primary"
-            />
+            <S.InputWrapper>
+              <Input
+                placeholder="아이디(이메일 주소)"
+                value={email}
+                onChange={handleEmailChange}
+                width="100%"
+                height="48px"
+                padding="4px 16px"
+                radius="8px"
+                textColor="primary"
+              />
+              {emailVerified && (
+                <S.IconWrapper>
+                  <FaCheckCircle color="green" size={20} />
+                </S.IconWrapper>
+              )}
+            </S.InputWrapper>
 
             <S.ButtonWrapper>
               <Button
@@ -120,7 +144,7 @@ const Join = () => {
           )}
 
           <S.ButtonWrapper>
-            <SignUpButton onClick={onSubmit} />
+            <SignUpButton onClick={onSubmit} disabled={!emailVerified} />
           </S.ButtonWrapper>
         </S.Form>
       </S.FormWrapper>
