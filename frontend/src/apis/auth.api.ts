@@ -69,3 +69,20 @@ export const requestResetPassword = async (email: string) => {
 
   return response.json();
 };
+
+export const requestEmailCertification = async (email: string) => {
+  const response = await fetch("/users/certify", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email }),
+  });
+
+  if (!response.ok) {
+    const result = await response.json();
+    throw new Error(result.message || "이메일 인증 요청 실패");
+  }
+
+  return response.json(); 
+};

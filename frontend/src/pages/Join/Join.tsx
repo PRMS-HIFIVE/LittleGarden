@@ -7,6 +7,7 @@ import LOGO from "@/assets/images/logo.svg";
 import { FaCheckCircle, FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { useAuth } from "@/hooks/useAuth";
 import { useSearchParams } from "react-router-dom";
+import { requestEmailCertification } from "@/apis/auth.api";
 
 const Join = () => {
   const [email, setEmail] = useState("");
@@ -51,10 +52,24 @@ const Join = () => {
     handleSignup({ email, pwd: password, nickName: nickname });
   };
 
-  const handleEmailVerify = () => {
-    console.log("이메일 인증 요청:", email);
+const handleEmailVerify = async () => {
+  if (!email.trim()) {
+    alert("이메일을 입력해주세요.");
+    return;
+  }
+
+  try {
+    const res = await requestEmailCertification(email);
     alert("이메일 인증 요청이 전송되었습니다. 이메일을 확인해주세요.");
-  };
+    console.log("서버 응답:", res); 
+  } catch (err) {
+    if (err instanceof Error) {
+      alert(err.message);
+    } else {
+      alert("예상치 못한 오류가 발생했습니다.");
+    }
+  }
+};
 
   return (
     <S.Container>
