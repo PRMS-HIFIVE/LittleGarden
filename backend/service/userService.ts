@@ -47,11 +47,12 @@ const updatePassword = async (pwd : string, userId : number) => {
 }
 
 const emailCertify = async (email : string) => {
-    const certCode = crypto.randomBytes(3).toString('hex'); // 6자리 인증 코드 생성
-    const result = await mailSend(email, "[LittleGarden] 이메일 인증", `인증 코드는 ${certCode} 입니다.`, "");
+    const originalString = 'emailYn=Y';
+    const encodedString = Buffer.from(originalString, 'utf8').toString('base64');
+    const result = await mailSend(email, "[LittleGarden] 이메일 인증", "", `<p>이메일 인증을 위해 아래 링크를 클릭해주세요.</p><a href='${process.env.FRONT_SERVER_URL}/join?data=${encodedString}'>이메일 인증하기</a>`);
 
     if (result.success) {
-        return certCode;
+        return;
     } else {
         console.log(result.result)
         throw new Error(result.message || "임시 비밀번호 메일 전송 실패");
