@@ -1,11 +1,12 @@
 import styled from "styled-components";
 
 export const DetailWrapper = styled.div`
-    height: 100vh;
+    height: 100%;
     display: flex;
     flex-direction: column;
     margin-left: 16px;
     margin-right: 16px;
+    padding-top: 10vh;
     align-items: center;
 
     @media screen and (min-width: 1024px){ 
