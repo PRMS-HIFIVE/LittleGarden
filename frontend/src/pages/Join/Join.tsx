@@ -18,7 +18,29 @@ const Join = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [searchParams] = useSearchParams();
-  const emailVerified = searchParams.get("emailYn") === "Y";
+
+  const emailVerified = (() => {
+    const encodedData = searchParams.get("data");
+    if (!encodedData) {
+      console.log("인증 실패: 쿼리 파라미터 'data' 없음");
+      return false;
+    }
+
+    try {
+      const decoded = atob(encodedData); 
+      console.log("디코딩된 쿼리:", decoded); 
+
+      const parsed = new URLSearchParams(decoded);
+      const emailYn = parsed.get("emailYn");
+      const result = emailYn === "Y";
+
+      console.log("emailYn:", emailYn, "| 인증 여부:", result);
+      return result;
+    } catch (e) {
+      console.error("쿼리 파싱 실패:", e);
+      return false;
+    }
+  })();
 
   const handleConfirmToggle = () => {
     setShowConfirmPassword((prev) => !prev);
@@ -52,24 +74,24 @@ const Join = () => {
     handleSignup({ email, pwd: password, nickName: nickname });
   };
 
-const handleEmailVerify = async () => {
-  if (!email.trim()) {
-    alert("이메일을 입력해주세요.");
-    return;
-  }
-
-  try {
-    const res = await requestEmailCertification(email);
-    alert("이메일 인증 요청이 전송되었습니다. 이메일을 확인해주세요.");
-    console.log("서버 응답:", res); 
-  } catch (err) {
-    if (err instanceof Error) {
-      alert(err.message);
-    } else {
-      alert("예상치 못한 오류가 발생했습니다.");
+  const handleEmailVerify = async () => {
+    if (!email.trim()) {
+      alert("이메일을 입력해주세요.");
+      return;
     }
-  }
-};
+
+    try {
+      const res = await requestEmailCertification(email);
+      alert("이메일 인증 요청이 전송되었습니다. 이메일을 확인해주세요.");
+      console.log("서버 응답:", res);
+    } catch (err) {
+      if (err instanceof Error) {
+        alert(err.message);
+      } else {
+        alert("예상치 못한 오류가 발생했습니다.");
+      }
+    }
+  };
 
   return (
     <S.Container>

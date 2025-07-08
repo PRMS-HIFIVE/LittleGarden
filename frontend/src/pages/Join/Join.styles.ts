@@ -48,7 +48,7 @@ export const PasswordWrapper = styled.div`
 export const IconWrapper = styled.div`
   position: absolute;
   right: 12px;
-  top: 50%;
+  top: 55%;
   transform: translateY(-50%);
   color: ${textColors.green};
   cursor: pointer;
