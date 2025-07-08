@@ -9,7 +9,7 @@ export function useAuth() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const setEmail = useAuthStore((state) => state.setEmail); 
+  const setEmail = useAuthStore((state) => state.setEmail);
   const setToken = useAuthStore((state) => state.setToken);
 
   const handleSignup = async (formData: SignUpRequest) => {
@@ -22,6 +22,8 @@ export function useAuth() {
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.error(error.message);
+        alert(error.message);
+        setError(error.message);
       } else {
         console.error("예상치 못한 에러", error);
       }
@@ -49,6 +51,7 @@ export function useAuth() {
       if (error instanceof Error) {
         console.error(error.message);
         alert(error.message);
+        setError(error.message);
       } else {
         console.error("예상치 못한 에러", error);
         alert("예상치 못한 에러가 발생했습니다.");
