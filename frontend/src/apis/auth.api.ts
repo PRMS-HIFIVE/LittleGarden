@@ -13,7 +13,7 @@ export interface LoginResponse {
   loginUser: {
     id: number;
     email: string;
-    nickName: string;
+    nickname: string;
   };
   token: string;
 }

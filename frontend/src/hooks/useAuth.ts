@@ -43,7 +43,7 @@ export function useAuth() {
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(loginUser));
 
-      alert(`${loginUser.nickName}님, 로그인 되었습니다!`);
+      alert(`${loginUser.nickname}님, 로그인 되었습니다!`);
       navigate("/");
     } catch (error: unknown) {
       if (error instanceof Error) {
