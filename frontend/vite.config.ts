@@ -3,20 +3,18 @@ import react from '@vitejs/plugin-react'
 import path from 'path'
 import svgr from 'vite-plugin-svgr'
 
+// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), svgr()],
   resolve: {
-    alias: {
-      '@': path.resolve(__dirname, 'src'),
-    },
+    alias: [{ find: '@', replacement: path.resolve(__dirname, 'src') }],
   },
   server: {
-    host: true,
     proxy: {
-      '/users': {
-        target: 'http://localhost:5000',
+      '/nongsaro-api': {
+        target: 'http://api.nongsaro.go.kr',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/users/, '/users'),
+        rewrite: (path) => path.replace(/^\/nongsaro-api/, ''),
       },
     },
   },
