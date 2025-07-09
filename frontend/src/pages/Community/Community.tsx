@@ -17,6 +17,7 @@ const Community = () => {
     <>
       <S.Container>
         <DiaryHeader />
+
         <S.Title>커뮤니티</S.Title>
         <S.ButtonWrapper>
           <Button
