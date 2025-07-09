@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import { backgroundColors } from "@/styles/paletteMapping";
+import { CardListContainer } from "@/common/Card/CardList/CardList";
 
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
   max-width: 393px;
   margin: 0 auto;
   background-color: ${backgroundColors.primary};
@@ -23,4 +24,15 @@ export const ButtonWrapper = styled.div`
   flex-direction: row;
   justify-content: center;
   gap: 0.5rem;
+`;
+
+export const ScrollableCardList = styled(CardListContainer)`
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  box-sizing: border-box;
+
+  &::-webkit-scrollbar {
+    display: none; 
+  }
 `;
