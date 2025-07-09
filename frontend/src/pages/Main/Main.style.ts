@@ -39,7 +39,7 @@ export const PlantsList = styled.div`
     box-shadow: 0px 2px 6px 0px rgb(0 0 0 / 20%);
     display: flex;
     flex-direction: row;
-    padding: 8px 20px;
+    padding: 8px 16px;
     align-items: center;
     gap: 6px;
 
@@ -65,7 +65,15 @@ export const PlantNameArea = styled.div`
     gap: 6px;
 `
 
+export const PlantName = styled.p`
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100px;
+`
+
 export const PlantInfoWrapper = styled.div`
     display: flex;
     align-items: center;
+    gap: 10px;
 `

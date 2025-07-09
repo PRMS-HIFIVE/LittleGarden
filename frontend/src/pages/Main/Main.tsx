@@ -29,7 +29,7 @@ function Main(){
                                 <S.PlantWrapper>
                                     <S.PlantNameArea>
                                         <img src={plant.thumbnailUrl} alt={plant.name} />
-                                        <p>{plant.name}</p>
+                                        <S.PlantName>{plant.name}</S.PlantName>
                                     </S.PlantNameArea>
                                     <S.PlantInfoWrapper>
                                         <Droplet /> D - {plant.wateringCycle}
