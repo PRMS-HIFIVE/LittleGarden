@@ -7,7 +7,7 @@ function Index() {
 
     return (
         <IndexWrapper>
-            <MainpageHeader></MainpageHeader>
+            <MainpageHeader />
             <Main/>
             <Footer type="camera" />
 
