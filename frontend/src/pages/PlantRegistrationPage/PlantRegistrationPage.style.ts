@@ -95,3 +95,23 @@ export const AddPlantButton = styled.button`
         background-color: #27AE60;
     }
 `;
+
+export const InfoBox = styled.div`
+    background-color: #f0f7ff;
+    border: 1px solid #b3d4ff;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px 0;
+    font-size: 14px;
+    color: #333;
+
+    h4 {
+        margin-top: 0;
+        margin-bottom: 12px;
+        color: #0056b3;
+    }
+
+    p {
+        margin: 4px 0;
+    }
+`;

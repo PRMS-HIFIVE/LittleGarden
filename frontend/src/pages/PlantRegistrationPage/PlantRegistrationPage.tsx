@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { usePlantStore, type Plant } from '@/store/plantStore';
+import { usePlantSearch } from '@/hooks/usePlantSearch';
 import * as S from './PlantRegistrationPage.style';
+import { usePlantForm } from '@/hooks/usePlantForm';
 import { IoClose as CloseButton } from "react-icons/io5";
 import Button from '@/components/UI/Button/Button';
 import Input from '@/components/UI/Input/Input';
@@ -9,48 +10,43 @@ import Input from '@/components/UI/Input/Input';
 function PlantRegistrationPage() {
     const location = useLocation();
     const navigate = useNavigate();
-    const addPlant = usePlantStore((state) => state.addPlant);
+    const {
+        data: plantDetail,
+        isLoading,
+        error,
+        searchByImage,
+    } = usePlantSearch();
+
     const imageFile = location.state?.imageFile as File | undefined;
-    const [plantName, setPlantName] = useState('');
-    const [wateringCycle, setWateringCycle] = useState('');
     const [previewUrl, setPreviewUrl] = useState<string>('');
 
+    const {
+        plantName,
+        setPlantName,
+        wateringCycle,
+        setWateringCycle,
+        handleSubmit,
+    } = usePlantForm({ imageFile, plantDetail });
+
     useEffect(() => {
+        // 이미지 파일이 없으면 홈으로 리다이렉트
         if (imageFile) {
             const url = URL.createObjectURL(imageFile);
             setPreviewUrl(url);
+            // 이미지 파일로 식물 정보 검색 시작
+            searchByImage(imageFile);
             return () => URL.revokeObjectURL(url);
         } else {
             navigate('/');
         }
-    }, [imageFile, navigate]);
+    }, [imageFile, navigate, searchByImage]);
 
-    const toBase64 = (file: File): Promise<string> => new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result as string);
-        reader.onerror = error => reject(error);
-    });
-
-    const handleAddPlant = async () => {
-        if (!plantName || !wateringCycle || !imageFile) {
-            alert('모든 정보를 입력해주세요.');
-            return;
+    useEffect(() => {
+        // 검색된 식물 정보로 이름 자동 채우기
+        if (plantDetail) {
+            setPlantName(plantDetail.name);
         }
-
-        const base64Thumbnail = await toBase64(imageFile);
-
-        const newPlant: Plant = {
-            id: Date.now().toString(),
-            name: plantName,
-            wateringCycle: parseInt(wateringCycle, 10),
-            thumbnailUrl: base64Thumbnail, // Base64 URL을 저장
-        };
-
-        addPlant(newPlant);
-        alert('식물이 성공적으로 추가되었습니다!');
-        navigate('/');
-    };
+    }, [plantDetail]);
 
     return (
         <S.RegistrationWrapper>
@@ -59,6 +55,19 @@ function PlantRegistrationPage() {
             </S.RegistrationHeader>
             <S.FormContainer>
                 {previewUrl && <S.ImageThumbnail src={previewUrl} alt="식물 썸네일" />}
+
+                {isLoading && <p>식물 정보를 분석 중입니다...</p>}
+                {error && <p style={{ color: 'red' }}>오류: {error}</p>}
+
+                {plantDetail && !isLoading && (
+                    <S.InfoBox>
+                        <h4><strong>'{plantDetail.name}'</strong> 정보 (참고)</h4>
+                        <p><strong>물주기:</strong> {plantDetail.watering.spring}</p>
+                        <p><strong>광도:</strong> {plantDetail.lightRequirement}</p>
+                        <p><strong>온도:</strong> {plantDetail.growthTemp}</p>
+                    </S.InfoBox>
+                )}
+
                 <S.FormWrapper>
                     <S.FormGroup>
                         <S.Label htmlFor="plantName">🌱 식물 이름</S.Label>
@@ -79,7 +88,7 @@ function PlantRegistrationPage() {
                         />
                     </S.FormGroup>
                 </S.FormWrapper>
-                <Button buttonSize='full' radius='round' onClick={handleAddPlant}>
+                <Button buttonSize='full' radius='round' onClick={handleSubmit} disabled={isLoading}>
                     식물 추가하기
                 </Button>
             </S.FormContainer>

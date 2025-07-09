@@ -37,7 +37,9 @@ export const DetailBody = styled.div`
 
 export const WeatherInfo = styled.div`
     width: 100%;
+    height: 10vh;
     background: white;
+    box-shadow: 0px 2px 6px 0px rgb(0 0 0 / 20%);
     border-radius: 10px;
     display: flex;
     justify-content: center;
