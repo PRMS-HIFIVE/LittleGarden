@@ -57,10 +57,8 @@ function PlantDetailPage () {
 
                     {weather && (
                         <>
-                            <span>{weather.name}: </span>
                             <img src={`http://openweathermap.org/img/wn/${weather.weather[0].icon}.png`} alt={weather.weather[0].description} />
-                            <span>{weather.main.temp.toFixed(1)}°C, </span>
-                            <span>{weather.weather[0].description}</span>
+                            <span>{weather.main.temp.toFixed(1)}°C</span>
                         </>
                     )}
 
