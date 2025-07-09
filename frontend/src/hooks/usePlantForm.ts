@@ -17,7 +17,7 @@ export const usePlantForm = ({ imageFile, plantDetail }: UsePlantFormProps) => {
     const [wateringCycle, setWateringCycle] = useState('');
 
     useEffect(() => {
-        // API에서 식물 정보를 가져오면, 식물 이름 입력 필드를 자동으로 채웁니다.
+        // API 기반으로 식물 이름 입력 필드를 자동으로 채우기
         if (plantDetail) {
             setPlantName(plantDetail.name);
         }

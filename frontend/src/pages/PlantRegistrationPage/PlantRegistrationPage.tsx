@@ -10,8 +10,6 @@ import Input from '@/components/UI/Input/Input';
 function PlantRegistrationPage() {
     const location = useLocation();
     const navigate = useNavigate();
-
-    // 식물 검색 훅
     const {
         data: plantDetail,
         isLoading,
@@ -22,7 +20,6 @@ function PlantRegistrationPage() {
     const imageFile = location.state?.imageFile as File | undefined;
     const [previewUrl, setPreviewUrl] = useState<string>('');
 
-    // 폼 상태 및 제출 로직을 관리하는 훅
     const {
         plantName,
         setPlantName,
@@ -62,7 +59,6 @@ function PlantRegistrationPage() {
                 {isLoading && <p>식물 정보를 분석 중입니다...</p>}
                 {error && <p style={{ color: 'red' }}>오류: {error}</p>}
 
-                {/* API로부터 가져온 상세 정보 (참고용) */}
                 {plantDetail && !isLoading && (
                     <S.InfoBox>
                         <h4><strong>'{plantDetail.name}'</strong> 정보 (참고)</h4>

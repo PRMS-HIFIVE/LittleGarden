@@ -9,7 +9,6 @@ import {
 } from "@/apis/plant.api";
 import { resizeImage } from "@/utils/image";
 
-/** 컴포넌트에서 사용하기 쉽도록 가공된 식물 상세 정보 타입 */
 export interface PlantDetail {
     contentNo: string;
     name: string;
@@ -31,7 +30,6 @@ export interface PlantDetail {
     fertilizer: string;
 }
 
-/** usePlantSearch 훅이 관리하는 상태 타입 */
 interface PlantSearchState {
     data: PlantDetail | null;
     suggestions: PlantIdSuggestion[] | null;
@@ -40,7 +38,6 @@ interface PlantSearchState {
     error: string | null;
 }
 
-/** CDATA 또는 일반 텍스트 노드에서 텍스트 값을 추출하는 헬퍼 함수 */
 const getText = (node: { _text?: string; _cdata?: string } | undefined): string => {
     if (!node) return '';
     return (node._text || node._cdata) ?? '';
@@ -61,7 +58,6 @@ export const usePlantSearch = () => {
         error: null,
     });
 
-    /** Nongsaro API 응답을 PlantDetail 타입으로 변환하는 헬퍼 함수 */
     const mapToPlantDetail = useCallback((rawDetail: NongsaroDetailItem): PlantDetail => ({
         contentNo: getText(rawDetail.cntntsNo),
         name: getText(rawDetail.plntzrNm) || getText(rawDetail.plntbneNm), // 유통명이 없으면 학명 사용
@@ -102,7 +98,7 @@ export const usePlantSearch = () => {
     }, [mapToPlantDetail]);
 
     /** 이미지 파일로 식물 검색을 시작하는 함수 */
-  const searchByImage = useCallback(async (imageFile: File) => {
+    const searchByImage = useCallback(async (imageFile: File) => {
         setState({ data: null, suggestions: null, nongsaroList: null, isLoading: true, error: null });
 
         try {
@@ -140,7 +136,7 @@ export const usePlantSearch = () => {
             const errorMessage = err instanceof Error ? err.message : "알 수 없는 오류가 발생했습니다.";
             setState((prev) => ({ ...prev, isLoading: false, error: errorMessage }));
         }
-  }, [getDetailsByContentNo]);
+    }, [getDetailsByContentNo]);
 
     return {
         ...state,
