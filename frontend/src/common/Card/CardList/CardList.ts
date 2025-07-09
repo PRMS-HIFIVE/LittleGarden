@@ -5,4 +5,5 @@ export const CardListContainer = styled.div`
     flex-direction: column;
     gap: 18px;
     justify-content: center;
+    margin: 1rem auto;
 `;

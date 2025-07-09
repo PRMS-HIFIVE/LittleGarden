@@ -2,16 +2,17 @@
 import * as S from "./Community.styles";
 import Button from "@/components/UI/Button/Button";
 import DiaryHeader from "@/common/Header/HeaderVariants/DiaryHeader";
-import { useNavigate } from "react-router-dom";
+import { CardListContainer } from "@/common/Card/CardList/CardList";
+import Card from "@/common/Card/Card";
+// import { useNavigate } from "react-router-dom";
 
 
 const Community = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const handleViewLatestPosts = () => {}
   const handleViewMyPosts = () => {}
   const handleWritePost = () => {
-    navigate("/community/write");
   }
 
 
@@ -47,6 +48,17 @@ const Community = () => {
             글쓰기
           </Button>
         </S.ButtonWrapper>
+        
+        <CardListContainer>
+          <Card
+            title="제목"
+            content="내용"
+            date="2023-10-01"
+            image="https://picsum.photos/200/300"
+            tag={["태그1", "태그2"]}
+            profileImage="https://picsum.photos/50/50"
+          />
+        </CardListContainer>
       </S.Container>
     </>
   );
