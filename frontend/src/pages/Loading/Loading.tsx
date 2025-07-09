@@ -1,4 +1,4 @@
-import * as S from "./Loading.style";
+import * as S from "./Loading.styles";
 import loadingImg from "@/assets/images/Loading.png";
 
 const LoadingPage = () => {

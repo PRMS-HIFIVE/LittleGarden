@@ -1,5 +1,5 @@
 import { useState } from "react";
-import * as S from "./Password.style";
+import * as S from "./Password.styles";
 import Input from "@/components/UI/Input/Input";
 import LOGO from "@/assets/images/logo.svg";
 import Button from "@/components/UI/Button/Button";
