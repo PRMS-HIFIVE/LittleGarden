@@ -44,3 +44,23 @@ export interface MailSendResult {
     message: string;
     result?: any;
 }
+
+export interface IPlantData {
+    id?:number;
+    cntntsSj?: string;
+    dlthtsCodeNm?: string;
+    fmlCodeNm?: string;
+    fmldeSeasonCodeNm?: string;
+    frtlzrInfo?: string;
+    growthAraInfo?: string;
+    growthHgInfo?: string;
+    grwhTpCodeNm?: string;
+    grwtveCodeNm?: string;
+    hdCodeNm?: string;
+    ignSeasonCodeNm?: string;
+    lighttdemanddoCodeNm?: string;
+    managedemanddoCodeNm?: string;
+    managelevelCodeNm?: string;
+    postngplaceCodeNm?: string;
+    watercycleNm?: string;
+}

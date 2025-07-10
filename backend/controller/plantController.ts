@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from "http-status-codes";
 import plantService from "../service/plantService";
-import { TypedRequest } from '../types/types';
+import { IPlantData, TypedRequest } from '../types/types';
+import geminiService from '../service/geminiService';
 
 export interface IPlantRequestBody {
     cntntsNo : string;
@@ -33,8 +34,17 @@ export const getPlants = async (req: Request, res: Response) : Promise<void> => 
     const plantId = req.query.plantId ? Number(req.query.plantId) : undefined;
 
     try {
-        const plants = await plantService.getPlants(userId, plantId);
-        res.status(StatusCodes.OK).json(plants);
+        const plants = await plantService.getPlants(userId, plantId)as unknown as IPlantData[];
+        const comments = await Promise.all(
+            plants.map(plant => geminiService.geminiComment(plant))
+        );
+        
+        res.status(StatusCodes.OK).json(
+            plants.map((plant, index) => ({
+                ...plant,
+                comment: comments[index]
+            }))
+        );
         return;
     } catch(err) {
         console.log(err)
