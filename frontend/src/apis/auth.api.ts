@@ -18,9 +18,11 @@ export interface LoginResponse {
   token: string;
 }
 
+const BASE_URL = import.meta.env.VITE_BACK_SERVER_URL;
+
 
 export const signup = async (data: SignUpRequest) => {
-  const response = await fetch("/users/join", {
+  const response = await fetch(`${BASE_URL}/users/join`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -37,7 +39,7 @@ export const signup = async (data: SignUpRequest) => {
 };
 
 export const login = async (data: LoginRequest): Promise<LoginResponse> => {
-  const response = await fetch("/users/login", {
+  const response = await fetch(`${BASE_URL}/users/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -54,7 +56,7 @@ export const login = async (data: LoginRequest): Promise<LoginResponse> => {
 };
 
 export const requestResetPassword = async (email: string) => {
-  const response = await fetch("/users/reset", {
+  const response = await fetch(`${BASE_URL}/users/reset`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -71,7 +73,7 @@ export const requestResetPassword = async (email: string) => {
 };
 
 export const requestEmailCertification = async (email: string) => {
-  const response = await fetch("/users/certify", {
+  const response = await fetch(`${BASE_URL}/users/certify`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -84,5 +86,5 @@ export const requestEmailCertification = async (email: string) => {
     throw new Error(result.message || "이메일 인증 요청 실패");
   }
 
-  return response.json(); 
+  return response.json();
 };

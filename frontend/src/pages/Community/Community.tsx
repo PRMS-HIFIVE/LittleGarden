@@ -1,17 +1,25 @@
-// import React from "react";
 import * as S from "./Community.styles";
 import Button from "@/components/UI/Button/Button";
 import DiaryHeader from "@/common/Header/HeaderVariants/DiaryHeader";
-// import { CardListContainer } from "@/common/Card/CardList/CardList";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { usePostFilter } from "@/hooks/usePostFilter";
 import Card from "@/common/Card/Card";
-// import { useNavigate } from "react-router-dom";
+import { usePostStore } from "@/store/postStore";
 
 const Community = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  const handleViewLatestPosts = () => {};
-  const handleViewMyPosts = () => {};
-  const handleWritePost = () => {};
+  const { filteredPosts } = usePostStore();
+
+  const { init, filterLatest, filterMyPosts } = usePostFilter(2);
+
+    useEffect(() => {
+    init();
+  }, []);
+
+  // 글쓰기 버튼 클릭 시 이동
+  const handleWritePost = () => navigate("/community/write");
 
   return (
     <>
@@ -23,7 +31,7 @@ const Community = () => {
           <Button
             variant="diaryMenu"
             width="50%"
-            onClick={handleViewLatestPosts}
+            onClick={filterLatest}
           >
             최신순
           </Button>
@@ -32,7 +40,7 @@ const Community = () => {
             variant="diaryMenu"
             width="50%"
             color="white"
-            onClick={handleViewMyPosts}
+            onClick={filterMyPosts}
           >
             내 글 보기
           </Button>
@@ -47,7 +55,22 @@ const Community = () => {
           </Button>
         </S.ButtonWrapper>
 
-        <S.ScrollableCardList>
+        {/* 더미데이터 확인용 카드리스트 렌더링 */}
+        
+      <S.ScrollableCardList>
+        {filteredPosts.map((post) => (
+          <Card
+            key={post.postId}
+            title={post.title}
+            content={post.content}
+            date={post.createdAt}
+            image={post.img}
+            tag={post.plantTag}
+          />
+        ))}
+      </S.ScrollableCardList>
+
+        {/* <S.ScrollableCardList>
           {[...Array(10)].map((_, i) => (
             <Card
               key={i}
@@ -59,7 +82,7 @@ const Community = () => {
               profileImage="https://picsum.photos/50/50"
             />
           ))}
-        </S.ScrollableCardList>
+        </S.ScrollableCardList> */}
       </S.Container>
     </>
   );
