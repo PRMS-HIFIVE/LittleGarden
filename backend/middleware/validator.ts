@@ -138,3 +138,17 @@ export const deleteCommentValidator : (ValidationChain | RequestHandler)[] = [
     param("commentId").notEmpty().withMessage("댓글 id는 필수 입력 항목입니다."),
     handleValidation
 ];
+
+export const subscribeValidator : (ValidationChain | RequestHandler)[] = [
+    body("subscription").notEmpty().withMessage("구독 정보는 필수 항목입니다."),
+    body("subscription.endpoint").notEmpty().withMessage("구독 정보의 endpoint는 필수 항목입니다."),
+    handleValidation
+];
+
+export const sendPushValidator = [
+    body("title").notEmpty().withMessage("title은 필수 입력 항목입니다."),
+    body("body").notEmpty().withMessage("알림 내용은 필수 입력 항목입니다."),
+    body("data").notEmpty().withMessage("data는 필수 입력 항목입니다."),
+    body("data.subscription").notEmpty().withMessage("data.subscription은 필수 입력 항목입니다."),
+    handleValidation
+];

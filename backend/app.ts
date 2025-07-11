@@ -1,5 +1,4 @@
-import { Request, Response } from 'express';
-import express from 'express';
+import express, { Request, Response } from 'express';
 import cors from 'cors';
 import { StatusCodes } from 'http-status-codes';
 import http from 'http';
@@ -28,6 +27,9 @@ app.use("/posts", postsRouter);
 app.use("/plantidapi", apiplantsRouter);
 app.use("/plants", plantsRouter);
 app.use("/comments", commentsRouter);
+
+// 스케줄링
+import './service/scheduleService';
 
 // catch 404 and forward to error handler
 app.use(function(req : Request, res : Response) {

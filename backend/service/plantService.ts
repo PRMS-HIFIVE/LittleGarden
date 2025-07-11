@@ -69,11 +69,10 @@ const updatePlantNickName = async (plantId : string, nickName : string) => {
 };
 
 const updatePlantWatering = async (plantId : string, watering : number) => {
-    const sql = `UPDATE plants SET watering = ? WHERE id = ?`;
+    const sql = `UPDATE plants SET last_watering = ? WHERE id = ?`;
     const values = [watering, plantId];
     return await executeQuery<ResultSetHeader>(sql, values);
 };
-
 
 const deletePlant = async (plantId : string) => {
     const sql = `DELETE FROM plants WHERE id = ?`;

@@ -1,8 +1,7 @@
 import express from 'express';
 import { Request, Response } from "express";
 import fs from 'fs';
-// import fetch from 'node-fetch';
-const fetch = require('node-fetch'); 
+import fetch from 'node-fetch';
 
 import path from 'path';
 
