@@ -46,6 +46,21 @@ export const WeatherInfo = styled.div`
     align-items: center;
 `
 
+export const WeatherWrapper = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+`
+
+export const WeatherItem = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    gap: 8px;
+`
+
 export const DetailImageContainer = styled.div`
     img{
         width: 100%;
@@ -59,4 +74,6 @@ export const InfoWrapper = styled.div`
     background: #A9DFBF;
     border-top-right-radius: 30px;
     border-top-left-radius: 30px;
+    padding: 24px 16px;
+    padding-bottom: 70px;
 `

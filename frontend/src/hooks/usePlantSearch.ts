@@ -27,6 +27,12 @@ export interface PlantDetail {
         autumn: string;
         winter: string;
     };
+    wateringCode: {
+        spring: string;
+        summer: string;
+        autumn: string;
+        winter: string;
+    };
     fertilizer: string;
 }
 
@@ -43,12 +49,6 @@ const getText = (node: { _text?: string; _cdata?: string } | undefined): string 
     return (node._text || node._cdata) ?? '';
 };
 
-/**
- * 이미지 파일을 기반으로 식물 정보를 검색하는 커스텀 훅
- * 1. Plant.id로 이미지 식별
- * 2. 농사로 API에서 이름으로 검색
- * 3. 농사로 API에서 상세 정보 조회
- */
 export const usePlantSearch = () => {
     const [state, setState] = useState<PlantSearchState>({
         data: null,
@@ -76,10 +76,15 @@ export const usePlantSearch = () => {
             autumn: getText(rawDetail.watercycleAutumnCodeNm),
             winter: getText(rawDetail.watercycleWinterCodeNm),
         },
+        wateringCode: {
+            spring: getText(rawDetail.watercycleSprngCode),
+            summer: getText(rawDetail.watercycleSummerCode),
+            autumn: getText(rawDetail.watercycleAutumnCode),
+            winter: getText(rawDetail.watercycleWinterCode),
+        },
         fertilizer: getText(rawDetail.frtlzrInfo),
     }), []);
 
-    /** 콘텐츠 번호로 상세 정보를 조회하고 상태를 업데이트하는 함수 */
     const getDetailsByContentNo = useCallback(async (cntntsNo: string) => {
         setState((prev) => ({ ...prev, isLoading: true, error: null }));
         try {
@@ -97,12 +102,11 @@ export const usePlantSearch = () => {
         }
     }, [mapToPlantDetail]);
 
-    /** 이미지 파일로 식물 검색을 시작하는 함수 */
     const searchByImage = useCallback(async (imageFile: File) => {
         setState({ data: null, suggestions: null, nongsaroList: null, isLoading: true, error: null });
 
         try {
-            // 1. 이미지 리사이즈 후 Base64로 변환하여 식별 (Plant.id)
+            // 이미지 리사이즈 후 Base64로 변환하여 식별 (Plant.id)
             const imageBase64 = await resizeImage(imageFile, { maxSize: 800, quality: 0.8 });
             const idResponse = await identifyPlantByImage(imageBase64);
             const suggestions = idResponse.result.classification.suggestions;
@@ -111,7 +115,6 @@ export const usePlantSearch = () => {
                 throw new Error("식물을 식별할 수 없습니다. 다른 사진으로 시도해주세요.");
             }
 
-            // 2. 식물 목록 검색 (농사로)
             const topSuggestionName = suggestions[0].name;
             const listResponse = await searchPlantByNameOnNongsaro(topSuggestionName);
             let nongsaroItems = listResponse.response.body.items?.item;
@@ -119,11 +122,10 @@ export const usePlantSearch = () => {
             if (!nongsaroItems) {
                 throw new Error(`'${topSuggestionName}'에 대한 정보를 농사로에서 찾을 수 없습니다.`);
             }
-            if (!Array.isArray(nongsaroItems)) nongsaroItems = [nongsaroItems]; // 단일 객체일 경우 배열로 변환
+            if (!Array.isArray(nongsaroItems)) nongsaroItems = [nongsaroItems];
 
             setState((prev) => ({ ...prev, suggestions, nongsaroList: nongsaroItems }));
 
-            // 3. 식물 상세 정보 조회 (농사로)
             const contentNo = getText(nongsaroItems[0]?.cntntsNo);
 
             if (contentNo) {
