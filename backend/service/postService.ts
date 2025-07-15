@@ -1,6 +1,7 @@
 import { ResultSetHeader, RowDataPacket } from 'mysql2';
 import { IPost } from '../types/types';
 import { executeQuery } from '../utils/executeQuery';
+import { platform } from 'os';
 
 interface IFilterPost {
     plantTag?: string;
@@ -8,36 +9,41 @@ interface IFilterPost {
 }
 
 const posts = async (post: IPost) => {
-    const sql = "INSERT INTO posts (user_id, title, content, state) VALUES (?, ?, ?, ?)";
-    const values = [post.userId, post.title, post.content, post.state];
+    const sql = "INSERT INTO posts (user_id, title, content, state,is_health) VALUES (?, ?, ?, ?,?)";
+    const values = [post.userId, post.title, post.content, post.state, post.isHealth];
     return await executeQuery(sql, values);
 };
 
 const getPosts = async (plantTag?:IFilterPost,state?:IFilterPost) => {
     let sql;
     let values=[];
-    if(plantTag && state){
-        sql = "SELECT * FROM plant.posts INNER JOIN posts_tag ON posts.id = posts_tag.post_id WHERE plant_id = ? AND state = ?;";
-        values.push(plantTag,state);
-        return await executeQuery(sql, values);
-    }if(plantTag){
-        sql = "SELECT * FROM plant.posts INNER JOIN posts_tag ON posts.id = posts_tag.post_id WHERE plant_id = ?;";
+    sql = `
+        SELECT 
+            posts.*, 
+            plants.cntntsSj AS plantTag
+        FROM 
+            posts
+        INNER JOIN post_tags ON posts.id = post_tags.post_id
+        INNER JOIN plants ON post_tags.plant_id = plants.id
+    `;
+
+    if (plantTag && state) {
+        sql += " WHERE plants.cntntsSj = ? AND posts.state = ?";
+        values.push(plantTag, state);
+    } else if (plantTag) {
+        sql += " WHERE plants.cntntsSj = ?";
         values.push(plantTag);
-        return await executeQuery(sql, values);
-    }if(state){
-        sql = "SELECT * FROM plant.posts INNER JOIN posts_tag ON posts.id = posts_tag.post_id WHERE state = ?;";
+    } else if (state) {
+        sql += " WHERE posts.state = ?";
         values.push(state);
-        return await executeQuery(sql, values);
     }
-    else{
-        sql = "SELECT * FROM posts";
-        return await executeQuery<RowDataPacket[]>(sql, []);
-    }
+
+    return await executeQuery<RowDataPacket[]>(sql, values);
 };
 
 const updatePosts = async (postId:number,post: IPost) => {
-    const sql = "UPDATE posts SET user_id=?,title=?,content=?,state=? WHERE id=?";
-    const values = [post.userId, post.title, post.content,post.state,postId];
+    const sql = "UPDATE posts SET user_id=?,title=?,content=?,state=?,is_health=? WHERE id=?";
+    const values = [post.userId, post.title, post.content,post.state,post.isHealth,postId];
     return await executeQuery(sql, values);
 }
 
@@ -48,7 +54,7 @@ const deletePosts = async (postId:number) => {
 
 const tags = async (postId : number,plantTag:string[]) => {
     // 1. plant_id가 있는지 살펴본다.
-    const plantsql = `SELECT * FROM plants WHERE name IN (${plantTag.map(() => '?').join(',')})`;
+    const plantsql = `SELECT * FROM plants WHERE cntntsSj IN (${plantTag.map(() => '?').join(',')})`;
     const resultPlants = await executeQuery<RowDataPacket[]>(plantsql, plantTag);
     
     // 2-1. 있을 때 post_tags 테이블에 추가
@@ -70,7 +76,7 @@ const updateTags = async (postId : number,plantTag:string[]) => {
     const resultDelete = await executeQuery<ResultSetHeader>(deleteTagSql,postId);
     
     // 2. 처음 만들때와 같이 진행 ( => 전체 삭제만 하고 다시 작성한다. )
-    const plantsql = `SELECT * FROM plants WHERE name IN (${plantTag.map(() => '?').join(',')})`;
+    const plantsql = `SELECT * FROM plants WHERE cntntsSj IN (${plantTag.map(() => '?').join(',')})`;
     const resultPlants = await executeQuery<RowDataPacket[]>(plantsql, plantTag);
 
     // 2-1. 있을 때 post_tags 테이블에 추가

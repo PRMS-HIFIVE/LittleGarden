@@ -1,9 +1,14 @@
+import { GoogleGenerativeAI, HarmBlockThreshold, HarmCategory } from '@google/generative-ai';
 import { IPlantData } from './../types/types';
-import { ResultSetHeader, RowDataPacket } from "mysql2";
-import { executeQuery } from "../utils/executeQuery";
-
 
 const API_KEY = process.env.GEMINI_API_KEY;
+
+if (!API_KEY) {
+    throw new Error('env 파일에 API_KEY가 없습니다.');
+}
+
+const genAI = new GoogleGenerativeAI(API_KEY);
+const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
 const geminiComment = async (plantData:IPlantData) => {
 
@@ -24,62 +29,36 @@ const geminiComment = async (plantData:IPlantData) => {
                         그리고 물 주기에 맞춰서 며칠마다 물줘야하는지도 알려주세요.
                         ${detailsString}`;
 
-    const requestBodyObject = { 
-    contents: [
-    {
-        parts: [
-            {
-                text: promptText,
-            },
-        ],
-    },
-    ],
-    safetySettings: [
-        {
-            category: "HARM_CATEGORY_HARASSMENT",
-            threshold: "BLOCK_NONE",
-        },
-        {
-            category: "HARM_CATEGORY_HATE_SPEECH",
-            threshold: "BLOCK_NONE",
-        },
-        {
-            category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-            threshold: "BLOCK_NONE",
-        },
-        {
-            category: "HARM_CATEGORY_DANGEROUS_CONTENT",
-            threshold: "BLOCK_NONE",
-        },
-        ],
-    };
-
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${API_KEY}`;
-
     try {
-        const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(requestBodyObject),
+        const result = await model.generateContent({
+            contents: [
+                {
+                    role:"",
+                    parts: [
+                        {
+                            text: promptText,
+                        },
+                    ],
+                },
+            ],
+            safetySettings: [
+            { category: HarmCategory.HARM_CATEGORY_HARASSMENT, threshold: HarmBlockThreshold.BLOCK_NONE },
+            { category: HarmCategory.HARM_CATEGORY_HATE_SPEECH, threshold: HarmBlockThreshold.BLOCK_NONE },
+            { category: HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT, threshold: HarmBlockThreshold.BLOCK_NONE },
+            { category: HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT, threshold: HarmBlockThreshold.BLOCK_NONE },
+            ],
         });
 
-        if (!response.ok) {
-            const errorData = await response.json();
-            console.log('Gemini API Error Response:', errorData);
-            throw new Error(`Gemini API error: ${errorData.error?.message || response.statusText}`);
-        }
+        const response = await result.response;
+        const generatedText = response.text();
 
-        const data = await response.json();
-
-        const generatedText = data.candidates?.[0]?.content?.parts?.[0]?.text;
         if (generatedText) {
             return generatedText;
         } else {
-            console.log('Gemini API response did not contain expected text:', data);
+            console.warn('Gemini API response did not contain expected text:', response);
             throw new Error('Failed to extract comment from Gemini API response.');
         }
+
     } catch (error: any) {
         console.error('Fetch request error to Gemini API:', error);
         throw new Error(`Gemini API 호출 실패: ${error.message}`);
