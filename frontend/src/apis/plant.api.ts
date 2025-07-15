@@ -93,8 +93,7 @@ const xmlToJson = <T>(xmlText: string): T => {
 const getAuthToken = (): string | null => {
     const token = localStorage.getItem("token");
     if (!token) return null;
-    // 토큰이 불필요한 큰따옴표로 감싸여 있을 경우 제거
-    return token.startsWith('"') && token.endsWith('"') ? token.slice(1, -1) : token;
+    return token;
 };
 
 const mockIdentifyPlantByImage = (): Promise<PlantIdResponse> => {
@@ -159,7 +158,7 @@ export const fetchMyPlants = async (): Promise<Plant[]> => {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`,
+            'Authorization': `${token}`,
         },
     });
 
@@ -207,7 +206,7 @@ export const fetchPlantById = async (plantId: number): Promise<Plant | null> => 
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`,
+            'Authorization': `${token}`,
         },
     });
 
@@ -228,7 +227,7 @@ export const updatePlant = async (plantId: number, data: { nickName?: string; wa
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`,
+            'Authorization': `${token}`,
         },
         body: JSON.stringify(data),
     });

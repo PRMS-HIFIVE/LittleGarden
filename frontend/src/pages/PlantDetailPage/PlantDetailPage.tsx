@@ -42,8 +42,8 @@ function PlantDetailPage () {
         if(!plant) return;
         setIsUpdating(true);
         try {
-            const now = new Date().toISOString();
-            await updatePlant(plant.id, {watering: now});
+            const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
+            await updatePlant(Number(plant.id), {watering: now});
 
             alert('물주기 완료! 식물이 좋아해요~');
         } catch (error) {

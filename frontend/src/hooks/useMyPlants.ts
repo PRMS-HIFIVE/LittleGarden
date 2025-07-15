@@ -27,7 +27,7 @@ export const useMyPlants = () => {
         } finally {
             setIsLoading(false);
         }
-    }, [token, myPlants.length, setMyPlants]);
+    }, [token, setMyPlants]);
 
     useEffect(() => {
         loadMyPlants();
