@@ -29,9 +29,9 @@ const createPlant = async (userId: number, plant: IPlantRequestBody) => {
     const sql = `
         INSERT INTO plants (
             user_id, cntntsNo, cntntsSj, imgUrl, dlthtsCodeNm, fmlCodeNm, fmldeSeasonCodeNm, frtlzrInfo,
-            growthAraInfo, growthHgInfo, grwhTpCodeNm, grwtveCodeNm, hdCodeNm, ignSeasonCodeNm,
-            lighttdemanddoCodeNm, managedemanddoCodeNm, managelevelCodeNm, postngplaceCodeNm,
-            winterLwetTpCodeNm, watercycleSprngCode, watercycleSummerCode, watercycleAutumnCode, watercycleWinterCode
+            growthAraInfo, growthHgInfo, grwthTpCodeNm, grwtveCodeNm, hdCodeNm, ignSeasonCodeNm,
+            lightdemanddoCodeNm, managedemanddoCodeNm, managelevelCodeNm, postngplaceCodeNm,
+            winterLwetTpCodeNm, watercycleSpringCode, watercycleSummerCode, watercycleAutumnCode, watercycleWinterCode
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
     const values = [
@@ -68,7 +68,7 @@ const updatePlantNickName = async (plantId : string, nickName : string) => {
     return await executeQuery<ResultSetHeader>(sql, values);
 };
 
-const updatePlantWatering = async (plantId : string, watering : number) => {
+const updatePlantWatering = async (plantId : string, watering : string) => {
     const sql = `UPDATE plants SET last_watering = ? WHERE id = ?`;
     const values = [watering, plantId];
     return await executeQuery<ResultSetHeader>(sql, values);
