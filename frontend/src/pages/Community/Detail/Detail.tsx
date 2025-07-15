@@ -1,134 +1,111 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import * as S from "./Detail.styles";
 import CommunityBackHeader from "@/common/Header/HeaderVariants/CommunityBackHeader";
 import Tag from "@/components/UI/Tag/Tag";
+import { useComment } from "@/hooks/useComment";
+import { fetchPostDetail } from "@/apis/post.api";
+import { useAuthStore } from "@/store/authStore";
+import LoadingPage from "@/pages/Loading/Loading";
 
-interface CommentData {
-  id: number;
-  nickname: string;
-  content: string;
+// 게시글 데이터 타입
+interface PostDetail {
   profileImage: string;
-  isAuthor: "1" | "0";
+  nickname: string;
+  title: string;
+  content: string;
+  images: string[];
+  plantTags: string[];
+  createdAt: string;
 }
 
 const CommunityDetail = () => {
+  const { id } = useParams();
+  const postId = Number(id);
   const [comment, setComment] = useState("");
-  // const [comments, setComments] = useState<string[]>([]);
-  const [comments, setComments] = useState<CommentData[]>([
-    // 작성자가 아닌 유저의 댓글 확인용 데이터
-    {
-      id: 2,
-      nickname: "유저2",
-      content: "저도 몬스테라 키우고 있어요!",
-      profileImage: "https://via.placeholder.com/40",
-      isAuthor: "0",
-    },
-  ]);
+  const [post, setPost] = useState<PostDetail | null>(null);
 
-  // const handleCommentSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   if (comment.trim()) {
-  //     setComments([...comments, comment]);
-  //     setComment("");
-  //   }
-  // };
+  const user = useAuthStore((s) => s.user);
+  console.log("로그인 유저 정보:", user);
 
-  const handleCommentSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const { comments, loadComments, createComment } = useComment(postId);
+
+  // 게시글 + 댓글 불러오기
+  useEffect(() => {
+    const init = async () => {
+      try {
+        const postData = await fetchPostDetail(postId);
+        setPost(postData);
+        await loadComments();
+
+      } catch (err) {
+        console.error("게시글 또는 댓글 불러오기 실패", err);
+      }
+    };
+
+    if (postId) init();
+
+  }, [postId]);
+
+  // 댓글 등록
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!comment.trim()) return;
 
-    if (comment.trim()) {
-      const newComment: CommentData = {
-        id: comments.length + 1,
-        nickname: post.nickname,
-        content: comment,
-        profileImage: post.profileImage,
-        isAuthor: "1",
-      };
-
-      setComments([...comments, newComment]);
-      setComment("");
+    try {
+      await createComment(comment); // 서버 저장 + store 갱신
+      setComment(""); // 입력창 초기화
+    } catch (err) {
+      console.error("댓글 등록 실패", err);
     }
   };
 
-  // 더미 데이터 (추후 API로 대체 예정)
-  const post = {
-    profileImage: "https://via.placeholder.com/40",
-    nickname: "닉네임",
-    title: "제목제목제목제목제목제목",
-    content: `작성한 내용 작성한 내용의 일부 작성한 내용 작성한 내용의 일부
-    작성한 내용 작성한 내용의 일부작성한 내용 작성한 내용의 일부
-    작성한 내용 작성한 내용의 일부작성한 내용 작성한 내용의 일부
-    작성한 내용 작성한 내용의 일부작성한 내용 작성한 내용의 일부
-    작성한 내용 작성한 내용의 일부작성한 내용 작성한 내용의 일부
-    작성한 내용 작성한 내용의 일부작성한 내용 작성한 내용의 일부
-    작성한 내용 작성한 내용의 일부작성한 내용 작성한 내용의 일부
-    작성한 내용 작성한 내용의 일부작성한 내용 작성한 내용의 일부
-    작성한 내용 작성한 내용의 일부작성한 내용 작성한 내용의 일부
-    작성한 내용 작성한 내용의 일부작성한 내용 작성한 내용의 일부
-    작성한 내용 작성한 내용의 일부작성한 내용 작성한 내용의 일부
-    작성한 내용 작성한 내용의 일부작성한 내용 작성한 내용의 일부
-    작성한 내용 작성한 내용의 일부작성한 내용 작성한 내용의 일부`,
-    plantTags: ["#식물", "#화분"],
-    images: ["https://via.placeholder.com/300"],
-    createdAt: "2025.06.27",
-  };
+  if (!post) return <LoadingPage />;
 
   return (
     <S.Container>
       <S.ScrollArea>
-        <CommunityBackHeader/>
+        <CommunityBackHeader />
         <S.SectionDivider />
-        <S.PostHeader>
-          <S.ProfileImage
-            src={post.profileImage}
-            alt={`${post.nickname} 프로필`}
-          />
 
+        <S.PostHeader>
+          <S.ProfileImage src={post.profileImage} alt="프로필 이미지" />
           <S.Nickname>{post.nickname}</S.Nickname>
         </S.PostHeader>
 
         <S.Title>{post.title}</S.Title>
-
         <S.Content>{post.content}</S.Content>
 
         <S.ImageWrapper>
           {post.images.map((img, idx) => (
-            <S.Image key={idx} src={img} alt={`post-image-${idx}`} />
+            <S.Image key={idx} src={img} alt={`img-${idx}`} />
           ))}
         </S.ImageWrapper>
 
         <S.TagWrapper>
-          {/* {post.plantTags.map((tag, idx) => (
-            <S.Tag key={idx}>{tag}</S.Tag>
-          ))} */}
-          <Tag>#화분 </Tag>
-          <Tag>#식물 </Tag>
+          {post.plantTags.map((tag, idx) => (
+            <Tag key={idx}>{tag}</Tag>
+          ))}
         </S.TagWrapper>
 
         <S.Date>{post.createdAt}</S.Date>
-
         <S.SectionDivider />
 
-        {/* 댓글 섹션 */}
+        {/* 댓글 영역 */}
         <S.CommentSection>
           {comments.length === 0 ? (
             <S.EmptyComment>아직 댓글이 없습니다.</S.EmptyComment>
           ) : (
-            // <S.CommentList>
-            //   {comments.map((cmt, idx) => (
-            //     <S.CommentItem key={idx}>{cmt}</S.CommentItem>
-            //   ))}
-            // </S.CommentList>
             <S.CommentList>
               {comments.map((cmt) => (
                 <S.CommentItem key={cmt.id}>
                   <S.CommentHeader>
                     <S.ProfileImage
-                      src={cmt.profileImage}
-                      alt={`${cmt.nickname} 프로필`}
+                      src={cmt.profileImage || "/default-profile.png"}
+                      alt={`${cmt.nickName} 프로필`}
                     />
                     <S.Nickname>
-                      {cmt.nickname}
+                      {cmt.nickName}
                       {cmt.isAuthor === "1" && (
                         <S.AuthorBadge>작성자</S.AuthorBadge>
                       )}
@@ -142,14 +119,12 @@ const CommunityDetail = () => {
         </S.CommentSection>
       </S.ScrollArea>
 
-      {/* 댓글 입력 폼 */}
-      <S.CommentForm onSubmit={handleCommentSubmit}>
+      <S.CommentForm onSubmit={handleSubmit}>
         <S.CommentInput
           placeholder="댓글을 남겨보세요."
           value={comment}
           onChange={(e) => setComment(e.target.value)}
         />
-
         <S.CommentButton type="submit">전송</S.CommentButton>
       </S.CommentForm>
     </S.Container>

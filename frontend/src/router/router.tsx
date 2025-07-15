@@ -24,8 +24,8 @@ const AppRouter = () => {
         <Route path="/upload-preview" element={<UploadPreviewPage />} />
         <Route path="/register-plant" element={<PlantRegistrationPage />} />
         <Route path="/detail/:plantId" element={<PlantDetailPage />} />
-        <Route path="/detail" element={<CommunityDetail />} />
-        <Route path="/Community" element={<Community />} />
+        <Route path="/community" element={<Community />} />
+        <Route path="/community/:id" element={<CommunityDetail />} />
       </Routes>
     </Suspense>
   );

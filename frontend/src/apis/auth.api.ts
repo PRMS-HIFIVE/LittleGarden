@@ -88,3 +88,23 @@ export const requestEmailCertification = async (email: string) => {
 
   return response.json();
 };
+
+export const updateNickname = async (nickName: string) => {
+  const token = localStorage.getItem("token");
+
+  const response = await fetch(`${BASE_URL}/users`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token ?? ""}`,
+    },
+    body: JSON.stringify({ nickName }),
+  });
+
+  if (!response.ok) {
+    const result = await response.json();
+    throw new Error(result.message || "닉네임 변경 실패");
+  }
+
+  return response.json(); 
+};

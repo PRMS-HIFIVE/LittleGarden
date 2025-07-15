@@ -16,6 +16,7 @@ export interface IPost {
     is_health?:string,
     state?:number,
     plantTag?: string[]
+    isHealth?:number
 }
 
 export interface IPlant {

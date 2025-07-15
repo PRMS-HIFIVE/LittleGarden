@@ -19,3 +19,22 @@ export const fetchAllPosts = async (): Promise<Post[]> => {
   const data = await response.json();
   return data.data;
 };
+
+// 게시글 상세조회 API
+export const fetchPostDetail = async (postId: number) => {
+  console.log("게시글 조회요청:", postId);
+
+  const token = localStorage.getItem("token");
+  const response = await fetch(`/posts/${postId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("게시글 조회 실패");
+  }
+
+  const data = await response.json();
+  return data.data;
+};
