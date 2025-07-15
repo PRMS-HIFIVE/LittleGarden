@@ -4,12 +4,12 @@ import { Request, Response } from "express";
 
 export const postPosts = async (req:Request, res:Response) : Promise<void> => {
     const userId = req.user?.id;
-    const { title, content, plantTag, state } = req.body;
+    const { title, content, plantTag, state, isHealth } = req.body;
 
     const cleanedTags = plantTag.map((tag:string) => tag.replace(/^#/, ''));
 
     try {
-        const newPost = await postService.posts({userId, title, content,state});
+        const newPost = await postService.posts({userId, title, content,state, isHealth});
         const newtag = await postService.tags(newPost.insertId,cleanedTags);
         res.status(StatusCodes.CREATED).json({
             message : "게시글이 성공적으로 작성되었습니다.",
@@ -48,13 +48,16 @@ export const getPosts = async (req:Request, res:Response) : Promise<void> => {
 export const updatePosts = async (req:Request, res:Response) : Promise<void> => {
     const userId = req.user?.id;
     const postId = parseInt(req.params.postId);
-    const { title, content, plantTag, state } = req.body;
+    const { title, content, plantTag, state,isHealth } = req.body;
 
     const cleanedTags = plantTag.map((tag:string) => tag.replace(/^#/, ''));
 
     try {
-        const updatePost = await postService.updatePosts(postId,{userId, title, content,state});
-        const updateTag = await postService.updateTags(postId,cleanedTags);
+        const updatePost = await postService.updatePosts(postId,{userId, title, content,state,isHealth});
+        if(cleanedTags.length>=1){
+            const updateTag = await postService.updateTags(postId,cleanedTags);
+        }
+        
         res.status(StatusCodes.CREATED).json({
             message : "게시글이 성공적으로 수정되었습니다.",
             data : updatePost
@@ -63,7 +66,8 @@ export const updatePosts = async (req:Request, res:Response) : Promise<void> => 
     } catch (error){
         console.error("Error updating post:", error);
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-            message: "게시글 수정 중 오류가 발생했습니다."
+            message: "게시글 수정 중 오류가 발생했습니다.",
+            err: error
         });
         return;
     }
