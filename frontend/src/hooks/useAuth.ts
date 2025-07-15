@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { login, signup, requestResetPassword } from "@/apis/auth.api";
+import {
+  login,
+  signup,
+  requestResetPassword,
+  updateNickname,
+} from "@/apis/auth.api";
 import type { LoginRequest, SignUpRequest } from "@/apis/auth.api";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "@/store/authStore";
@@ -11,6 +16,9 @@ export function useAuth() {
 
   const setEmail = useAuthStore((state) => state.setEmail);
   const setToken = useAuthStore((state) => state.setToken);
+
+  const setUser = useAuthStore((state) => state.setUser);
+  const user = useAuthStore((state) => state.user);
 
   const handleSignup = async (formData: SignUpRequest) => {
     setLoading(true);
@@ -82,10 +90,37 @@ export function useAuth() {
     }
   };
 
+  const handleUpdateNickname = async (newNickname: string) => {
+    setLoading(true);
+    setError(null);
+    try {
+      await updateNickname(newNickname);
+
+      if (user) {
+        const updatedUser = { ...user, nickname: newNickname };
+        setUser(updatedUser);
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+      }
+
+      alert("닉네임이 변경되었습니다.");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        alert(error.message || "닉네임 변경 실패");
+        setError(error.message);
+      } else {
+        alert("알 수 없는 오류가 발생했습니다.");
+        setError("알 수 없는 오류");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     handleSignup,
     handleLogin,
     handleRequestResetPassword,
+    handleUpdateNickname,
     loading,
     error,
   };
