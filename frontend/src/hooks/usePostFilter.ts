@@ -1,7 +1,7 @@
 import { usePostStore } from "@/store/postStore";
 import { useState } from "react";
-// import { fetchAllPosts } from "@/apis/post.api";
-// import { useAuthStore } from "@/store/authStore";
+import { fetchAllPosts } from "@/apis/post.api";
+import { useAuthStore } from "@/store/authStore";
 
 export interface Post {
   postId: number;
@@ -15,74 +15,30 @@ export interface Post {
   img?: string;
 }
 
-const dummyPosts: Post[] = [
-  {
-    postId: 1,
-    state: 2,
-    title: "첫 번째 게시글",
-    content: "내용1",
-    createdAt: "2025-07-10T10:00:00",
-    userId: 1,
-  },
-  {
-    postId: 2,
-    state: 2,
-    title: "두 번째 게시글",
-    content: "내용2",
-    createdAt: "2025-07-09T10:00:00",
-    userId: 2,
-  },
-  {
-    postId: 3,
-    state: 2,
-    title: "세 번째 게시글",
-    content: "내용3",
-    createdAt: "2025-07-15T10:00:00",
-    userId: 1,
-  },
-];
-
-// state에 따라 성장일기, 커뮤니티 게시글 구분
+// state에 따라 성장일기(1), 커뮤니티(2) 게시글 구분
 export const usePostFilter = (stateType: 1 | 2) => {
-  const { allPosts, setAllPosts, filteredPosts, setFilteredPosts } =
-    usePostStore();
-
-  // 실제 사용할 코드
-  //   const userId = useAuthStore((s) => s.userId);
-
-  //   const init = async () => {
-  //     const data = await fetchAllPosts();
-  //     const filtered = data.filter((post) => post.state === stateType);
-  //     setAllPosts(filtered);
-  //   };
-
-  // 더미데이터 확인 로직
+  const { allPosts, setAllPosts, filteredPosts, setFilteredPosts } = usePostStore();
+  const userId = useAuthStore((s) => s.userId);
   const [isMyPostFiltered, setIsMyPostFiltered] = useState(false);
-  const userId = 1;
 
-  //   let isMyPostFiltered = false;
-
+  // 초기 게시글 불러오기 (state에 맞는 게시글만 필터링)
   const init = async () => {
-    // const data = await fetchAllPosts();
-    const data = dummyPosts;
+    const data = await fetchAllPosts();
     const filtered = data.filter((post) => post.state === stateType);
     setAllPosts(filtered);
     setFilteredPosts(filtered);
   };
 
-  // 최신순 필터링, 내 글보기 클릭 후 최신순 버튼 누르면 내 글들만 최신순으로 정렬
+  // 최신순 정렬
   const filterLatest = () => {
     const source = isMyPostFiltered ? filteredPosts : allPosts;
-
     const sorted = [...source].sort(
-      (a, b) =>
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
-
     setFilteredPosts(sorted);
   };
 
-  // 내 글 필터링, 2번 클릭하면 전체 글로 돌아감
+  // 내 글 보기 / 전체 보기 토글
   const filterMyPosts = () => {
     if (!userId) return;
 
