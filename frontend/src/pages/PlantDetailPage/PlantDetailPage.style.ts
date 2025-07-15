@@ -34,17 +34,6 @@ export const DetailBody = styled.div`
     padding-top: 20px;
     padding-bottom: 20px;
 `
-export const DdayLabel = styled.div`
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: #2E8B57;
-    margin-bottom: 1rem;
-    padding: 8px 16px;
-    background-color: #F0FFF0;
-    border-radius: 20px;
-    border: 2px solid #2E8B57;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-`;
 
 export const WeatherInfo = styled.div`
     width: 100%;
