@@ -9,6 +9,7 @@ import MainpageHeader from '@/common/Header/HeaderVariants/MainpageHeader';
 import { usePlantDetail } from '@/hooks/usePlantDetail';
 import { updatePlant } from '@/apis/plant.api';
 import { Droplet } from '@/assets/icons/IconList';
+import { marked } from 'marked';
 
 function PlantDetailPage () {
     const { plantId } = useParams<{ plantId: string }>();
@@ -65,6 +66,10 @@ function PlantDetailPage () {
     if (!plant) {
         return <div>식물 정보를 찾을 수 없습니다. <button onClick={handleGoBack}>돌아가기</button></div>;
     }
+
+    // const parsedMessage = () => {
+    //     marked.parse(`${plant.comment}`);
+    // }
     
     const renderWeatherContent = () => {
         if (isGeoLoading) return <p>위치 정보를 가져오는 중...</p>;
@@ -105,7 +110,7 @@ function PlantDetailPage () {
                 </Button>
             </S.DetailBody>
             <S.InfoWrapper>
-                <p>나중에 Gemini Text</p>
+                {`${plant.comment}`}
             </S.InfoWrapper>
             <Footer type='camera'/>
         </S.DetailWrapper>
