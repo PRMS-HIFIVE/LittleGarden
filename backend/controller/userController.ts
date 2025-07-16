@@ -63,6 +63,7 @@ export const login = async (req: TypedRequest<IUserRequestBody>, res: Response) 
             return;
         }
 
+        
         const token = jwt.sign(
             { 
                 id: loginUser[0].id, 
@@ -70,9 +71,16 @@ export const login = async (req: TypedRequest<IUserRequestBody>, res: Response) 
             }, 
             JWT_SECRET!,
             {
-                expiresIn : "1h"
+                expiresIn : "3h"
             } 
         );
+
+        res.cookie('access_token', token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'strict',
+            maxAge: 60 * 60 * 3000
+        });
 
         res.status(StatusCodes.OK).json({
             loginUser : loginUser[0],

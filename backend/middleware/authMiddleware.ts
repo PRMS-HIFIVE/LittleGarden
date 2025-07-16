@@ -5,14 +5,11 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export const authenticateToken = (req : Request, res : Response, next : NextFunction) => {
-    const { authorization } = req.headers;
-
-    if (!authorization || !authorization.startsWith('Bearer ')) {
-        res.status(StatusCodes.UNAUTHORIZED).json({ message: "인증 토큰이 없거나 'Bearer' 형식이 아닙니다." });
+    const token = req.cookies.access_token;
+    if (!token) {
+        res.status(StatusCodes.UNAUTHORIZED).json({ message: '인증 토큰이 없습니다.' });
         return;
     }
-
-    const token = authorization.split(' ')[1];
 
     try {
         if(process.env.JWT_SECRET) {
