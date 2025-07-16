@@ -7,6 +7,7 @@ import { useComment } from "@/hooks/useComment";
 import { fetchPostDetail } from "@/apis/post.api";
 import { useAuthStore } from "@/store/authStore";
 import LoadingPage from "@/pages/Loading/Loading";
+import { FiEdit, FiTrash2 } from "react-icons/fi";
 
 // 게시글 데이터 타입
 interface PostDetail {
@@ -22,13 +23,23 @@ interface PostDetail {
 const CommunityDetail = () => {
   const { id } = useParams();
   const postId = Number(id);
+
   const [comment, setComment] = useState("");
   const [post, setPost] = useState<PostDetail | null>(null);
+  
+  const [editingCommentId, setEditingCommentId] = useState<number | null>(null);
+  const [editingContent, setEditingContent] = useState("");
 
   const user = useAuthStore((s) => s.user);
   console.log("로그인 유저 정보:", user);
 
-  const { comments, loadComments, createComment } = useComment(postId);
+  const {
+    comments,
+    loadComments,
+    createComment,
+    updateComment,
+    deleteComment,
+  } = useComment(postId);
 
   // 게시글 + 댓글 불러오기
   useEffect(() => {
@@ -37,14 +48,12 @@ const CommunityDetail = () => {
         const postData = await fetchPostDetail(postId);
         setPost(postData);
         await loadComments();
-
       } catch (err) {
         console.error("게시글 또는 댓글 불러오기 실패", err);
       }
     };
 
     if (postId) init();
-
   }, [postId]);
 
   // 댓글 등록
@@ -57,6 +66,40 @@ const CommunityDetail = () => {
       setComment(""); // 입력창 초기화
     } catch (err) {
       console.error("댓글 등록 실패", err);
+    }
+  };
+
+  const startEditing = (id: number, content: string) => {
+    setEditingCommentId(id);
+    setEditingContent(content);
+  };
+
+  const cancelEditing = () => {
+    setEditingCommentId(null);
+    setEditingContent("");
+  };
+
+  const handleUpdate = async () => {
+    if (editingCommentId !== null && editingContent.trim()) {
+      try {
+        await updateComment(editingCommentId, editingContent);
+        setEditingCommentId(null);
+        setEditingContent("");
+        await loadComments();
+      } catch (err) {
+        console.error("댓글 수정 실패", err);
+      }
+    }
+  };
+
+  const handleDelete = async (commentId: number) => {
+    if (confirm("댓글을 삭제하시겠습니까?")) {
+      try {
+        await deleteComment(commentId);
+        await loadComments();
+      } catch (err) {
+        console.error("댓글 삭제 실패", err);
+      }
     }
   };
 
@@ -110,8 +153,35 @@ const CommunityDetail = () => {
                         <S.AuthorBadge>작성자</S.AuthorBadge>
                       )}
                     </S.Nickname>
+
+                    {user?.id === cmt.userId && (
+                      <S.IconWrapper>
+                        <S.IconButton
+                          onClick={() => startEditing(cmt.id, cmt.content)}
+                        >
+                          <FiEdit size={16} />
+                        </S.IconButton>
+                        <S.IconButton onClick={() => handleDelete(cmt.id)}>
+                          <FiTrash2 size={16} />
+                        </S.IconButton>
+                      </S.IconWrapper>
+                    )}
                   </S.CommentHeader>
-                  <S.CommentText>{cmt.content}</S.CommentText>
+
+                  {editingCommentId === cmt.id ? (
+                    <>
+                      <S.CommentEditInput
+                        value={editingContent}
+                        onChange={(e) => setEditingContent(e.target.value)}
+                      />
+                      <S.CommentEditActions>
+                        <button onClick={handleUpdate}>수정</button>
+                        <button onClick={cancelEditing}>취소</button>
+                      </S.CommentEditActions>
+                    </>
+                  ) : (
+                    <S.CommentText>{cmt.content}</S.CommentText>
+                  )}
                 </S.CommentItem>
               ))}
             </S.CommentList>
