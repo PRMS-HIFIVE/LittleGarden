@@ -23,8 +23,8 @@ export const StyledHeader = styled.div<{
     background-color: ${({backgroundColor = 'primary'}) => backgroundColors[backgroundColor]};
     width: ${({width}) => width || '100%'};
     min-width: ${({minWidth}) => minWidth || 'auto'};
-    max-width: ${({maxWidth}) => maxWidth || 'auto'};
-    height: ${({height}) => height || '10vh'};
+    max-width: ${({maxWidth}) => maxWidth || '393px'};
+    height: ${({height}) => height || '120px'};
     padding: ${({padding = '0'}) => padding};
     margin: ${({margin = '0'}) => margin};
     border-bottom: ${({borderBottom = 'none'}) => headerBorderBottomStyles[borderBottom]};
@@ -55,7 +55,7 @@ export const HeaderCenter = styled.div`
 `
 export const HeaderSide =styled.div<{position?: 'left' | 'right', padding?: string}>`
     display: flex;
-    flex: 1;
+    flex: 0 0 auto;
     align-items: center;
     justify-content: ${({position = 'center'}) => position === 'left' ? 'flex-start' : position === 'right' ? 'flex-end' :'center'};
     min-width: 40px;
@@ -84,4 +84,5 @@ export const headerBorderBottomStyles = {
     tertiary: `1px solid ${palette.navyBlue}`,
     none: 'none',
 }as const;
+
 export type HeaderBorderBottomStyles = keyof typeof headerBorderBottomStyles;

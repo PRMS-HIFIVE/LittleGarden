@@ -19,6 +19,7 @@ export interface LoginResponse {
 }
 
 const BASE_URL = import.meta.env.VITE_BACK_SERVER_URL;
+console.log("백엔드 주소:", BASE_URL);
 
 
 export const signup = async (data: SignUpRequest) => {

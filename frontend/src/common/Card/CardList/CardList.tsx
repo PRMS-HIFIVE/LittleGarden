@@ -1,5 +1,5 @@
-import { CardListContainer } from './CardList';
-import Card from './../Card';
+import { CardListContainer } from '@/common/Card/CardList/CardList.styles';
+import Card from '@/common/Card/Card';
 
 interface CardItems {
     title: string;

@@ -32,7 +32,7 @@ const Header = ({
     padding,
     leftPadding,
     rightPadding,
-    margin,
+    margin = '0 auto',
     borderBottom,
 }: HeaderProps) => {
 
@@ -56,5 +56,6 @@ const Header = ({
         </HeaderContainer>
     )
 }
+
 
 export default Header;

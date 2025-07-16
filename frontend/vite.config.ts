@@ -10,6 +10,7 @@ export default defineConfig({
     alias: [{ find: '@', replacement: path.resolve(__dirname, 'src') }],
   },
   server: {
+    host: true,
     proxy: {
       '/nongsaro-api': {
         target: 'http://api.nongsaro.go.kr',

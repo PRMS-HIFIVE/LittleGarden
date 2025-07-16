@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { backgroundColors } from "@/styles/paletteMapping";
-import { CardListContainer } from "@/common/Card/CardList/CardList";
+import { CardListContainer } from "@/common/Card/CardList/CardList.styles";
 
 export const Container = styled.div`
   display: flex;

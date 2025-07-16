@@ -184,3 +184,45 @@ export const CommentText = styled.p`
   border-radius: 10px;
 `;
 
+export const IconWrapper = styled.div`
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+`;
+
+export const IconButton = styled.button`
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #666;
+
+  &:hover {
+    color: #000;
+  }
+`;
+
+export const CommentEditInput = styled.textarea`
+  width: 100%;
+  padding: 8px;
+  margin-top: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  resize: none;
+`;
+
+export const CommentEditActions = styled.div`
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+
+  & > button {
+    background-color: #e2e2e2;
+    border: none;
+    padding: 4px 8px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+`;
+
+
+
