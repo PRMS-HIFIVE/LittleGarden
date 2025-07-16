@@ -16,7 +16,7 @@ const DiaryPhotoList = () => {
 
             try {
                 const userId = Number(localStorage.getItem("userId"));
-                const data: DiaryData[] = await diaryAPI.getDiary();
+                const data: DiaryData[] = await diaryAPI.getDiary(userId);
 
                 const filtered = data.filter(diary => diary.userId === userId && diary.image?.trim());
 
