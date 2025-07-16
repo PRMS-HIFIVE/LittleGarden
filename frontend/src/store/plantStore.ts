@@ -18,6 +18,7 @@ export interface Plant {
     frtlzrInfo?: string;
     dlthtsCodeNm?: string;
     comment?: string;
+    watercycle?: number;
 }
 
 interface PlantStoreState {

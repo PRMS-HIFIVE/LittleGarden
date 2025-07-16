@@ -34,7 +34,7 @@ export const usePlantForm = ({ imageFile, plantDetail }: UsePlantFormProps) => {
 
             const payload: Record<string, any> = {
                 cntntsSj: plantName,
-                wateringCycle: wateringCycle,
+                watercycle: wateringCycle,
                 imgUrl: imageUrl,
 
                 cntntsNo: plantDetail?.contentNo || '정보 없음',
