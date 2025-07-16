@@ -9,7 +9,6 @@ import MainpageHeader from '@/common/Header/HeaderVariants/MainpageHeader';
 import { usePlantDetail } from '@/hooks/usePlantDetail';
 import { updatePlant } from '@/apis/plant.api';
 import { Droplet } from '@/assets/icons/IconList';
-import { marked } from 'marked';
 
 function PlantDetailPage () {
     const { plantId } = useParams<{ plantId: string }>();
