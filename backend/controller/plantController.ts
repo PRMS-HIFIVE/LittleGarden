@@ -27,6 +27,7 @@ export interface IPlantRequestBody {
     watercycleSummerCode : string;
     watercycleAutumnCode : string;
     watercycleWinterCode : string;
+    watercycle? : number;
 }
 
 export const getPlants = async (req: Request, res: Response) : Promise<void> => {
@@ -77,7 +78,8 @@ export const createPlant = async (req: TypedRequest<IPlantRequestBody>, res: Res
         watercycleSprngCode: req.body.watercycleSprngCode,
         watercycleSummerCode: req.body.watercycleSummerCode,
         watercycleAutumnCode: req.body.watercycleAutumnCode,
-        watercycleWinterCode: req.body.watercycleWinterCode
+        watercycleWinterCode: req.body.watercycleWinterCode,
+        watercycle: req.body.watercycle
     };
     
     try {

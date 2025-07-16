@@ -152,3 +152,19 @@ export const sendPushValidator = [
     body("data.subscription").notEmpty().withMessage("data.subscription은 필수 입력 항목입니다."),
     handleValidation
 ];
+
+export const updateSubscriptionValidator : (ValidationChain | RequestHandler)[] = [
+    param("subId").notEmpty().withMessage("단말 id는 필수 입력 항목입니다."),
+    body().custom(body => {
+        if (body.deviceName === undefined && body.isEnabled === undefined) {
+            throw new Error('deviceName 또는 isEnabled 중 하나는 필수입니다.');
+        }
+        return true;
+    }),
+    handleValidation
+];
+
+export const deleteSubscriptionValidator : (ValidationChain | RequestHandler)[] = [
+    param("subId").notEmpty().withMessage("단말 id는 필수 입력 항목입니다."),
+    handleValidation
+];
