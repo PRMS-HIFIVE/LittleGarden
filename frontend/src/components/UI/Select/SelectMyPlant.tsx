@@ -1,30 +1,32 @@
 import { getAuthToken } from "@/apis/diary.api";
 import { AddedTag, AddTagButton, Select, SelectRow, SelectWrapper, TagList, TagRemoveButton } from "@/components/UI/Select/SelectMyPlant.styles";
+//import type { Plant } from "@/store/plantStore";
 import { useEffect, useState } from "react";
 
 
 export interface MyPlantTag {
-    userId: number;
-    plantId: number;
+    //userId: number;
+    plantId: string;
     name: string;
 }
 export interface PlantSelectorProps {
   onChange: (plants: MyPlantTag[]) => void;
+  //plant: Plant[];
 }
 
 const PlantSelector = ({onChange} : PlantSelectorProps) => {
-  const [selectedPlantId, setSelectedPlantId] = useState<number | null>(null);
+  const [selectedPlantId, setSelectedPlantId] = useState<string | null>(null);
   const [selectedPlants, setSelectedPlants] = useState<MyPlantTag[]>([]);
   const [plantList, setPlantList] = useState<MyPlantTag[]>([]);
 
   const handleAddPlant = () => {
-    const plant = plantList.find(p => p.plantId === selectedPlantId);
+    const plant = plantList.find(p => p.plantId === String(selectedPlantId));
     if (plant && !selectedPlants.some(p => p.plantId === plant.plantId)) {
       setSelectedPlants(prev => [...prev, plant]);
     }
   };
 
-  const handleRemovePlant = (id: number) => {
+  const handleRemovePlant = (id: string) => {
     setSelectedPlants(selectedPlants.filter(p => p.plantId !== id));
   };
 
@@ -65,7 +67,7 @@ const PlantSelector = ({onChange} : PlantSelectorProps) => {
       <SelectRow>
         <Select
           value={selectedPlantId ?? ""}
-          onChange={e => setSelectedPlantId(Number(e.target.value))}
+          onChange={e => setSelectedPlantId(e.target.value)}
         >
             {plantList.map(plant => (
                 <option key={plant.plantId} value={plant.plantId}>{plant.name}</option>

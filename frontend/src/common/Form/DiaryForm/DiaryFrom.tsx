@@ -5,6 +5,7 @@ import Button from "@/components/UI/Button/Button";
 import Input from "@/components/UI/Input/Input";
 import PlantSelector, { type MyPlantTag } from "@/components/UI/Select/SelectMyPlant";
 import { AddedTag, TagList } from "@/components/UI/Select/SelectMyPlant.styles";
+//import { usePlantStore } from "@/store/plantStore";
 
 interface DiaryFormProps {
   formTitle?: string;
@@ -33,6 +34,7 @@ const DiaryForm =({
     onChangeSelectedPlants,
     onSubmit,
     }: DiaryFormProps) => {
+    //const { plants } = usePlantStore();
 
     return (
         <>
@@ -60,7 +62,11 @@ const DiaryForm =({
                         onChange={(e) => onChangeTag(e.target.value)}
                     /> */}
 
-                    <PlantSelector onChange={onChangeSelectedPlants} />
+                    <PlantSelector 
+                        //plants={plants}
+                        onChange={onChangeSelectedPlants}
+
+                    />
                     
                     {selectedPlants.length > 0 && (
                         <TagList>

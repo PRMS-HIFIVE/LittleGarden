@@ -1,4 +1,4 @@
-import DiaryForm from "@/common/Form/DiaryForm/DiaryForm";
+import DiaryForm from "@/common/Form/DiaryForm/DiaryFrom";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as diaryAPI from "@/apis/diary.api"
@@ -23,7 +23,10 @@ const DiaryWrite = () => {
             navigate("/login");
             return;
         }
-
+        if (!title.trim() || !content.trim()) {
+            alert("제목과 내용 모두 입력해주세요");
+            return;
+        }
         try {
 /*
             const uploadedUrls = await Promise.all(
@@ -41,15 +44,17 @@ const DiaryWrite = () => {
                 })
             )
 */
-            await diaryAPI.postDiary({
+
+            const payload: diaryAPI.PostDiaryPayload = {
                 userId,
                 title,
                 content,
-                //plantTag: tag ? tag.split(",").map((t) => t.trim().replace(/^#/, "")) : [],
-                plantTag: selectedPlants.map(p => String(p.plantId)),
+                plantTag: selectedPlants.map((plant) => plant.plantId),
+                image: undefined, // 추후 imageUrl 또는 uploadedUrl 넣을 수 있음
                 state: 1,
-                //image: uploadedUrls,
-            })
+            };
+
+            await diaryAPI.postDiary(payload)
             alert("등록되었습니다");
             navigate("/diary/latest");
         } catch (error: unknown) {

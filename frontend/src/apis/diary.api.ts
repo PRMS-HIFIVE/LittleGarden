@@ -1,9 +1,9 @@
 // 성장일기 API
 
-//const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 // 임시 태그
-const tempPlantTags = ["1", "2"];
+//const tempPlantTags = ["1", "2"];
 
 
 export interface DiaryData {
@@ -36,7 +36,7 @@ export type DiaryPayloadUnion = GetDiaryPayload | PostDiaryPayload | PutDiaryPay
 export const getDiary = async (userId: number) => {
     const token = getAuthToken();
 
-    const response = await fetch(`/posts?userId=${userId}&state=1`, {
+    const response = await fetch(`${API_BASE_URL}/posts?userId=${userId}&state=1`, {
         headers: {
             "Authorization": `Bearer ${token ?? ""}`,
         }
@@ -62,7 +62,7 @@ export const postDiary = async (payload: PostDiaryPayload) => {
     //     if (file) formData.append("image", file);
     // });
 
-    const response = await fetch(`/posts`, {
+    const response = await fetch(`${API_BASE_URL}/posts`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -73,8 +73,8 @@ export const postDiary = async (payload: PostDiaryPayload) => {
                 userId: payload.userId,
                 title: payload.title,
                 content: payload.content,
-                //plantTag: payload.plantTag?.length ? payload.plantTag : undefined,
-                plantTag: tempPlantTags, // 임시 태그
+                plantTag: payload.plantTag?.length ? payload.plantTag : undefined,
+                //plantTag: tempPlantTags, // 임시 태그
                 state: payload.state,
                 image: payload.image,
             }
@@ -92,7 +92,7 @@ export const postDiary = async (payload: PostDiaryPayload) => {
 // 게시글 수정
 export const putDiary = async (payload: PutDiaryPayload) => {
     const token = getAuthToken();
-    const response = await fetch(`/posts/${payload.postId}`, {
+    const response = await fetch(`${API_BASE_URL}/posts/${payload.postId}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
@@ -119,7 +119,7 @@ export const putDiary = async (payload: PutDiaryPayload) => {
 // 게시글 삭제
 export const deleteDiary = async (postId: number) => {
     const token = getAuthToken();
-    const response = await fetch(`/posts/${postId}`, {
+    const response = await fetch(`${API_BASE_URL}/posts/${postId}`, {
         method: "DELETE",
         headers:{
             Authorization: `Bearer ${token ?? ""}`,

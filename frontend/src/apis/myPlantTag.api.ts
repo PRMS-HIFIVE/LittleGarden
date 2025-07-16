@@ -1,8 +1,8 @@
 
 export interface MyPlantTagData {
-    userId: number;
-    plantId: number;
-    name: string;
+    //userId: number;
+    plantId: string; // 저장된 식물
+    name: string; // id로 받아온 이름
 }
 
 export const getMyPlantTag = async (): Promise<MyPlantTagData[]> => {
