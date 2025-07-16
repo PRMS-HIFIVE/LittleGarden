@@ -3,14 +3,15 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as diaryAPI from "@/apis/diary.api"
 import { useAuthStore } from "../../../store/authStore";
-import type { MyPlantTag } from "@/components/UI/Select/SelectMyPlant";
+//import type { MyPlantTag } from "@/components/UI/Select/SelectMyPlant";
+import type { PlantNameRequest } from "@/components/UI/Select/SelectMyPlant2";
 
 const DiaryWrite = () => {
     const userId = useAuthStore((state) => state.userId);
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     //const [tag, setTag] = useState("");
-    const [selectedPlants, setSelectedPlants] = useState<MyPlantTag[]>([]);
+    const [selectedPlants, setSelectedPlants] = useState</*MyPlantTag[]*/PlantNameRequest[]>([]);
     const [images, setImages] = useState<(File | null)[]>([null, null, null]);
 
     const navigate = useNavigate();
@@ -49,7 +50,7 @@ const DiaryWrite = () => {
                 userId,
                 title,
                 content,
-                plantTag: selectedPlants.map((plant) => plant.plantId),
+                plantTag: selectedPlants.map((plant) => plant.cntntsNo),
                 image: undefined, // 추후 imageUrl 또는 uploadedUrl 넣을 수 있음
                 state: 1,
             };

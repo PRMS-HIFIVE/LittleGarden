@@ -26,7 +26,7 @@ const DiaryList = () => {
             setError(null);
             try {
                 const userId = Number(localStorage.getItem("userId"));
-                const data: DiaryData[] = await diaryAPI.getDiary(/*userId*/); // diary.api 쪽에서는 전체 다 받아오고, 아래에서 필터링
+                const data: DiaryData[] = await diaryAPI.getDiary(userId); // diary.api 쪽에서는 전체 다 받아오고, 아래에서 필터링
 
                 // userId로 필터링
                 const filtered = data.filter(diary => diary.userId === userId);
