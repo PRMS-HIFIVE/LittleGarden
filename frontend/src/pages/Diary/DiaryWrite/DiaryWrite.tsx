@@ -1,4 +1,4 @@
-import DiaryForm from "@/common/Form/DiaryForm/DiaryFrom";
+import DiaryForm from "@/common/Form/DiaryForm/DiaryForm";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as diaryAPI from "@/apis/diary.api"
