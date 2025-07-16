@@ -149,16 +149,12 @@ export const identifyPlantByImage = async (imageBase64: string): Promise<PlantId
 };
 
 export const fetchMyPlants = async (): Promise<Plant[]> => {
-    const token = getAuthToken();
-    if (!token) {
-        return [];
-    }
-
+    const token = localStorage.getItem("token");
     const response = await fetch(`${BASE_URL}/plants`, {
         method: 'GET',
         headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `${token}`,
+            "Authorization": `Bearer ${token ?? ""}`,
+            "Content-Type": "application/json",
         },
     });
 
@@ -206,7 +202,7 @@ export const fetchPlantById = async (plantId: number): Promise<Plant | null> => 
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `${token}`,
+            'Authorization': `Bearer ${token}`,
         },
     });
 
@@ -227,7 +223,7 @@ export const updatePlant = async (plantId: number, data: { nickName?: string; wa
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `${token}`,
+            'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify(data),
     });
