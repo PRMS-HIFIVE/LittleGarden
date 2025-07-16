@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import Loading from "@/pages/Loading/Loading";
+import NoticePage from "@/pages/Notice/NoticePage";
 
 const Index = lazy(() => import("@/pages/Index"));
 const UploadPreviewPage = lazy(() => import("@/pages/UploadPreview/UploadPreviewPage"));
@@ -33,8 +34,9 @@ const AppRouter = () => {
         <Route path="/diary" element={<Diary />}>
           <Route path="latest" element={<DiaryList />} />
           {/* <Route path="photo" element={<PhotoOnly />} /> */}
-          </Route>
-          <Route path="/diary/write" element={<DiaryWrite />} />
+        </Route>
+        <Route path="/diary/write" element={<DiaryWrite />} />
+        <Route path="/notice" element={<NoticePage />} />
       </Routes>
     </Suspense>
   );

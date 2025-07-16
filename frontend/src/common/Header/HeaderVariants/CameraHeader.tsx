@@ -20,4 +20,5 @@ const CameraHeader = () => {
     )
 }
 
+
 export default CameraHeader;

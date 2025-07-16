@@ -84,4 +84,5 @@ export const headerBorderBottomStyles = {
     tertiary: `1px solid ${palette.navyBlue}`,
     none: 'none',
 }as const;
+
 export type HeaderBorderBottomStyles = keyof typeof headerBorderBottomStyles;

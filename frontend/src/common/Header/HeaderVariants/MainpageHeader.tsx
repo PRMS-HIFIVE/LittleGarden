@@ -29,7 +29,7 @@ const MainpageHeader = () => {
         }
      };
     const handleNotice = () => {
-
+        navigate('/notice')
     };
     const handleMenu = () => {
         toggleSidebar();
@@ -55,5 +55,6 @@ const MainpageHeader = () => {
         </Header>
     )
 }
+
 
 export default MainpageHeader;

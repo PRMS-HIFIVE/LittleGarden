@@ -18,4 +18,5 @@ export const SidebarProfileName = styled.span`
     font-size: 1.8rem;
     font-weight: bold;
     color: inherit;
+    
 `;

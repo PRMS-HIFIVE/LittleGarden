@@ -24,4 +24,5 @@ const PageHeader = ({...rest}: HeaderProps) => {
     )
 }
 
+
 export default PageHeader;

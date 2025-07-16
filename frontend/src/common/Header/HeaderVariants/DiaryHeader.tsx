@@ -42,4 +42,5 @@ const DiaryHeader = ({...rest}: HeaderProps) => {
     )
 }
 
+
 export default DiaryHeader;
