@@ -95,6 +95,17 @@ export const login = async (req: TypedRequest<IUserRequestBody>, res: Response) 
     }
 }
 
+export const logout = (req: Request, res: Response) : void => {
+    res.clearCookie('access_token', {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'strict'
+    });
+
+    res.json({ message: '로그아웃되었습니다.' });
+    return;
+}
+
 export const emailCertify = async (req: Request, res: Response): Promise<void> => {
     const {email} = req.body;
     try {
