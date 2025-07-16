@@ -27,7 +27,7 @@ if (!publicVapidKey || !privateVapidKey) {
 
 webpush.setVapidDetails(`mailto:${VAPID_EMAIL}`, publicVapidKey, privateVapidKey);
 
-import pushRouter from './router/push';
+import pushRouter from './router/push-server/push';
 app.use("/", pushRouter);
 
 app.listen(PORT, () => {

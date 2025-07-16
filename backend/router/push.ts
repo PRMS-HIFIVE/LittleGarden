@@ -1,11 +1,16 @@
 import express from 'express';
+import { deleteSubscription, getSubscriptions, subscribeDevice, updateSubscription } from '../controller/pushController';
 import { authenticateToken } from '../middleware/authMiddleware';
-import { sendPushValidator, subscribeValidator } from '../middleware/validator';
-import { sendPushNotification, subscribeDevice } from '../controller/pushController';
+import { deleteSubscriptionValidator, subscribeValidator, updateSubscriptionValidator } from '../middleware/validator';
 
 const router = express.Router();
 
-router.post('/subscribe', authenticateToken, subscribeValidator, subscribeDevice);
-router.post('/send-notification', sendPushValidator, sendPushNotification);
+router.route('/')
+    .get(authenticateToken, getSubscriptions)
+    .post(authenticateToken, subscribeValidator, subscribeDevice);
+
+router.route('/:subId')
+    .put(authenticateToken, updateSubscriptionValidator, updateSubscription)
+    .delete(authenticateToken, deleteSubscriptionValidator, deleteSubscription);
 
 export default router;

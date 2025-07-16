@@ -21,12 +21,14 @@ import postsRouter from "./router/posts";
 import apiplantsRouter from "./router/apiplant";
 import plantsRouter from "./router/plants";
 import commentsRouter from "./router/comments";
+import pushRouter from "./router/push";
 
 app.use("/users", usersRouter);
 app.use("/posts", postsRouter);
 app.use("/plantidapi", apiplantsRouter);
 app.use("/plants", plantsRouter);
 app.use("/comments", commentsRouter);
+app.use("/push", pushRouter);
 
 // 스케줄링
 import './service/scheduleService';
