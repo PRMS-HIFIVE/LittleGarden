@@ -38,8 +38,16 @@ export const StyledSidebar = styled.div<{
     display: flex;
     flex-direction: column;
 
-    transform: ${({isOpen}) => (isOpen ?  'translateX(0)' : 'translateX(100%)')};
-    transition: transform 0.2s ease-in-out;
+    transform: ${({ isOpen }) => (isOpen ? 'translateX(0)' : 'translateX(100%)')};
+    opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
+    visibility: ${({ isOpen }) => (isOpen ? 'visible' : 'hidden')};
+
+    transition:
+    transform 0.3s ease-in-out,
+    opacity 0.3s ease-in-out,
+    visibility 0.3s ease-in-out;
+
+  pointer-events: ${({ isOpen }) => (isOpen ? 'auto' : 'none')};
 `;
 
 export const SidebarMenuItem = styled.button<{ 
