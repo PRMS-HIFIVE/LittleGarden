@@ -1,8 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import Loading from "@/pages/Loading/Loading";
-import NoticePage from "@/pages/Notice/NoticePage";
-
 const Index = lazy(() => import("@/pages/Index"));
 const UploadPreviewPage = lazy(() => import("@/pages/UploadPreview/UploadPreviewPage"));
 const PlantRegistrationPage = lazy(() => import("@/pages/PlantRegistrationPage/PlantRegistrationPage"));
@@ -15,6 +13,7 @@ const CommunityDetail = lazy(() => import("@/pages/Community/Detail/Detail"));
 const Diary = lazy(() => import("@/pages/Diary/Diary"));
 const DiaryList = lazy(() => import("@/pages/Diary/DiaryList/DiaryList"));
 const DiaryWrite = lazy(() => import("@/pages/Diary/DiaryWrite/DiaryWrite"));
+const NoticePage = lazy(() => import("@/pages/Notice/NoticePage"));
 
 
 
