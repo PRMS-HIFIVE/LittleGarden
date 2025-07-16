@@ -83,7 +83,7 @@ const getTargetUsers = async () => {
     const sql = `SELECT P.user_id, P.cntntsSj, PS.subscription
                 FROM (plants P JOIN push_subscriptions PS ON P.user_id = PS.user_id)
                 LEFT JOIN watercycle W ON P.${watercycleColumn} = W.watercycleCode 
-                WHERE PS.is_enabled = 1 
+                WHERE U.push_enabled = 1 AND PS.is_enabled = 1 
                 AND (last_watering IS NULL OR DATE(last_watering) <= DATE_SUB(DATE(NOW()), INTERVAL W.day DAY))`;
     return await executeQuery<RowDataPacket[]>(sql, []);
 }
