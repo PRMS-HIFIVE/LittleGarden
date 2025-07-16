@@ -18,6 +18,11 @@ const Join = lazy(() => import("@/pages/Join/Join"));
 const Password = lazy(() => import("@/pages/Password/Password"));
 const Community = lazy(() => import("@/pages/Community/Community"));
 const CommunityDetail = lazy(() => import("@/pages/Community/Detail/Detail"));
+const Diary = lazy(() => import("@/pages/Diary/Diary"));
+const DiaryList = lazy(() => import("@/pages/Diary/DiaryList/DiaryList"));
+const DiaryWrite = lazy(() => import("@/pages/Diary/DiaryWrite/DiaryWrite"));
+const NoticePage = lazy(() => import("@/pages/Notice/NoticePage"));
+
 
 const AppRouter = () => {
   const token = useAuthStore((state) => state.token);
@@ -41,8 +46,12 @@ const AppRouter = () => {
         <Route path="/detail/:plantId" element={<PlantDetailPage />} />
         <Route path="/community" element={<Community />} />
         <Route path="/community/:id" element={<CommunityDetail />} />
-
-
+        <Route path="/diary" element={<Diary />}>
+          <Route path="latest" element={<DiaryList />} />
+          {/* <Route path="photo" element={<PhotoOnly />} /> */}
+        </Route>
+        <Route path="/diary/write" element={<DiaryWrite />} />
+        <Route path="/notice" element={<NoticePage />} />
       </Routes>
     </Suspense>
   );

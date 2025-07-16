@@ -2,8 +2,9 @@ import { StyledSidebar, SidebarDivider, SidebarLogoutButton } from "@/common/Sid
 import { SidebarMenuItem, type SidebarWidth } from "@/common/Sidebar/Sidebar.styles";
 import { SidebarProfile, SidebarProfileImage, SidebarProfileName } from "@/common/Sidebar/SidebarProfile";
 import type { BackgroundColors, SidebarBorderColors, TextColors } from "@/styles/paletteMapping";
-import type { ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import useSidebarStore from "@/store/sidebarStore";
+import { useNavigate } from "react-router-dom";
 
 
 interface MenuItemsType {
@@ -26,9 +27,9 @@ interface SidebarProps {
 }
 
 const menuItemList: MenuItemsType[] = [
-    {id: 'home', text: '홈', onClick: () => {}},
-    {id: 'diary', text: '성장일기', onClick: () => {}},
-    {id: 'community', text: '커뮤니티', onClick: () => {}},
+    {id: 'home', text: '홈', path: '/'},
+    {id: 'diary', text: '성장일기', path: '/diary'},
+    {id: 'community', text: '커뮤니티', path: '/community'},
 ]
 
 
@@ -42,12 +43,33 @@ const Sidebar = ({
     //borderColor = 'primary',
     padding = "0px",
 }: SidebarProps) => {
+    // 사이드바 상태관리
+    const isSidebarOpen = useSidebarStore((state) => state.isSidebarOpen);
+    const [hasMounted, sethasMounted] = useState(false);
+    useEffect(() => {
+        sethasMounted(true);
+    }, []);
+
     const isOpen = useSidebarStore((state) => state.isSidebarOpen);
     const toggleSidebar = useSidebarStore((state) => state.toggleSidebar);
-
+    const navigate = useNavigate();
+    //로그아웃
     const handleLogout = () => {
 
     };
+    // 메뉴 아이템 클릭관련
+    const menuItemsClickHandler = menuItems.map(item => ({
+        ...item,
+        onClick: () => {
+            if (item.path) {
+                navigate(item.path);
+                toggleSidebar();
+            } else if (item.onClick) {
+                item.onClick();
+                toggleSidebar();
+            }
+        }
+    }))
 
     return (
         <>
@@ -66,7 +88,7 @@ const Sidebar = ({
             )}
         
             <StyledSidebar
-                isOpen={isOpen}
+                isOpen={hasMounted && isSidebarOpen}
                 width={width}
                 backgroundColor={backgroundColor}
                 textColor={textColor}
@@ -95,7 +117,7 @@ const Sidebar = ({
                 <SidebarDivider />
 
 
-                {menuItems.map((item, index) => (
+                {menuItemsClickHandler.map((item, index) => (
                     <SidebarMenuItem
                         key={item.id}
                         hasIcon={!!item.icon}
@@ -119,5 +141,6 @@ const Sidebar = ({
         </>
     );
 };
+
 
 export default Sidebar;

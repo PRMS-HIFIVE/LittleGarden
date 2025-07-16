@@ -1,4 +1,4 @@
-import { ImageFileInput, ImageUploadContainer, ImageUploadLabel, PreviewImage } from "@/common/From/DiaryForm/ImageUploadBox/ImageUploadBox.styles";
+import { ImageFileInput, ImageUploadContainer, ImageUploadLabel, PreviewImage } from "@/common/Form/DiaryForm/ImageUploadBox/ImageUploadBox.styles";
 import { palette } from "@/styles/palette";
 import { useState } from "react";
 
