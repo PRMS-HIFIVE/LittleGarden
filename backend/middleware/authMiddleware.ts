@@ -7,14 +7,16 @@ dotenv.config();
 export const authenticateToken = (req : Request, res : Response, next : NextFunction) => {
     const { authorization } = req.headers;
 
-    if (!authorization) {
-        res.status(StatusCodes.UNAUTHORIZED).json({ message: "인증 토큰이 없습니다." });
+    if (!authorization || !authorization.startsWith('Bearer ')) {
+        res.status(StatusCodes.UNAUTHORIZED).json({ message: "인증 토큰이 없거나 'Bearer' 형식이 아닙니다." });
         return;
     }
 
+    const token = authorization.split(' ')[1];
+
     try {
         if(process.env.JWT_SECRET) {
-            const decoded = jwt.verify(authorization, process.env.JWT_SECRET);
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
             req.user = decoded;
         } else {
             throw new Error("JWT_SECRET 환경 변수가 설정되지 않았습니다.");
