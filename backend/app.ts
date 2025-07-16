@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import cors from 'cors';
 import { StatusCodes } from 'http-status-codes';
 import http from 'http';
+import path from "path";
 
 import dotenv from 'dotenv';
 dotenv.config();
@@ -33,10 +34,18 @@ app.use("/push", pushRouter);
 // 스케줄링
 import './service/scheduleService';
 
-// catch 404 and forward to error handler
-app.use(function(req : Request, res : Response) {
-    res.status(StatusCodes.NOT_FOUND).end();
+// 정적 파일 제공: frontend/dist 폴더 안의 빌드 결과물 서빙
+app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
+// SPA 라우팅 처리: 모든 미등록 경로에 대해 index.html 반환
+app.get("*", (req: Request, res: Response) => {
+  res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
 });
+
+// catch 404 and forward to error handler
+// app.use(function(req : Request, res : Response) {
+//     res.status(StatusCodes.NOT_FOUND).end();
+// });
 
 const server = http.createServer(app);
 
