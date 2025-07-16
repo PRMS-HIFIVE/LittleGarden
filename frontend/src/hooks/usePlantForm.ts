@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { usePlantStore, type Plant } from '@/store/plantStore';
 import type { PlantDetail } from './usePlantSearch';
-import { resizeImage } from '@/utils/image';
+import { registerPlant } from '@/apis/plant.api';
+import { uploadImage } from '@/apis/image.api';
 
 interface UsePlantFormProps {
     imageFile: File | undefined;
@@ -11,13 +11,12 @@ interface UsePlantFormProps {
 
 export const usePlantForm = ({ imageFile, plantDetail }: UsePlantFormProps) => {
     const navigate = useNavigate();
-    const addPlant = usePlantStore((state) => state.addPlant);
+    const [isLoading, setIsLoading] = useState(false);
 
     const [plantName, setPlantName] = useState('');
     const [wateringCycle, setWateringCycle] = useState('');
 
     useEffect(() => {
-        // API 기반으로 식물 이름 입력 필드를 자동으로 채우기
         if (plantDetail) {
             setPlantName(plantDetail.name);
         }
@@ -29,20 +28,51 @@ export const usePlantForm = ({ imageFile, plantDetail }: UsePlantFormProps) => {
             return;
         }
 
-        // 썸네일용으로 작은 사이즈의 이미지 생성
-        const base64Thumbnail = await resizeImage(imageFile, { maxSize: 400, quality: 0.7 });
+        setIsLoading(true);
+        try {
+            const imageUrl = await uploadImage(imageFile);
 
-        const newPlant: Plant = {
-            id: Date.now().toString(),
-            name: plantName,
-            wateringCycle: parseInt(wateringCycle, 10),
-            thumbnailUrl: base64Thumbnail,
-        };
+            const payload: Record<string, any> = {
+                cntntsSj: plantName,
+                wateringCycle: wateringCycle,
+                imgUrl: imageUrl,
 
-        addPlant(newPlant);
-        alert('식물이 성공적으로 추가되었습니다!');
-        navigate('/');
+                cntntsNo: plantDetail?.contentNo || '정보 없음',
+                plntbneNm: plantDetail?.scientificName || '정보 없음',
+                fmlCodeNm: plantDetail?.familyName || '정보 없음',
+                ignSeasonCodeNm: plantDetail?.floweringSeason || '정보 없음',
+                dlthtsCodeNm: plantDetail?.pests || '정보 없음',
+                grwhTpCodeNm: plantDetail?.growthTemp || '정보 없음',
+                winterLwetTpCodeNm: plantDetail?.winterMinTemp || '정보 없음',
+                hdCodeNm: plantDetail?.humidity || '정보 없음',
+                lighttdemanddoCodeNm: plantDetail?.lightRequirement || '정보 없음',
+                postngplaceCodeNm: plantDetail?.placement || '정보 없음',
+                frtlzrInfo: plantDetail?.fertilizer || '정보 없음',
+                watercycleSprngCode: plantDetail?.wateringCode.spring || '정보 없음',
+                watercycleSummerCode: plantDetail?.wateringCode.summer || '정보 없음',
+                watercycleAutumnCode: plantDetail?.wateringCode.autumn || '정보 없음',
+                watercycleWinterCode: plantDetail?.wateringCode.winter || '정보 없음',
+
+                // (임시 데이터)
+                fmldeSeasonCodeNm: '정보 없음',
+                growthAraInfo: '정보 없음',
+                growthHgInfo: '정보 없음',
+                grwtveCodeNm: '정보 없음',
+                managedemanddoCodeNm: '정보 없음',
+                managelevelCodeNm: '정보 없음',
+            };
+
+            await registerPlant(payload);
+
+            alert('식물이 성공적으로 등록되었습니다!');
+            navigate('/');
+        } catch (error) {
+            const errorMessage = error instanceof Error ? error.message : '식물 등록 중 알 수 없는 오류가 발생했습니다.';
+            alert(`식물 등록 실패:\n${errorMessage}`);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
-    return { plantName, setPlantName, wateringCycle, setWateringCycle, handleSubmit };
+    return { plantName, setPlantName, wateringCycle, setWateringCycle, handleSubmit, isLoading };
 };

@@ -1,10 +1,8 @@
 import * as xmljs from "xml-js";
+import type { Plant } from "@/store/plantStore";
 
-// ==================================
-// Type Definitions
-// ==================================
+const BASE_URL = import.meta.env.VITE_BACK_SERVER_URL;
 
-/** Plant.id API - 식물 식별 제안 */
 export interface PlantIdSuggestion {
     id: string;
     name: string;
@@ -15,7 +13,6 @@ export interface PlantIdSuggestion {
     };
 }
 
-/** Plant.id API - 식별 결과 응답 */
 export interface PlantIdResponse {
     result: {
         classification: {
@@ -26,23 +23,19 @@ export interface PlantIdResponse {
             binary: boolean;
         };
     };
-  // 기타 응답 필드들
 }
 
-/** CDATA 또는 일반 텍스트를 포함할 수 있는 타입 */
-interface CDataOrText {
+export interface CDataOrText {
     _text?: string;
     _cdata?: string;
 }
 
-/** 농사로 API - 식물 목록의 개별 아이템 */
 export interface NongsaroListItem {
     cntntsNo: CDataOrText;
     cntntsSj: CDataOrText;
     rtnThumbFileUrl: CDataOrText;
 }
 
-/** 농사로 API - 식물 목록 조회 응답 (JSON 변환 후) */
 export interface NongsaroListResponse {
     response: {
         header: {
@@ -51,13 +44,12 @@ export interface NongsaroListResponse {
         };
         body: {
             items: {
-                item: NongsaroListItem[] | NongsaroListItem; // 결과가 하나일 경우 객체로 올 수 있음
+                item: NongsaroListItem[] | NongsaroListItem;
             };
         };
     };
 }
 
-/** 농사로 API - 식물 상세 정보 (JSON 변환 후) */
 export interface NongsaroDetailItem {
     cntntsNo: CDataOrText; // 컨텐츠 번호
     fmlCodeNm: CDataOrText; // 과명
@@ -70,15 +62,17 @@ export interface NongsaroDetailItem {
     hdCodeNm: CDataOrText; // 습도
     lighttdemanddoCodeNm: CDataOrText; // 광요구도
     postngplaceCodeNm: CDataOrText; // 배치장소
+    watercycleSprngCode: CDataOrText; // 물주기 코드 (봄)
+    watercycleSummerCode: CDataOrText; // 물주기 코드 (여름)
+    watercycleAutumnCode: CDataOrText; // 물주기 코드 (가을)
+    watercycleWinterCode: CDataOrText; // 물주기 코드 (겨울)
     watercycleSprngCodeNm: CDataOrText; // 물주기 (봄)
     watercycleSummerCodeNm: CDataOrText; // 물주기 (여름)
     watercycleAutumnCodeNm: CDataOrText; // 물주기 (가을)
     watercycleWinterCodeNm: CDataOrText; // 물주기 (겨울)
     frtlzrInfo: CDataOrText; // 비료 정보
-    // 기타 필요한 상세 정보 필드
 }
 
-/** 농사로 API - 식물 상세 조회 응답 (JSON 변환 후) */
 export interface NongsaroDetailResponse {
     response: {
         header: {
@@ -96,14 +90,12 @@ const xmlToJson = <T>(xmlText: string): T => {
     return JSON.parse(jsonStr) as T;
 };
 
-// ==================================
-// API Functions
-// ==================================
+const getAuthToken = (): string | null => {
+    const token = localStorage.getItem("token");
+    if (!token) return null;
+    return token;
+};
 
-/**
- * 개발 환경에서 Plant.id API 호출을 모의(mock)합니다.
- * 실제 API 크레딧을 소모하지 않고 테스트할 수 있습니다.
- */
 const mockIdentifyPlantByImage = (): Promise<PlantIdResponse> => {
     console.warn("DEV MODE: Plant.id API is mocked to save credits.");
     return new Promise((resolve) => {
@@ -123,12 +115,11 @@ const mockIdentifyPlantByImage = (): Promise<PlantIdResponse> => {
                     is_plant: { probability: 0.99, binary: true },
                 },
             } as PlantIdResponse);
-        }, 1000); // 1초 지연으로 실제 네트워크 환경처럼 시뮬레이션
+        }, 1000);
     });
 };
 
 export const identifyPlantByImage = async (imageBase64: string): Promise<PlantIdResponse> => {
-    // 개발 환경이고, VITE_USE_MOCK_API 환경 변수가 'true'일 때 모의 함수를 사용합니다.
     if (import.meta.env.DEV && import.meta.env.VITE_USE_MOCK_API === 'true') {
         return mockIdentifyPlantByImage();
     }
@@ -155,6 +146,92 @@ export const identifyPlantByImage = async (imageBase64: string): Promise<PlantId
     }
 
     return response.json();
+};
+
+export const fetchMyPlants = async (): Promise<Plant[]> => {
+    const token = localStorage.getItem("token");
+    const response = await fetch(`${BASE_URL}/plants`, {
+        method: 'GET',
+        headers: {
+            "Authorization": `Bearer ${token ?? ""}`,
+            "Content-Type": "application/json",
+        },
+    });
+
+    if (!response.ok) throw new Error('내 식물 목록을 불러오는데 실패했습니다.');
+
+    return response.json();
+};
+
+export const registerPlant = async (plantData: Record<string, any>) => {
+    const token = getAuthToken();
+    if (!token) {
+        throw new Error("인증 토큰이 없습니다. 다시 로그인해주세요.");
+    }
+
+    const response = await fetch(`${BASE_URL}/plants`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(plantData),
+    });
+
+    if (!response.ok) {
+        const errorResult = await response.json();
+        const errorMessage = errorResult.errors
+            ? errorResult.errors.map((e: { msg: string }) => e.msg).join("\n")
+            : errorResult.message || "식물 등록에 실패했습니다.";
+        throw new Error(errorMessage);
+    }
+
+    return response.json();
+};
+
+export const fetchPlantById = async (plantId: number): Promise<Plant | null> => {
+    const token = getAuthToken();
+    if (!token) {
+        throw new Error("인증 토큰이 없습니다. 다시 로그인해주세요.");
+    }
+
+    const urlWithQuery = `${BASE_URL}/plants?plantId=${plantId}`;
+
+    const response = await fetch(urlWithQuery, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+    });
+
+    if (!response.ok) throw new Error('식물 상세 정보를 불러오는데 실패했습니다.');
+
+    const plants: Plant[] = await response.json();
+
+    return plants[0] || null;
+};
+
+export const updatePlant = async (plantId: number, data: { nickName?: string; watering?: string }): Promise<void> => {
+    const token = getAuthToken();
+    if (!token) {
+        throw new Error("인증 토큰이 없습니다. 다시 로그인해주세요.");
+    }
+
+    const response = await fetch(`${BASE_URL}/plants/${plantId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+        const errorResult = await response.json().catch(() => ({ message: '식물 정보 업데이트에 실패했습니다.' }));
+        throw new Error(errorResult.message || '식물 정보 업데이트에 실패했습니다.');
+    }
 };
 
 const NONGSARO_BASE_URL = "/nongsaro-api/service/garden";

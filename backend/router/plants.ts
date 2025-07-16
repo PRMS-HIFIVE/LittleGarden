@@ -9,7 +9,7 @@ router.route('/')
     .get(authenticateToken, getPlants)
     .post(authenticateToken, createPlantValidator, createPlant)
 
-router.route('/:id')
+router.route('/:plantId')
     .put(authenticateToken, updatePlantValidator, updatePlant)
     .delete(authenticateToken, deletePlantValidator, deletePlant)
 

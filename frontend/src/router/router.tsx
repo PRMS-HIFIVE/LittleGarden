@@ -1,10 +1,18 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import Loading from "@/pages/Loading/Loading";
+import { useAuthStore } from "@/store/authStore";
+
 const Index = lazy(() => import("@/pages/Index"));
-const UploadPreviewPage = lazy(() => import("@/pages/UploadPreview/UploadPreviewPage"));
-const PlantRegistrationPage = lazy(() => import("@/pages/PlantRegistrationPage/PlantRegistrationPage"));
-const PlantDetailPage = lazy(() => import("@/pages/PlantDetailPage/PlantDetailPage"));
+const UploadPreviewPage = lazy(
+  () => import("@/pages/UploadPreview/UploadPreviewPage")
+);
+const PlantRegistrationPage = lazy(
+  () => import("@/pages/PlantRegistrationPage/PlantRegistrationPage")
+);
+const PlantDetailPage = lazy(
+  () => import("@/pages/PlantDetailPage/PlantDetailPage")
+);
 const Login = lazy(() => import("@/pages/Login/Login"));
 const Join = lazy(() => import("@/pages/Join/Join"));
 const Password = lazy(() => import("@/pages/Password/Password"));
@@ -16,13 +24,21 @@ const DiaryWrite = lazy(() => import("@/pages/Diary/DiaryWrite/DiaryWrite"));
 const NoticePage = lazy(() => import("@/pages/Notice/NoticePage"));
 
 
-
 const AppRouter = () => {
+  const token = useAuthStore((state) => state.token);
+
   return (
     <Suspense fallback={<Loading />}>
       <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/login" element={<Login />} />
+        <Route
+          path="/"
+          element={token ? <Index /> : <Navigate to="/login" replace />}
+        />
+
+        <Route
+          path="/login"
+          element={token ? <Navigate to="/" replace /> : <Login />}
+        />
         <Route path="/password" element={<Password />} />
         <Route path="/join" element={<Join />} />
         <Route path="/upload-preview" element={<UploadPreviewPage />} />
