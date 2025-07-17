@@ -42,7 +42,6 @@ export const signup = async (data: SignUpRequest) => {
 export const login = async (data: LoginRequest): Promise<LoginResponse> => {
   const response = await fetch(`${BASE_URL}/users/login`, {
     method: "POST",
-    credentials: 'include',
     headers: {
       "Content-Type": "application/json",
     },
@@ -101,7 +100,7 @@ export const updateNickname = async (nickName: string) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ nickName }),
-    credentials: "include",
+    //credentials: "include",
   });
 
   if (!response.ok) {
