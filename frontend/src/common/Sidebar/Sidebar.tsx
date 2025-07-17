@@ -30,6 +30,7 @@ const menuItemList: MenuItemsType[] = [
     {id: 'home', text: '홈', path: '/'},
     {id: 'diary', text: '성장일기', path: '/diary'},
     {id: 'community', text: '커뮤니티', path: '/community'},
+    {id: 'alert', text: '알림 설정', path: '/alert'},
 ]
 
 
