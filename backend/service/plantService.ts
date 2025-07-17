@@ -31,8 +31,8 @@ const createPlant = async (userId: number, plant: IPlantRequestBody) => {
             user_id, cntntsNo, cntntsSj, imgUrl, dlthtsCodeNm, fmlCodeNm, fmldeSeasonCodeNm, frtlzrInfo,
             growthAraInfo, growthHgInfo, grwthTpCodeNm, grwtveCodeNm, hdCodeNm, ignSeasonCodeNm,
             lightdemanddoCodeNm, managedemanddoCodeNm, managelevelCodeNm, postngplaceCodeNm,
-            winterLwetTpCodeNm, watercycleSpringCode, watercycleSummerCode, watercycleAutumnCode, watercycleWinterCode
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            winterLwetTpCodeNm, watercycle, watercycleSpringCode, watercycleSummerCode, watercycleAutumnCode, watercycleWinterCode
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
     const values = [
         userId,
@@ -54,6 +54,7 @@ const createPlant = async (userId: number, plant: IPlantRequestBody) => {
         plant.managelevelCodeNm,
         plant.postngplaceCodeNm,
         plant.winterLwetTpCodeNm,
+        plant.watercycle,
         plant.watercycleSprngCode,
         plant.watercycleSummerCode,
         plant.watercycleAutumnCode,

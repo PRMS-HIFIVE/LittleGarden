@@ -75,16 +75,16 @@ export const createPlant = async (req: TypedRequest<IPlantRequestBody>, res: Res
         managelevelCodeNm: req.body.managelevelCodeNm,
         postngplaceCodeNm: req.body.postngplaceCodeNm,
         winterLwetTpCodeNm: req.body.winterLwetTpCodeNm,
+        watercycle: req.body.watercycle,
         watercycleSprngCode: req.body.watercycleSprngCode,
         watercycleSummerCode: req.body.watercycleSummerCode,
         watercycleAutumnCode: req.body.watercycleAutumnCode,
-        watercycleWinterCode: req.body.watercycleWinterCode,
-        watercycle: req.body.watercycle
+        watercycleWinterCode: req.body.watercycleWinterCode
     };
     
     try {
         await plantService.createPlant(userId, plant);
-        res.status(StatusCodes.CREATED).json({ message : "닉네임이 변경되었습니다. "});
+        res.status(StatusCodes.CREATED).json({ message : "식물이 등록되었습니다. "});
         return;
     } catch(err) {
         console.log(err)

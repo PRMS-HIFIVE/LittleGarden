@@ -18,7 +18,7 @@ export const usePlantForm = ({ imageFile, plantDetail }: UsePlantFormProps) => {
 
     useEffect(() => {
         if (plantDetail) {
-            setPlantName(plantDetail.name);
+            // setPlantName(plantDetail.name);
         }
     }, [plantDetail]);
 
