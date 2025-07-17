@@ -54,7 +54,7 @@ const deletePosts = async (postId:number) => {
 
 const tags = async (postId : number,plantTag:string[]) => {
     // 1. plant_id가 있는지 살펴본다.
-    const plantsql = `SELECT * FROM plants WHERE cntntsSj IN (${plantTag.map(() => '?').join(',')})`;
+    const plantsql = `SELECT * FROM plants WHERE id IN (${plantTag.map(() => '?').join(',')})`;
     const resultPlants = await executeQuery<RowDataPacket[]>(plantsql, plantTag);
     
     // 2-1. 있을 때 post_tags 테이블에 추가
