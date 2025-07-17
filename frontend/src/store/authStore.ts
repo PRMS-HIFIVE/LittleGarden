@@ -15,13 +15,16 @@ interface AuthState {
   isAuthenticated: boolean;
   setAuthenticated: (value: boolean) => void;
   resetAuth: () => void;
+  isInitialized: boolean;
+  setInitialized: (val: boolean) => void;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
   email: "",
   user: null,
   userId: null,
-  isAuthenticated: false,
+    isAuthenticated: false,
+  isInitialized: false, 
   setEmail: (email) => set({ email }),
   setAuthenticated: (value) => set({ isAuthenticated: value }),
 
@@ -33,9 +36,9 @@ export const useAuthStore = create<AuthState>((set) => ({
       console.log("유저 ID 저장:", user.id);
     } else {
       localStorage.removeItem("user");
-      // set({ user: null, userId: null });
+      set({ user: null, userId: null });
     }
-    set({ user });
+    // set({ user });
   },
 
   resetAuth: () => {
@@ -44,6 +47,8 @@ export const useAuthStore = create<AuthState>((set) => ({
       isAuthenticated: false,
       user: null,
       userId: null,
+       isInitialized: true,
     });
   },
+  setInitialized: (val) => set({ isInitialized: val }),
 }));

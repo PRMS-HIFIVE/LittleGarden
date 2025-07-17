@@ -7,12 +7,12 @@ import { useAuthStore } from "@/store/authStore";
 
 export interface Post {
   id: number;
-  userId: number;
+  user_id: number;
   title: string;
   content: string;
   isHealth?: number;
   state: number;
-  createdAt: string;
+  created_at: string;
   plantTag?: string[];
   img?: string;
   profileImage?: string; // 프로필 이미지 추가
@@ -22,8 +22,21 @@ export interface Post {
 // state에 따라 성장일기(1), 커뮤니티(2) 게시글 구분
 export const usePostFilter = (stateType: 1 | 2) => {
   const { setAllPosts, setFilteredPosts, filteredPosts, allPosts } = usePostStore();
+
   const userId = useAuthStore((s) => s.userId);
+  const isInitialized = useAuthStore((s) => s.isInitialized);
+  console.log("필터 로그인 유저ID:", userId, "isInitialized:", isInitialized);
+
   const [isMyPostFiltered, setIsMyPostFiltered] = useState(false);
+    if (!isInitialized) {
+    return {
+      init: async () => {},
+      filterLatest: () => {},
+      filterMyPosts: () => {},
+      filteredPosts,
+      allPosts,
+    };
+  }
 
   const init = async () => {
     const posts = await fetchPostsByState(stateType);
@@ -36,7 +49,7 @@ export const usePostFilter = (stateType: 1 | 2) => {
   const filterLatest = () => {
     const source = isMyPostFiltered ? filteredPosts : allPosts;
     const sorted = [...source].sort(
-      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
     );
     setFilteredPosts(sorted);
   };
@@ -49,7 +62,7 @@ export const usePostFilter = (stateType: 1 | 2) => {
       setFilteredPosts(allPosts);
       setIsMyPostFiltered(false);
     } else {
-      const mine = allPosts.filter((post) => post.userId === userId);
+      const mine = allPosts.filter((post) => post.user_id === userId);
       setFilteredPosts(mine);
       setIsMyPostFiltered(true);
     }

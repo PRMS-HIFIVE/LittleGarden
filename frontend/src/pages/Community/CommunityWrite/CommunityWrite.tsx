@@ -7,7 +7,7 @@ import type { PlantNameRequest } from "@/components/UI/Select/SelectMyPlant2";
 
 const CommunityWrite = () => {
   const userId = useAuthStore((state) => state.userId);
-  console.log("로그인 유저 ID:", userId);
+  console.log("글쓰기 로그인 유저 ID:", userId);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 

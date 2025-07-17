@@ -8,6 +8,7 @@ import { useAuthStore } from "@/store/authStore";
 import LoadingPage from "@/pages/Loading/Loading";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import MainpageHeader from "@/common/Header/HeaderVariants/MainpageHeader";
+import { FaUserCircle } from "react-icons/fa";
 
 // 게시글 데이터 타입
 interface PostDetail {
@@ -48,13 +49,22 @@ const CommunityDetail = () => {
       try {
         const postData = await fetchPostDetail(postId);
         const postDetail: PostDetail = {
-          profileImage: postData.profileImage || "/default-profile.png",
+          profileImage: postData.profileImage || "",
           nickname: postData.nickname ?? "작성자 이름",
           title: postData.title,
           content: postData.content,
           images: postData.img ? [postData.img] : [],
           plantTags: postData.plantTag || [],
-          createdAt: new Date(postData.createdAt).toLocaleDateString(),
+          createdAt: postData.created_at
+            ? new Date(postData.created_at).toLocaleString("ko-KR", {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+              })
+            : "날짜 정보 없음",
         };
 
         setPost(postDetail);
@@ -124,7 +134,11 @@ const CommunityDetail = () => {
         <S.SectionDivider />
 
         <S.PostHeader>
-          <S.ProfileImage src={post.profileImage} alt="프로필 이미지" />
+          {post.profileImage ? (
+            <S.ProfileImage src={post.profileImage} alt="프로필 이미지" />
+          ) : (
+            <FaUserCircle size={35} style={{ color: '#ccc' }} />
+          )}
           <S.Nickname>{post.nickname}</S.Nickname>
         </S.PostHeader>
 
@@ -155,10 +169,14 @@ const CommunityDetail = () => {
               {comments.map((cmt) => (
                 <S.CommentItem key={cmt.id}>
                   <S.CommentHeader>
-                    <S.ProfileImage
-                      src={cmt.profileImage || "/default-profile.png"}
-                      alt={`${cmt.nickName} 프로필`}
-                    />
+                    {cmt.profileImage ? (
+                      <S.ProfileImage
+                        src={cmt.profileImage}
+                        alt={`${cmt.nickName} 프로필`}
+                      />
+                    ) : (
+                      <FaUserCircle size={35} style={{ color: '#ccc' }} />
+                    )}
                     <S.Nickname>
                       {cmt.nickName}
                       {cmt.isAuthor === "1" && (

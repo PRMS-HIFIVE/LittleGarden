@@ -91,16 +91,19 @@ const getPostDetail = async (postId: number) => {
   const sql = `
     SELECT 
       posts.*,
+      users.nickname,
       GROUP_CONCAT(plants.cntntsSj) AS plantTags
     FROM posts
+    LEFT JOIN users ON posts.user_id = users.id
     LEFT JOIN post_tags ON posts.id = post_tags.post_id
     LEFT JOIN plants ON post_tags.plant_id = plants.id
     WHERE posts.id = ?
-    GROUP BY posts.id
+    GROUP BY posts.id, users.nickname
   `;
   const result = await executeQuery<RowDataPacket[]>(sql, [postId]);
   return result.length > 0 ? result[0] : null;
 };
+
 
 
 const updateTags = async (postId: number, plantTag: string[]) => {

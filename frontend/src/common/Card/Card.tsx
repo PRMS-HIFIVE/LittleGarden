@@ -1,6 +1,7 @@
 import { CardContainer, CardContent, CardDate, CardHeader, CardProfile, CardThumbnail, CardTitle, CardTitleDateWrapper } from "@/common/Card/Card.styles";
 import Tag from "@/components/UI/Tag/Tag";
 import { TagContainer } from "@/components/UI/Tag/Tag.styles";
+import { FaUserCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 export interface CardProps {
@@ -33,7 +34,12 @@ const Card = ({
     return (
         <CardContainer onClick={handleCardClick} style={{cursor: "pointer"}}>
             <CardHeader>
-                <CardProfile src={profileImage} />
+                {/* <CardProfile src={profileImage} /> */}
+                {profileImage ? (
+                    <CardProfile src={profileImage} alt="프로필 이미지" />
+                ) : (
+                    <FaUserCircle size={40} style={{ color: '#ccc' }} />
+                )}
                 <CardTitleDateWrapper>
                     <CardTitle>{title}</CardTitle>
                     <CardDate>{date}</CardDate>

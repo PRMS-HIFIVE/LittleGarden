@@ -30,6 +30,28 @@ const AppRouter = () => {
 
   const [loading, setLoading] = useState(true);
 
+// useEffect(() => {
+//   const verify = async () => {
+//     try {
+//       const localUser = localStorage.getItem("user");
+//       if (localUser) {
+//         const parsedUser = JSON.parse(localUser);
+//         useAuthStore.getState().setUser(parsedUser);
+//       }
+
+//       await checkAuth();
+//       setAuthenticated(true);
+//     } catch (err) {
+//       console.error("인증 실패:", err);
+//       resetAuth();
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   verify();
+// }, []);
+
 useEffect(() => {
   const verify = async () => {
     try {
@@ -45,13 +67,13 @@ useEffect(() => {
       console.error("인증 실패:", err);
       resetAuth();
     } finally {
+      useAuthStore.getState().setInitialized(true);  // 여기서 초기화 완료 상태 설정
       setLoading(false);
     }
   };
 
   verify();
 }, []);
-
 
 
   if (loading) return <div>로딩 중...</div>;

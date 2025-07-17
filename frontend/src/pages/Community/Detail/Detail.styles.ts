@@ -7,6 +7,7 @@ export const Container = styled.div`
   height: 100vh;
   max-width: 393px;
   margin: 0 auto;
+  padding-top: 10px;
   background-color: ${backgroundColors.white};
 `;
 
