@@ -67,24 +67,22 @@ const deletePosts = async (postId: number) => {
   return await executeQuery<ResultSetHeader>(sql, postId);
 };
 
-const tags = async (postId: number, plantTag: string[]) => {
-  // 1. plant_id가 있는지 살펴본다.
-  const plantsql = `SELECT * FROM plants WHERE cntntsSj IN (${plantTag.map(() => '?').join(',')})`;
-
-  const resultPlants = await executeQuery<RowDataPacket[]>(plantsql, plantTag);
-
-  // 2-1. 있을 때 post_tags 테이블에 추가
-  if (resultPlants && resultPlants.length > 0) {
-    const insertSql = `INSERT INTO post_tags (post_id,plant_id) VALUES ${resultPlants
-      .map(() => "(?,?)")
-      .join(",")}`;
-    const values = resultPlants.flatMap((plant: any) => [postId, plant.id]);
-    return await executeQuery<ResultSetHeader>(insertSql, values);
-  }
-  // 2-2. 없을 때 없으니 리턴
-  else {
-    throw new Error("해당하는 식물 태그가 없습니다.");
-  }
+const tags = async (postId : number,plantTag:string[]) => {
+    // 1. plant_id가 있는지 살펴본다.
+    const plantsql = `SELECT * FROM plants WHERE id IN (${plantTag.map(() => '?').join(',')})`;
+    const resultPlants = await executeQuery<RowDataPacket[]>(plantsql, plantTag);
+    
+    // 2-1. 있을 때 post_tags 테이블에 추가
+    if(resultPlants && resultPlants.length > 0){
+        const insertSql = `INSERT INTO post_tags (post_id,plant_id) VALUES ${resultPlants.map(() => '(?,?)').join(',')}`
+        const values = resultPlants.flatMap((plant: any) => [postId, plant.id]);
+        return await executeQuery<ResultSetHeader>(insertSql, values);
+    }
+    // 2-2. 없을 때 없으니 리턴 
+    else {
+        throw new Error('해당하는 식물 태그가 없습니다.');
+    }
+    
 };
 
 const updateTags = async (postId: number, plantTag: string[]) => {
