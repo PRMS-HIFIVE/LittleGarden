@@ -84,7 +84,7 @@ function PlantRegistrationPage() {
                 )} */}
 
                 <S.FormWrapper>
-                    <S.FormGroup>
+                    <S.FormGroup style={{position: 'relative'}}>
                         <S.Label htmlFor="plantName">🌱 식물 이름</S.Label>
                         <Input
                             type='text'
