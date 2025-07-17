@@ -31,6 +31,8 @@ export const TagList = styled.div`
     flex-wrap: wrap;
     margin-top: 12px;
     gap: 8px;
+    justify-content: flex-start;
+    align-self: flex-start;
 `;
 
 export const AddedTag = styled.div`
