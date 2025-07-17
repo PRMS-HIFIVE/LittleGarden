@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import * as S from "./Detail.styles";
-import CommunityBackHeader from "@/common/Header/HeaderVariants/CommunityBackHeader";
 import Tag from "@/components/UI/Tag/Tag";
 import { useComment } from "@/hooks/useComment";
 import { fetchPostDetail } from "@/apis/post.api";
 import { useAuthStore } from "@/store/authStore";
 import LoadingPage from "@/pages/Loading/Loading";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
+import MainpageHeader from "@/common/Header/HeaderVariants/MainpageHeader";
 
 // 게시글 데이터 타입
 interface PostDetail {
@@ -23,6 +23,7 @@ interface PostDetail {
 const CommunityDetail = () => {
   const { id } = useParams();
   const postId = Number(id);
+  console.log("게시글 ID:", postId);
 
   const [comment, setComment] = useState("");
   const [post, setPost] = useState<PostDetail | null>(null);
@@ -119,7 +120,7 @@ const CommunityDetail = () => {
   return (
     <S.Container>
       <S.ScrollArea>
-        <CommunityBackHeader />
+        <MainpageHeader />
         <S.SectionDivider />
 
         <S.PostHeader>

@@ -1,11 +1,11 @@
 import * as S from "./Community.styles";
 import Button from "@/components/UI/Button/Button";
-import DiaryHeader from "@/common/Header/HeaderVariants/DiaryHeader";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { usePostFilter } from "@/hooks/usePostFilter";
 // import { usePostStore } from "@/store/postStore";
 import CommunityList from "./CommunityList/CommunityList";
+import MainpageHeader from "@/common/Header/HeaderVariants/MainpageHeader";
 
 const Community = () => {
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ const Community = () => {
   return (
     <>
       <S.Container>
-        <DiaryHeader />
+        <MainpageHeader />
 
         <S.Title>커뮤니티</S.Title>
         <S.ButtonWrapper>
@@ -58,7 +58,7 @@ const Community = () => {
       <S.ScrollableCardList>
       <CommunityList />
       </S.ScrollableCardList>
-      
+
       </S.Container>
     </>
   );

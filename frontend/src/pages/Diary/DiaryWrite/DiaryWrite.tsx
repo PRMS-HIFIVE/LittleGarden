@@ -47,7 +47,7 @@ const DiaryWrite = () => {
 */
 
             const payload: diaryAPI.PostDiaryPayload = {
-                userId,
+                userId: null !== userId ? userId : 0, // userId가 null일 경우 0으로 설정
                 title,
                 content,
                 plantTag: selectedPlants.map((plant) => plant.cntntsNo),

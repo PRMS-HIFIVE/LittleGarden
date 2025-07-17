@@ -48,6 +48,8 @@ const getPosts = async (plantTag?: IFilterPost, state?: IFilterPost) => {
   return await executeQuery<RowDataPacket[]>(sql, values);
 };
 
+
+
 const updatePosts = async (postId: number, post: IPost) => {
   const sql =
     "UPDATE posts SET user_id=?,title=?,content=?,state=?,is_health=? WHERE id=?";
@@ -85,6 +87,22 @@ const tags = async (postId : number,plantTag:string[]) => {
     
 };
 
+const getPostDetail = async (postId: number) => {
+  const sql = `
+    SELECT 
+      posts.*,
+      GROUP_CONCAT(plants.cntntsSj) AS plantTags
+    FROM posts
+    LEFT JOIN post_tags ON posts.id = post_tags.post_id
+    LEFT JOIN plants ON post_tags.plant_id = plants.id
+    WHERE posts.id = ?
+    GROUP BY posts.id
+  `;
+  const result = await executeQuery<RowDataPacket[]>(sql, [postId]);
+  return result.length > 0 ? result[0] : null;
+};
+
+
 const updateTags = async (postId: number, plantTag: string[]) => {
   // 1. post_tags테이블에서 post_id를 전부 삭제
   const deleteTagSql = `DELETE FROM post_tags WHERE post_id = ?`;
@@ -116,6 +134,7 @@ const updateTags = async (postId: number, plantTag: string[]) => {
 export default {
   posts,
   getPosts,
+  getPostDetail,
   updatePosts,
   deletePosts,
   tags,

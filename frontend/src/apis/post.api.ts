@@ -37,10 +37,11 @@ export const fetchPostsByState = async (stateType: number): Promise<Post[]> => {
 };
 
 // 게시글 상세조회
-export const fetchPostDetail = async (postId: number): Promise<Post> => {
-  const response = await fetch(`${BASE_URL}/posts/${postId}`, {
+export const fetchPostDetail = async (id: number): Promise<Post> => {
+  const response = await fetch(`${BASE_URL}/posts/${id}`, {
     credentials: "include",
   });
+  console.log("게시글 상세조회 요청:", id);
 
   if (!response.ok) {
     throw new Error("게시글 조회 실패");

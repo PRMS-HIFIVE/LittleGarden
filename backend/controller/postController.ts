@@ -43,6 +43,29 @@ export const getPosts = async (req:Request, res:Response) : Promise<void> => {
     }
 };
 
+// 게시글 상세 조회
+export const getPostDetail = async (req: Request, res: Response): Promise<void> => {
+  const postId = parseInt(req.params.postId);  // 라우터에서 :postId로 받아올 예정
+
+  try {
+    const post = await postService.getPostDetail(postId);
+    if (!post) {
+      res.status(StatusCodes.NOT_FOUND).json({ message: "게시글을 찾을 수 없습니다." });
+      return;
+    }
+
+    res.status(StatusCodes.OK).json({ message: "게시글 조회 성공", data: post });
+    return;
+  } catch (error) {
+    console.error("Error getting post detail:", error);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: "게시글 상세 조회 중 오류가 발생했습니다."
+    });
+    return;
+  }
+};
+
+
 export const updatePosts = async (req:Request, res:Response) : Promise<void> => {
     const userId = req.user?.id;
     const postId = parseInt(req.params.postId);

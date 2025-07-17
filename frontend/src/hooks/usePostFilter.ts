@@ -6,7 +6,7 @@ import { fetchPostsByState } from "@/apis/post.api";
 import { useAuthStore } from "@/store/authStore";
 
 export interface Post {
-  postId: number;
+  id: number;
   userId: number;
   title: string;
   content: string;
