@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import * as S from './UploadPreview.style';
+import { useEffect } from 'react';
 
 function UploadPreviewPage() {
     const location = useLocation();
@@ -7,9 +8,14 @@ function UploadPreviewPage() {
 
     const imageFile = location.state?.imageFile as File | undefined;
 
-    if (!imageFile) {
+    useEffect(() => {
+        if (!imageFile) {
         navigate('/');
-        return null;
+        }
+    }, [imageFile, navigate]);
+
+    if (!imageFile) {
+        return null;  // 네비게이트 후 렌더링 중단
     }
 
     const handleRegisterClick = () => {

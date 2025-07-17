@@ -39,13 +39,13 @@ const Button = ({
     return (
         <StyledButton
             color = {color ?? variantStyle.color}
-            buttonSize = {buttonSize ?? variantStyle.buttonSize}
-            width = {width}
-            height = {height}
-            padding = {padding}
-            margin = {margin}
-            styleType = {styleType ?? variantStyle.styleType}
-            radius = {radius ?? variantStyle.radius}
+            $buttonSize = {buttonSize ?? variantStyle.buttonSize}
+            $width = {width}
+            $height = {height}
+            $padding = {padding}
+            $margin = {margin}
+            $styleType = {styleType ?? variantStyle.styleType}
+            $radius = {radius ?? variantStyle.radius}
             onClick = {onClick}
             type = {type}
         >
