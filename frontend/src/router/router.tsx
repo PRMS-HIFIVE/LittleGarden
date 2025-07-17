@@ -1,7 +1,8 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import Loading from "@/pages/Loading/Loading";
 import { useAuthStore } from "@/store/authStore";
+import { checkAuth } from "@/apis/auth.api";
 
 const Index = lazy(() => import("@/pages/Index"));
 const UploadPreviewPage = lazy(
@@ -23,23 +24,43 @@ const DiaryList = lazy(() => import("@/pages/Diary/DiaryList/DiaryList"));
 const DiaryWrite = lazy(() => import("@/pages/Diary/DiaryWrite/DiaryWrite"));
 const NoticePage = lazy(() => import("@/pages/Notice/NoticePage"));
 
-
 const AppRouter = () => {
-  const token = useAuthStore((state) => state.token);
-  console.log("AppRouter token:", token);
+  const { setAuthenticated, resetAuth,isAuthenticated } = useAuthStore();
+
+  const [loading, setLoading] = useState(true);
+
+ useEffect(() => {
+  const verify = async () => {
+    try {
+      await checkAuth();
+      setAuthenticated(true);
+    } catch (err) {
+      console.error("인증 실패:", err);
+      resetAuth();
+    } finally {
+      setLoading(false);
+    }
+  };
+  verify();
+}, []);
+
+
+  if (loading) return <div>로딩 중...</div>;
 
   return (
     <Suspense fallback={<Loading />}>
       <Routes>
         <Route
           path="/"
-          element={token ? <Index /> : <Navigate to="/login" replace />}
+          element={
+            isAuthenticated ? <Index /> : <Navigate to="/login" replace />
+          }
         />
-
         <Route
           path="/login"
-          element={token ? <Navigate to="/" replace /> : <Login />}
+          element={isAuthenticated ? <Navigate to="/" replace /> : <Login />}
         />
+
         <Route path="/password" element={<Password />} />
         <Route path="/join" element={<Join />} />
         <Route path="/upload-preview" element={<UploadPreviewPage />} />

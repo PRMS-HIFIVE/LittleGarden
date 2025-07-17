@@ -14,10 +14,8 @@ export function useAuth() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const setEmail = useAuthStore((state) => state.setEmail);
-  const setToken = useAuthStore((state) => state.setToken);
-
   const setUser = useAuthStore((state) => state.setUser);
+  const setAuthenticated = useAuthStore((state) => state.setAuthenticated);
   const user = useAuthStore((state) => state.user);
 
   const handleSignup = async (formData: SignUpRequest) => {
@@ -40,27 +38,32 @@ export function useAuth() {
     }
   };
 
-  const handleLogin = async (formData: LoginRequest) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await login(formData);
-      const { loginUser, token } = response;
+const handleLogin = async (formData: LoginRequest) => {
+  setLoading(true);
+  setError(null);
+  try {
+    const response = await login(formData);
+    const { loginUser } = response;
 
-      setEmail(loginUser.email);
-      setUser(loginUser);
-      setToken(token); // 토큰 직접 세팅 (쿠키에서 읽는 게 아님)
+    setUser(loginUser);
+    setAuthenticated(true); 
+    localStorage.setItem("user", JSON.stringify(loginUser));
 
-      localStorage.setItem("user", JSON.stringify(loginUser));
-
-      alert(`${loginUser.nickname}님, 로그인 되었습니다!`);
-      navigate("/");
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
+    alert(`${loginUser.nickname}님, 로그인 되었습니다!`);
+    navigate("/");
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      alert(error.message || "로그인 실패");
+      setError(error.message);
+    } else {
+      alert("알 수 없는 오류가 발생했습니다.");
+      setError("알 수 없는 오류");
     }
-  };
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   const handleRequestResetPassword = async (email: string) => {
     setLoading(true);
@@ -92,7 +95,6 @@ export function useAuth() {
       if (user) {
         const updatedUser = { ...user, nickname: newNickname };
         setUser(updatedUser);
-        localStorage.setItem("user", JSON.stringify(updatedUser));
       }
 
       alert("닉네임이 변경되었습니다.");
