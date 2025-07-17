@@ -6,12 +6,10 @@ export interface MyPlantTagData {
 }
 
 export const getMyPlantTag = async (): Promise<MyPlantTagData[]> => {
-    //const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
     const response = await fetch(`/plants`, {
-        credentials: 'include',
-        headers: {
-            //Authorization: `Bearer ${token ?? "" }`,
-        }
+        credentials: "include",
+
     });
 
     if (!response.ok) {

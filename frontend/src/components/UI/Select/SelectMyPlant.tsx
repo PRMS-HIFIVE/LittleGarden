@@ -1,4 +1,6 @@
-//import { getAuthToken } from "@/apis/diary.api";
+
+// import { getAuthToken } from "@/apis/diary.api";
+
 import { AddedTag, AddTagButton, Select, SelectRow, SelectWrapper, TagList, TagRemoveButton } from "@/components/UI/Select/SelectMyPlant.styles";
 //import type { Plant } from "@/store/plantStore";
 import { useEffect, useState } from "react";
@@ -37,13 +39,14 @@ const PlantSelector = ({onChange} : PlantSelectorProps) => {
   useEffect(() => {
     const fetchMyPlant = async () => {
         try{
-            //const token = getAuthToken();
+            // const token = getAuthToken();
             const response = await fetch("/plants", {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    //"Authorization": `Bearer ${token}`,
-                }
+                    // "Authorization": `Bearer ${token}`,
+                },
+                credentials: "include",
             });
             if (!response.ok) throw new Error("식물 정보를 불러오는데 실패했습니다");
             const data = await response.json();

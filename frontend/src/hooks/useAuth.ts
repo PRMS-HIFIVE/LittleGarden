@@ -44,24 +44,19 @@ export function useAuth() {
     setLoading(true);
     setError(null);
     try {
-      const { token, loginUser } = await login(formData);
+      const response = await login(formData);
+      const { loginUser, token } = response;
 
       setEmail(loginUser.email);
-      setToken(token);
+      setUser(loginUser);
+      setToken(token); // 토큰 직접 세팅 (쿠키에서 읽는 게 아님)
 
       localStorage.setItem("user", JSON.stringify(loginUser));
 
       alert(`${loginUser.nickname}님, 로그인 되었습니다!`);
       navigate("/");
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        console.error(error.message);
-        alert(error.message);
-        setError(error.message);
-      } else {
-        console.error("예상치 못한 에러", error);
-        alert("예상치 못한 에러가 발생했습니다.");
-      }
+    } catch (error) {
+      console.error(error);
     } finally {
       setLoading(false);
     }

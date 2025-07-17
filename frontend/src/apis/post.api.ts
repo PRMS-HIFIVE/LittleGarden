@@ -1,14 +1,12 @@
 import type { Post } from "@/hooks/usePostFilter";
 
 export const fetchAllPosts = async (): Promise<Post[]> => {
-  const token = localStorage.getItem("token");
-
   const response = await fetch("/posts", {
     method: "GET",
     headers: {
-      "Authorization": `Bearer ${token ?? ""}`,
       "Content-Type": "application/json",
     },
+    credentials: "include",
   });
 
   if (!response.ok) {
@@ -24,11 +22,8 @@ export const fetchAllPosts = async (): Promise<Post[]> => {
 export const fetchPostDetail = async (postId: number) => {
   console.log("게시글 조회요청:", postId);
 
-  const token = localStorage.getItem("token");
   const response = await fetch(`/posts/${postId}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    credentials: "include",
   });
 
   if (!response.ok) {

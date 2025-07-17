@@ -1,15 +1,24 @@
 import { create } from "zustand";
 
+// const getCookie = (name: string): string | null => {
+//   const value = `; ${document.cookie}`;
+//   const parts = value.split(`; ${name}=`);
+//   if (parts.length === 2) {
+//     const cookieValue = parts.pop()?.split(";").shift();
+//     return cookieValue ? decodeURIComponent(cookieValue) : null;
+//   }
+//   return null;
+// };
+
 const getCookie = (name: string): string | null => {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) {
-    const cookieValue = parts.pop()?.split(";").shift();
-    // 쿠키 값이 없는 경우 null을 반환하도록 수정
-    return cookieValue ? decodeURIComponent(cookieValue) : null;
-  }
-  return null;
+  const cookies = document.cookie.split("; ").reduce<Record<string, string>>((acc, cookie) => {
+    const [key, val] = cookie.split("=");
+    acc[key] = val;
+    return acc;
+  }, {});
+  return cookies[name] ? decodeURIComponent(cookies[name]) : null;
 };
+
 
 const eraseCookie = (name: string) => {
   document.cookie = `${name}=; Max-Age=-99999999; path=/`;
@@ -18,7 +27,7 @@ const eraseCookie = (name: string) => {
 interface User {
   id: number;
   nickname: string;
-  profileImage: string;
+  profileImage?: string;
 }
 
 interface AuthState {
@@ -33,44 +42,51 @@ interface AuthState {
   resetAuth: () => void;
 }
 
-export const useAuthStore = create<AuthState>((set) => {
-  const token = getCookie("access_token");
-  const userRaw = localStorage.getItem("user");
-  const user = userRaw ? JSON.parse(userRaw) : null;
+const tokenFromCookie = getCookie("access_token");
 
-  return {
-    email: "",
-    userId: user?.id ?? null,
-    token,
-    user,
+export const useAuthStore = create<AuthState>((set) => ({
+  email: "",
+  userId: null,
+  token: tokenFromCookie ?? null,
+  user: (() => {
+    const userRaw = localStorage.getItem("user");
+    return userRaw ? JSON.parse(userRaw) : null;
+  })(),
 
-    setEmail: (email) => set({ email }),
-    setUserId: (userId) => set({ userId }),
-    setToken: (token) => {
-      if (token) {
-        document.cookie = `access_token=${encodeURIComponent(token)}; path=/`;
-      } else {
-        eraseCookie("access_token");
-      }
-      set({ token: token });
-    },
-    setUser: (user) => {
-      if (user) {
-        localStorage.setItem("user", JSON.stringify(user));
-      } else {
-        localStorage.removeItem("user");
-      }
-      set({ user });
-    },
-    resetAuth: () => {
+  setEmail: (email) => set({ email }),
+
+  setUserId: (userId) => set({ userId }),
+
+setToken: (token) => {
+  console.log("setToken called with", token);
+  if (token) {
+    document.cookie = `access_token=${encodeURIComponent(token)}; path=/`;
+  } else {
+    eraseCookie("access_token");
+  }
+  set({ token });
+  console.log("zustand set called");
+},
+
+
+  setUser: (user) => {
+    if (user) {
+      localStorage.setItem("user", JSON.stringify(user));
+    } else {
       localStorage.removeItem("user");
-      eraseCookie("access_token");
-      set({
-        email: "",
-        userId: null,
-        token: null,
-        user: null,
-      });
-    },
-  };
-});
+    }
+    set({ user });
+  },
+
+  resetAuth: () => {
+    localStorage.removeItem("user");
+    eraseCookie("access_token");
+    set({
+      email: "",
+      userId: null,
+      token: null,
+      user: null,
+    });
+  },
+}));
+

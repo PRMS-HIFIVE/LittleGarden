@@ -76,14 +76,15 @@ export const login = async (req: TypedRequest<IUserRequestBody>, res: Response) 
         );
 
         res.cookie('access_token', token, {
-            httpOnly: true,
-            secure: true,
+            httpOnly: true, 
+            secure: false, // 개발용으로 false 설정
             sameSite: 'strict',
             maxAge: 60 * 60 * 3000
         });
 
         res.status(StatusCodes.OK).json({
-            loginUser : loginUser[0]
+            loginUser : loginUser[0],
+            token
         });
         return;
 
@@ -103,6 +104,12 @@ export const logout = (req: Request, res: Response) : void => {
 
     res.json({ message: '로그아웃되었습니다.' });
     return;
+}
+
+export const authCheck = (req: Request, res: Response): void => {
+    res.status(StatusCodes.OK).json({
+        message : "인증된 사용자입니다."
+    });
 }
 
 export const emailCertify = async (req: Request, res: Response): Promise<void> => {
