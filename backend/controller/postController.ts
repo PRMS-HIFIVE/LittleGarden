@@ -6,11 +6,9 @@ export const postPosts = async (req:Request, res:Response) : Promise<void> => {
     const userId = req.user?.id;
     const { title, content, plantTag, state, isHealth } = req.body;
 
-    const cleanedTags = plantTag.map((tag:string) => tag.replace(/^#/, ''));
-
     try {
         const newPost = await postService.posts({userId, title, content,state, isHealth});
-        const newtag = await postService.tags(newPost.insertId,cleanedTags);
+        const newtag = await postService.tags(newPost.insertId,plantTag);
         res.status(StatusCodes.CREATED).json({
             message : "게시글이 성공적으로 작성되었습니다.",
             postData : newPost,
@@ -50,13 +48,9 @@ export const updatePosts = async (req:Request, res:Response) : Promise<void> => 
     const postId = parseInt(req.params.postId);
     const { title, content, plantTag, state,isHealth } = req.body;
 
-    const cleanedTags = plantTag.map((tag:string) => tag.replace(/^#/, ''));
-
     try {
         const updatePost = await postService.updatePosts(postId,{userId, title, content,state,isHealth});
-        if(cleanedTags.length>=1){
-            const updateTag = await postService.updateTags(postId,cleanedTags);
-        }
+        const updateTag = await postService.updateTags(postId,plantTag);
         
         res.status(StatusCodes.CREATED).json({
             message : "게시글이 성공적으로 수정되었습니다.",
