@@ -105,6 +105,12 @@ export const logout = (req: Request, res: Response) : void => {
     return;
 }
 
+export const authCheck = (req: Request, res: Response): void => {
+    res.status(StatusCodes.OK).json({
+        message : "인증된 사용자입니다."
+    });
+}
+
 export const emailCertify = async (req: Request, res: Response): Promise<void> => {
     const {email} = req.body;
     try {
