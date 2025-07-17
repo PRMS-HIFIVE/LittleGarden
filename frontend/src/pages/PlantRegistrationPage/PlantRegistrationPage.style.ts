@@ -115,3 +115,24 @@ export const InfoBox = styled.div`
         margin: 4px 0;
     }
 `;
+
+export const SearchResultsBox = styled.ul`
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-top: none;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 100;
+`;
+
+export const SearchResultItem = styled.li`
+    padding: 10px;
+    cursor: pointer;
+    &:hover {
+        background-color: #f5f5f5;
+    }
+`;

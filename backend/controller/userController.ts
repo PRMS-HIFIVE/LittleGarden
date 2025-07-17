@@ -112,6 +112,7 @@ export const authCheck = (req: Request, res: Response): void => {
     });
 }
 
+
 export const emailCertify = async (req: Request, res: Response): Promise<void> => {
     const {email} = req.body;
     try {

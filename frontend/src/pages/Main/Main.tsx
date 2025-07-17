@@ -32,7 +32,7 @@ function Main(){
                                     <Star />
                                     <S.PlantWrapper>
                                         <S.PlantNameArea>
-                                            <img src={plant.imgUrl} alt={plant.cntntsSj} style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover', marginRight: '12px' }}/>
+                                            <img src={plant.imgUrl} alt={plant.cntntsSj}/>
                                             <S.PlantName>{plant.cntntsSj}</S.PlantName>
                                         </S.PlantNameArea>
                                         <S.PlantInfoWrapper>

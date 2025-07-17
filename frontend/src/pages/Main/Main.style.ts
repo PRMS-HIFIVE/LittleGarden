@@ -34,6 +34,7 @@ export const PlantsListWrapper = styled.div`
 `
 
 export const PlantsList = styled.div`
+    height: 88px;
     background: white;
     border-radius: 10px;
     box-shadow: 0px 2px 6px 0px rgb(0 0 0 / 20%);
@@ -44,9 +45,10 @@ export const PlantsList = styled.div`
     gap: 6px;
 
     img{
-        width: 80px;
-        height: 80px;
+        width: 60px;
+        height: 60px;
         border-radius: 10px;
+        object-fit: 'cover';
     }
 `
 
@@ -69,7 +71,8 @@ export const PlantName = styled.p`
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    width: 100px;
+    width: 160px;
+    text-align: left;
 `
 
 export const PlantInfoWrapper = styled.div`

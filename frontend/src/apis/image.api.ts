@@ -12,7 +12,6 @@ export const uploadImage = async (imageFile: File): Promise<string> => {
     const response = await fetch(`${IMGBB_API_URL}?key=${apiKey}`, {
         method: "POST",
         body: formData,
-        credentials: "include", 
     });
 
     if (!response.ok) {

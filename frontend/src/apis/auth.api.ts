@@ -15,7 +15,7 @@ export interface LoginResponse {
     email: string;
     nickname: string;
   };
-  token: string; 
+  token: string;
 }
 
 const BASE_URL = import.meta.env.VITE_BACK_SERVER_URL;
@@ -28,7 +28,7 @@ export const signup = async (data: SignUpRequest) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
-    credentials: "include", 
+    credentials: "include",
   });
 
   if (!response.ok) {
@@ -46,7 +46,7 @@ export const login = async (data: LoginRequest): Promise<LoginResponse> => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
-    credentials: "include", 
+    credentials: "include",
   });
 
   if (!response.ok) {
@@ -57,6 +57,20 @@ export const login = async (data: LoginRequest): Promise<LoginResponse> => {
   return response.json();
 };
 
+export const checkAuth = async () => {
+  const response = await fetch(`${BASE_URL}/users/check`, {
+    method: "GET",
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    throw new Error("Unauthorized");
+  }
+
+  const data = await response.json();
+  return data.user;
+};
+
 export const requestResetPassword = async (email: string) => {
   const response = await fetch(`${BASE_URL}/users/reset`, {
     method: "POST",
@@ -64,7 +78,7 @@ export const requestResetPassword = async (email: string) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ email }),
-    credentials: "include", 
+    credentials: "include",
   });
 
   if (!response.ok) {
@@ -82,7 +96,7 @@ export const requestEmailCertification = async (email: string) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ email }),
-    credentials: "include", 
+    credentials: "include",
   });
 
   if (!response.ok) {
@@ -108,5 +122,5 @@ export const updateNickname = async (nickName: string) => {
     throw new Error(result.message || "닉네임 변경 실패");
   }
 
-  return response.json(); 
+  return response.json();
 };

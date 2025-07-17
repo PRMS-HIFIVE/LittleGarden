@@ -1,29 +1,5 @@
 import { create } from "zustand";
 
-// const getCookie = (name: string): string | null => {
-//   const value = `; ${document.cookie}`;
-//   const parts = value.split(`; ${name}=`);
-//   if (parts.length === 2) {
-//     const cookieValue = parts.pop()?.split(";").shift();
-//     return cookieValue ? decodeURIComponent(cookieValue) : null;
-//   }
-//   return null;
-// };
-
-const getCookie = (name: string): string | null => {
-  const cookies = document.cookie.split("; ").reduce<Record<string, string>>((acc, cookie) => {
-    const [key, val] = cookie.split("=");
-    acc[key] = val;
-    return acc;
-  }, {});
-  return cookies[name] ? decodeURIComponent(cookies[name]) : null;
-};
-
-
-const eraseCookie = (name: string) => {
-  document.cookie = `${name}=; Max-Age=-99999999; path=/`;
-};
-
 interface User {
   id: number;
   nickname: string;
@@ -32,42 +8,25 @@ interface User {
 
 interface AuthState {
   email: string;
-  userId: number | null;
-  token: string | null;
   user: User | null;
-  setEmail: (email: string) => void;
-  setUserId: (userId: number | null) => void;
-  setToken: (token: string | null) => void;
+  userId: number | null;
   setUser: (user: User | null) => void;
+  setEmail: (email: string) => void;
+  isAuthenticated: boolean;
+  setAuthenticated: (value: boolean) => void;
   resetAuth: () => void;
 }
 
-const tokenFromCookie = getCookie("access_token");
-
-export const useAuthStore = create<AuthState>((set) => ({
+export const useAuthStore = create<AuthState>((set, get) => ({
   email: "",
-  userId: null,
-  token: tokenFromCookie ?? null,
-  user: (() => {
-    const userRaw = localStorage.getItem("user");
-    return userRaw ? JSON.parse(userRaw) : null;
-  })(),
+  user: null,
+  isAuthenticated: false,
+   setEmail: (email) => set({ email }),
+  get userId() {
+    return get().user?.id ?? null; 
+  },
 
-  setEmail: (email) => set({ email }),
-
-  setUserId: (userId) => set({ userId }),
-
-setToken: (token) => {
-  console.log("setToken called with", token);
-  if (token) {
-    document.cookie = `access_token=${encodeURIComponent(token)}; path=/`;
-  } else {
-    eraseCookie("access_token");
-  }
-  set({ token });
-  console.log("zustand set called");
-},
-
+  setAuthenticated: (value) => set({ isAuthenticated: value }),
 
   setUser: (user) => {
     if (user) {
@@ -80,13 +39,9 @@ setToken: (token) => {
 
   resetAuth: () => {
     localStorage.removeItem("user");
-    eraseCookie("access_token");
     set({
-      email: "",
-      userId: null,
-      token: null,
+      isAuthenticated: false,
       user: null,
     });
   },
 }));
-
