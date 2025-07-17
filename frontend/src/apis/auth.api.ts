@@ -114,7 +114,7 @@ export const updateNickname = async (nickName: string) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ nickName }),
-    credentials: "include",
+    //credentials: "include",
   });
 
   if (!response.ok) {

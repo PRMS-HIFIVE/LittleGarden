@@ -27,59 +27,59 @@ const buttonFontSizeMap = {
 
 export const StyledButton = styled.button<{
   color: ButtonColors;
-  buttonSize: ButtonSize;
-  styleType?: ButtonStyleType;
-  radius?: ButtonRadius;
-  width?: string;
-  height?: string;
-  padding?: string;
-  margin?: string;
+  $buttonSize: ButtonSize;
+  $styleType?: ButtonStyleType;
+  $radius?: ButtonRadius;
+  $width?: string;
+  $height?: string;
+  $padding?: string;
+  $margin?: string;
 }>`
-  background-color: ${({ color, styleType }) =>
-    styleType === "filled"
+  background-color: ${({ color, $styleType }) =>
+    $styleType === "filled"
       ? buttonColors[color]
-      : styleType === "outline"
+      : $styleType === "outline"
       ? "transparent"
-      : styleType === "clear"
+      : $styleType === "clear"
       ? "transparent"
       : buttonColors[color]};
 
-  ${({ buttonSize = "medium", width, height }) => {
-    const size = buttonSizeMap[buttonSize as keyof typeof buttonSizeMap] || {};
+  ${({ $buttonSize = "medium", $width, $height }) => {
+    const size = buttonSizeMap[$buttonSize as keyof typeof buttonSizeMap] || {};
     return `
-      width: ${width && width !== "" ? width : size.width ?? "auto"};
-      height: ${height && height !== "" ? height : size.height ?? "auto"};
+      width: ${$width && $width !== "" ? $width : size.width ?? "auto"};
+      height: ${$height && $height !== "" ? $height : size.height ?? "auto"};
     `;
   }}
 
-  font-size: ${({ buttonSize = "medium" }) =>
-    buttonFontSizeMap[buttonSize as keyof typeof buttonFontSizeMap] || "16px"};
+  font-size: ${({ $buttonSize = "medium" }) =>
+    buttonFontSizeMap[$buttonSize as keyof typeof buttonFontSizeMap] || "16px"};
 
-  color: ${({ color, styleType }) =>
-    styleType === "outline"
+  color: ${({ color, $styleType }) =>
+    $styleType === "outline"
       ? buttonColors[color]
       : textColors[buttonTextColorMap[color]]};
 
-  border: ${({ color, styleType }) =>
-    styleType === "outline" ? `2px solid ${buttonColors[color]}` : "none"};
+  border: ${({ color, $styleType }) =>
+    $styleType === "outline" ? `2px solid ${buttonColors[color]}` : "none"};
 
-  border-radius: ${({ radius }) =>
-    radius === "square"
+  border-radius: ${({ $radius }) =>
+    $radius === "square"
       ? "0"
-      : radius === "semiRound"
+      : $radius === "semiRound"
       ? "4px"
-      : radius === "round"
+      : $radius === "round"
       ? "8px"
-      : radius === "pill"
+      : $radius === "pill"
       ? "999px"
-      : radius};
+      : $radius};
 
-  padding: ${({ padding }) =>
-    typeof padding === "string" && padding.trim() !== ""
-      ? padding
+  padding: ${({ $padding }) =>
+    typeof $padding === "string" && $padding.trim() !== ""
+      ? $padding
       : "8px 24px"};
-  margin: ${({ margin }) =>
-    typeof margin === "string" && margin.trim() !== "" ? margin : "0"};
+  margin: ${({ $margin }) =>
+    typeof $margin === "string" && $margin.trim() !== "" ? $margin : "0"};
   display: inline-flex;
   align-items: center;
   justify-content: center;

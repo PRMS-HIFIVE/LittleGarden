@@ -9,6 +9,7 @@ export const getMyPlantTag = async (): Promise<MyPlantTagData[]> => {
     // const token = localStorage.getItem("token");
     const response = await fetch(`/plants`, {
         credentials: "include",
+
     });
 
     if (!response.ok) {

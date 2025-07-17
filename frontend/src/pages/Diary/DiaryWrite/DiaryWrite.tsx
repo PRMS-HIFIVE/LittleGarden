@@ -19,11 +19,11 @@ const DiaryWrite = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!userId) {
-            alert("로그인 후 이용해주세요");
-            navigate("/login");
-            return;
-        }
+         if (!userId) {
+             alert("로그인 후 이용해주세요");
+             navigate("/login");
+             return;
+         }
         if (!title.trim() || !content.trim()) {
             alert("제목과 내용 모두 입력해주세요");
             return;

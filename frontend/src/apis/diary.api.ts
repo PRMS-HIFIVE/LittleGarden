@@ -34,8 +34,6 @@ export type DiaryPayloadUnion = GetDiaryPayload | PostDiaryPayload | PutDiaryPay
 
 // 게시글 조회
 export const getDiary = async (userId: number) => {
-    // const token = getAuthToken();
-
     const response = await fetch(`${API_BASE_URL}/posts?userId=${userId}&state=1`, {
         credentials: "include",
     });
@@ -90,6 +88,7 @@ export const postDiary = async (payload: PostDiaryPayload) => {
 export const putDiary = async (payload: PutDiaryPayload) => {
     const response = await fetch(`${API_BASE_URL}/posts/${payload.postId}`, {
         method: "PUT",
+        credentials: 'include',
         headers: {
             "Content-Type": "application/json",
         },
@@ -102,7 +101,7 @@ export const putDiary = async (payload: PutDiaryPayload) => {
             state: payload.state,
             image: payload.image,
         }),
-        credentials: "include",
+
     })
 
     if (!response.ok) {

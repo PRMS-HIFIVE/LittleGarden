@@ -1,4 +1,6 @@
+
 // import { getAuthToken } from "@/apis/diary.api";
+
 import { AddedTag, AddTagButton, Select, SelectRow, SelectWrapper, TagList, TagRemoveButton } from "@/components/UI/Select/SelectMyPlant.styles";
 //import type { Plant } from "@/store/plantStore";
 import { useEffect, useState } from "react";
