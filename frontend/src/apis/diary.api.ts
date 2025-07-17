@@ -34,11 +34,11 @@ export type DiaryPayloadUnion = GetDiaryPayload | PostDiaryPayload | PutDiaryPay
 
 // 게시글 조회
 export const getDiary = async (userId: number) => {
-    const token = getAuthToken();
+    //const token = getAuthToken();
 
     const response = await fetch(`${API_BASE_URL}/posts?userId=${userId}&state=1`, {
         headers: {
-            "Authorization": `Bearer ${token ?? ""}`,
+            //"Authorization": `Bearer ${token ?? ""}`,
         }
     });
     if(!response.ok) {
@@ -50,7 +50,7 @@ export const getDiary = async (userId: number) => {
 
 // 게시글 등록
 export const postDiary = async (payload: PostDiaryPayload) => {
-    const token = getAuthToken();
+    //const token = getAuthToken();
     // 이미지 보낼때 배열일때
     // const formData = new FormData();
 
@@ -66,7 +66,7 @@ export const postDiary = async (payload: PostDiaryPayload) => {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token ?? ""}`,
+            //"Authorization": `Bearer ${token ?? ""}`,
         },
         body: JSON.stringify(
             {
@@ -91,12 +91,12 @@ export const postDiary = async (payload: PostDiaryPayload) => {
 
 // 게시글 수정
 export const putDiary = async (payload: PutDiaryPayload) => {
-    const token = getAuthToken();
+    //const token = getAuthToken();
     const response = await fetch(`${API_BASE_URL}/posts/${payload.postId}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token ?? ""}`,
+            //"Authorization": `Bearer ${token ?? ""}`,
         },
         body: JSON.stringify({
             userId: payload.userId,
@@ -118,11 +118,11 @@ export const putDiary = async (payload: PutDiaryPayload) => {
 
 // 게시글 삭제
 export const deleteDiary = async (postId: number) => {
-    const token = getAuthToken();
+    //const token = getAuthToken();
     const response = await fetch(`${API_BASE_URL}/posts/${postId}`, {
         method: "DELETE",
         headers:{
-            Authorization: `Bearer ${token ?? ""}`,
+            //Authorization: `Bearer ${token ?? ""}`,
         }
     });
 
@@ -139,8 +139,8 @@ export const deleteDiary = async (postId: number) => {
 
 
 // 토큰 확인
-export const getAuthToken = ():string => {
-    const token = localStorage.getItem("token");
-    if(!token) throw new Error ("인증토큰이 없습니다")
-    return token;
-}
+// export const getAuthToken = ():string => {
+//     const token = localStorage.getItem("token");
+//     if(!token) throw new Error ("인증토큰이 없습니다")
+//     return token;
+// }
