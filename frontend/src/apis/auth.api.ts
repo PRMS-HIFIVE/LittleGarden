@@ -42,6 +42,7 @@ export const signup = async (data: SignUpRequest) => {
 export const login = async (data: LoginRequest): Promise<LoginResponse> => {
   const response = await fetch(`${BASE_URL}/users/login`, {
     method: "POST",
+    credentials: 'include',
     headers: {
       "Content-Type": "application/json",
     },
