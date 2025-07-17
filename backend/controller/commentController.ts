@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { StatusCodes } from "http-status-codes";
 import commentService from "../service/commentService";
 import { IComment, TypedRequest } from '../types/types';
+import noticeService from '../service/noticeService';
 
 type commentRequestBody = Pick<IComment, 'postId' | 'userId' | 'content'>;
 
@@ -26,6 +27,7 @@ export const createComment = async (req: TypedRequest<commentRequestBody>, res: 
 
     try {
         await commentService.createComment(postId, userId, content);
+        await noticeService.CommentAddNotice(postId);
         res.status(StatusCodes.CREATED).json({ message : "댓글이 등록되었습니다."});
         return;
     } catch(err) {

@@ -3,6 +3,7 @@ import { executeQuery } from '../utils/executeQuery';
 import { ResultSetHeader, RowDataPacket } from "mysql2";
 import { getWatercycleColumn } from '../utils/utils';
 import fetch from 'node-fetch';
+import noticeService from './noticeService';
 
 const PUSH_SERVER_URL = `http://push-server:${process.env.PUSH_SERVER_PORT}` || 'http://localhost:5001';
 
@@ -43,6 +44,7 @@ const job = schedule.scheduleJob('0 0 2 * * *', async () => {
 
         for (const user of usersToNotify) {
             try {
+                const addnotice = noticeService.addnotice(user.user_id,"watering");
                 const notificationPayload = {
                     title: `[LittleGarden] 물 줄 시간이에요!`,
                     body: `${user.cntntsSj}에게 물을 줄 때가 됐어요. 잊지 마세요!`,

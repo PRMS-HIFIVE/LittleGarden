@@ -7,13 +7,24 @@ export const postPosts = async (req:Request, res:Response) : Promise<void> => {
     const { title, content, plantTag, state, isHealth } = req.body;
 
     try {
-        const newPost = await postService.posts({userId, title, content,state, isHealth});
-        const newtag = await postService.tags(newPost.insertId,plantTag);
-        res.status(StatusCodes.CREATED).json({
-            message : "게시글이 성공적으로 작성되었습니다.",
-            postData : newPost,
-            tagData : newtag
+        const newPost = await postService.getPosts(plantTag, state);
+
+        const postMap = new Map<number, any>();
+
+        newPost.forEach(post => {
+            if (!postMap.has(post.id)) {
+                postMap.set(post.id, { ...post, plantTag: [post.plantTag] });
+            } else {
+                postMap.get(post.id).plantTag.push(post.plantTag);
+            }
         });
+
+        const mergedPosts = Array.from(postMap.values());
+
+        res.status(StatusCodes.CREATED).json({
+            message : "게시글이 성공적으로 조회되었습니다.",
+            data : mergedPosts
+        })
         return;
     } catch (error){
         console.error("Error creating post:", error);
