@@ -90,11 +90,11 @@ const xmlToJson = <T>(xmlText: string): T => {
     return JSON.parse(jsonStr) as T;
 };
 
-const getAuthToken = (): string | null => {
-    const token = localStorage.getItem("token");
-    if (!token) return null;
-    return token;
-};
+// const getAuthToken = (): string | null => {
+//     const token = localStorage.getItem("token");
+//     if (!token) return null;
+//     return token;
+// };
 
 const mockIdentifyPlantByImage = (): Promise<PlantIdResponse> => {
     console.warn("DEV MODE: Plant.id API is mocked to save credits.");
@@ -149,13 +149,14 @@ export const identifyPlantByImage = async (imageBase64: string): Promise<PlantId
 };
 
 export const fetchMyPlants = async (): Promise<Plant[]> => {
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
     const response = await fetch(`${BASE_URL}/plants`, {
         method: 'GET',
         headers: {
-            "Authorization": `Bearer ${token ?? ""}`,
+            // "Authorization": `Bearer ${token ?? ""}`,
             "Content-Type": "application/json",
         },
+        credentials: "include",
     });
 
     if (!response.ok) throw new Error('내 식물 목록을 불러오는데 실패했습니다.');
@@ -164,19 +165,20 @@ export const fetchMyPlants = async (): Promise<Plant[]> => {
 };
 
 export const registerPlant = async (plantData: Record<string, any>) => {
-    const token = getAuthToken();
-    if (!token) {
-        throw new Error("인증 토큰이 없습니다. 다시 로그인해주세요.");
-    }
+    // const token = getAuthToken();
+    // if (!token) {
+    //     throw new Error("인증 토큰이 없습니다. 다시 로그인해주세요.");
+    // }
 
     const response = await fetch(`${BASE_URL}/plants`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
-            Authorization: `Bearer ${token}`,
+            // Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(plantData),
+        credentials: "include",
     });
 
     if (!response.ok) {
@@ -191,10 +193,10 @@ export const registerPlant = async (plantData: Record<string, any>) => {
 };
 
 export const fetchPlantById = async (plantId: number): Promise<Plant | null> => {
-    const token = getAuthToken();
-    if (!token) {
-        throw new Error("인증 토큰이 없습니다. 다시 로그인해주세요.");
-    }
+    // const token = getAuthToken();
+    // if (!token) {
+    //     throw new Error("인증 토큰이 없습니다. 다시 로그인해주세요.");
+    // }
 
     const urlWithQuery = `${BASE_URL}/plants?plantId=${plantId}`;
 
@@ -202,8 +204,9 @@ export const fetchPlantById = async (plantId: number): Promise<Plant | null> => 
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`,
+            // 'Authorization': `Bearer ${token}`,
         },
+        credentials: "include",
     });
 
     if (!response.ok) throw new Error('식물 상세 정보를 불러오는데 실패했습니다.');
@@ -214,18 +217,19 @@ export const fetchPlantById = async (plantId: number): Promise<Plant | null> => 
 };
 
 export const updatePlant = async (plantId: number, data: { nickName?: string; watering?: string }): Promise<void> => {
-    const token = getAuthToken();
-    if (!token) {
-        throw new Error("인증 토큰이 없습니다. 다시 로그인해주세요.");
-    }
+    // const token = getAuthToken();
+    // if (!token) {
+    //     throw new Error("인증 토큰이 없습니다. 다시 로그인해주세요.");
+    // }
 
     const response = await fetch(`${BASE_URL}/plants/${plantId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`,
+            // 'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify(data),
+        credentials: "include",
     });
 
     if (!response.ok) {

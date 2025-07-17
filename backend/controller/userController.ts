@@ -76,14 +76,15 @@ export const login = async (req: TypedRequest<IUserRequestBody>, res: Response) 
         );
 
         res.cookie('access_token', token, {
-            httpOnly: true,
-            secure: true,
+            httpOnly: true, 
+            secure: false, // 개발용으로 false 설정
             sameSite: 'strict',
             maxAge: 60 * 60 * 3000
         });
 
         res.status(StatusCodes.OK).json({
-            loginUser : loginUser[0]
+            loginUser : loginUser[0],
+            token
         });
         return;
 
