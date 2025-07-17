@@ -32,7 +32,7 @@ const createPlant = async (userId: number, plant: IPlantRequestBody) => {
             growthAraInfo, growthHgInfo, grwthTpCodeNm, grwtveCodeNm, hdCodeNm, ignSeasonCodeNm,
             lightdemanddoCodeNm, managedemanddoCodeNm, managelevelCodeNm, postngplaceCodeNm,
             winterLwetTpCodeNm, watercycle, watercycleSpringCode, watercycleSummerCode, watercycleAutumnCode, watercycleWinterCode
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
     const values = [
         userId,
