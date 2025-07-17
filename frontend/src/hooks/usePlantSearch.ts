@@ -1,13 +1,11 @@
 import { useState, useCallback } from "react";
 import {
-    identifyPlantByImage,
     searchPlantByNameOnNongsaro,
     getPlantDetailFromNongsaro,
     type PlantIdSuggestion,
     type NongsaroListItem,
     type NongsaroDetailItem,
 } from "@/apis/plant.api";
-import { resizeImage } from "@/utils/image";
 
 export interface PlantDetail {
     contentNo: string;
@@ -102,47 +100,44 @@ export const usePlantSearch = () => {
         }
     }, [mapToPlantDetail]);
 
-    const searchByImage = useCallback(async (imageFile: File) => {
-        setState({ data: null, suggestions: null, nongsaroList: null, isLoading: true, error: null });
+    const searchByName = useCallback(async (name: string) => {
+        setState({data: null, suggestions:null, nongsaroList: null, isLoading: true, error: null});
 
         try {
-            // 이미지 리사이즈 후 Base64로 변환하여 식별 (Plant.id)
-            const imageBase64 = await resizeImage(imageFile, { maxSize: 800, quality: 0.8 });
-            const idResponse = await identifyPlantByImage(imageBase64);
-            const suggestions = idResponse.result.classification.suggestions;
-
-            if (!suggestions || suggestions.length === 0) {
-                throw new Error("식물을 식별할 수 없습니다. 다른 사진으로 시도해주세요.");
-            }
-
-            const topSuggestionName = suggestions[0].name;
-            const listResponse = await searchPlantByNameOnNongsaro(topSuggestionName);
+            const listResponse = await searchPlantByNameOnNongsaro(name);
             let nongsaroItems = listResponse.response.body.items?.item;
 
-            if (!nongsaroItems) {
-                throw new Error(`'${topSuggestionName}'에 대한 정보를 농사로에서 찾을 수 없습니다.`);
+            if(!nongsaroItems){
+                throw new Error(`${name}에 해당하는 식물을 찾을 수 없습니다.`)
             }
-            if (!Array.isArray(nongsaroItems)) nongsaroItems = [nongsaroItems];
+            if(!Array.isArray(nongsaroItems)) nongsaroItems = [nongsaroItems];
 
-            setState((prev) => ({ ...prev, suggestions, nongsaroList: nongsaroItems }));
+            setState((prev) => ({
+                ...prev, 
+                nongsaroList: nongsaroItems,
+                isLoading: false,
+            }));
 
-            const contentNo = getText(nongsaroItems[0]?.cntntsNo);
+            const contentNo = getText(nongsaroItems[0].cntntsNo);
 
             if (contentNo) {
                 await getDetailsByContentNo(contentNo);
             } else {
-                throw new Error(`'${topSuggestionName}'에 대한 상세 정보(콘텐츠 번호)를 찾을 수 없습니다.`);
+                throw new Error(`${name}에 대한 상세 정보를 찾을 수 없습니다.`)
             }
+
+            return { nongsaroList: nongsaroItems };
 
         } catch (err) {
             const errorMessage = err instanceof Error ? err.message : "알 수 없는 오류가 발생했습니다.";
             setState((prev) => ({ ...prev, isLoading: false, error: errorMessage }));
+            return { nongsaroList: [] }; // 에러 발생 시 빈 배열 반환
         }
     }, [getDetailsByContentNo]);
 
     return {
         ...state,
-        searchByImage,
+        searchByName,
         getDetailsByContentNo,
     };
 };
