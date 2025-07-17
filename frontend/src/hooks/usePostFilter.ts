@@ -1,6 +1,8 @@
 import { usePostStore } from "@/store/postStore";
 import { useState } from "react";
-import { fetchAllPosts } from "@/apis/post.api";
+// import { fetchAllPosts } from "@/apis/post.api";
+import { fetchPostsByState } from "@/apis/post.api";
+
 import { useAuthStore } from "@/store/authStore";
 
 export interface Post {
@@ -13,20 +15,21 @@ export interface Post {
   createdAt: string;
   plantTag?: string[];
   img?: string;
+  profileImage?: string; // 프로필 이미지 추가
+  nickname?: string; // 작성자 이름 추가
 }
 
 // state에 따라 성장일기(1), 커뮤니티(2) 게시글 구분
 export const usePostFilter = (stateType: 1 | 2) => {
-  const { allPosts, setAllPosts, filteredPosts, setFilteredPosts } = usePostStore();
+  const { setAllPosts, setFilteredPosts, filteredPosts, allPosts } = usePostStore();
   const userId = useAuthStore((s) => s.userId);
   const [isMyPostFiltered, setIsMyPostFiltered] = useState(false);
 
-  // 초기 게시글 불러오기 (state에 맞는 게시글만 필터링)
   const init = async () => {
-    const data = await fetchAllPosts();
-    const filtered = data.filter((post) => post.state === stateType);
-    setAllPosts(filtered);
-    setFilteredPosts(filtered);
+    const posts = await fetchPostsByState(stateType);
+    setAllPosts(posts);
+    setFilteredPosts(posts);
+    setIsMyPostFiltered(false);
   };
 
   // 최신순 정렬

@@ -26,7 +26,7 @@ const CommunityDetail = () => {
 
   const [comment, setComment] = useState("");
   const [post, setPost] = useState<PostDetail | null>(null);
-  
+
   const [editingCommentId, setEditingCommentId] = useState<number | null>(null);
   const [editingContent, setEditingContent] = useState("");
 
@@ -46,7 +46,18 @@ const CommunityDetail = () => {
     const init = async () => {
       try {
         const postData = await fetchPostDetail(postId);
-        setPost(postData);
+        const postDetail: PostDetail = {
+          profileImage: postData.profileImage || "/default-profile.png",
+          nickname: postData.nickname ?? "작성자 이름",
+          title: postData.title,
+          content: postData.content,
+          images: postData.img ? [postData.img] : [],
+          plantTags: postData.plantTag || [],
+          createdAt: new Date(postData.createdAt).toLocaleDateString(),
+        };
+
+        setPost(postDetail);
+
         await loadComments();
       } catch (err) {
         console.error("게시글 또는 댓글 불러오기 실패", err);

@@ -4,13 +4,13 @@ import DiaryHeader from "@/common/Header/HeaderVariants/DiaryHeader";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { usePostFilter } from "@/hooks/usePostFilter";
-import Card from "@/common/Card/Card";
-import { usePostStore } from "@/store/postStore";
+// import { usePostStore } from "@/store/postStore";
+import CommunityList from "./CommunityList/CommunityList";
 
 const Community = () => {
   const navigate = useNavigate();
 
-  const { filteredPosts } = usePostStore();
+  // const { filteredPosts } = usePostStore();
 
   const { init, filterLatest, filterMyPosts } = usePostFilter(2);
 
@@ -55,34 +55,10 @@ const Community = () => {
           </Button>
         </S.ButtonWrapper>
 
-        {/* 더미데이터 확인용 카드리스트 렌더링 */}
-        
       <S.ScrollableCardList>
-        {filteredPosts.map((post) => (
-          <Card
-            key={post.postId}
-            title={post.title}
-            content={post.content}
-            date={post.createdAt}
-            image={post.img}
-            tag={post.plantTag}
-          />
-        ))}
+      <CommunityList />
       </S.ScrollableCardList>
-
-        {/* <S.ScrollableCardList>
-          {[...Array(10)].map((_, i) => (
-            <Card
-              key={i}
-              title={`제목 ${i + 1}`}
-              content="내용"
-              date="2023-10-01"
-              image="https://picsum.photos/200/300"
-              tag={["태그1", "태그2"]}
-              profileImage="https://picsum.photos/50/50"
-            />
-          ))}
-        </S.ScrollableCardList> */}
+      
       </S.Container>
     </>
   );

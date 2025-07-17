@@ -1,11 +1,11 @@
 import {
-  AddedTag,
+  // AddedTag,
   AddTagButton,
   Select,
   SelectRow,
   SelectWrapper,
-  TagList,
-  TagRemoveButton,
+  // TagList,
+  // TagRemoveButton,
 } from "@/components/UI/Select/SelectMyPlant.styles";
 import { useMyPlants } from "@/hooks/useMyPlants";
 import { useEffect, useMemo, useState } from "react";
@@ -62,6 +62,7 @@ const PlantSelector2 = ({ onChange }: PlantSelectorProps) => {
 
   // 식물 추가 (중복 방지)
   const handleAddPlant = () => {
+    console.log("선택된 식물 ID:", selectedPlantId);
     const plant = plantList.find((p) => p.cntntsNo === selectedPlantId);
     if (plant && !selectedPlants.some((p) => p.cntntsNo === plant.cntntsNo)) {
       setSelectedPlants((prev) => [...prev, plant]);
@@ -69,9 +70,9 @@ const PlantSelector2 = ({ onChange }: PlantSelectorProps) => {
   };
 
   // 태그에서 식물 제거
-  const handleRemovePlant = (id: string) => {
-    setSelectedPlants((prev) => prev.filter((p) => p.cntntsNo !== id));
-  };
+  // const handleRemovePlant = (id: string) => {
+  //   setSelectedPlants((prev) => prev.filter((p) => p.cntntsNo !== id));
+  // };
 
   if (isLoading) return <div>식물 목록 불러오는 중...</div>;
   if (error) return <div>식물 목록을 불러오는 데 실패했습니다.</div>;

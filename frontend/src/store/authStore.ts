@@ -17,22 +17,23 @@ interface AuthState {
   resetAuth: () => void;
 }
 
-export const useAuthStore = create<AuthState>((set, get) => ({
+export const useAuthStore = create<AuthState>((set) => ({
   email: "",
   user: null,
+  userId: null,
   isAuthenticated: false,
-   setEmail: (email) => set({ email }),
-  get userId() {
-    return get().user?.id ?? null; 
-  },
-
+  setEmail: (email) => set({ email }),
   setAuthenticated: (value) => set({ isAuthenticated: value }),
 
   setUser: (user) => {
     if (user) {
       localStorage.setItem("user", JSON.stringify(user));
+      set({ user, userId: user.id });
+      console.log("유저 정보 저장:", user);
+      console.log("유저 ID 저장:", user.id);
     } else {
       localStorage.removeItem("user");
+      // set({ user: null, userId: null });
     }
     set({ user });
   },
@@ -42,6 +43,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     set({
       isAuthenticated: false,
       user: null,
+      userId: null,
     });
   },
 }));
