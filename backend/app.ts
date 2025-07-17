@@ -2,14 +2,14 @@ import express, { Request, Response } from 'express';
 import cors from 'cors';
 import { StatusCodes } from 'http-status-codes';
 import http from 'http';
-import path from "path";
+import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 dotenv.config();
 
 const PORT = process.env.PORT || 5000;
 const app = express();
 
-
+app.use(cookieParser());
 app.use(cors({
     origin: process.env.FRONT_SERVER_URL || "http://localhost:5173",
     credentials: true,

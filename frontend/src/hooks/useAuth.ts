@@ -49,8 +49,6 @@ export function useAuth() {
       setEmail(loginUser.email);
       setToken(token);
 
-      // 새로고침 후 유지용
-      localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(loginUser));
 
       alert(`${loginUser.nickname}님, 로그인 되었습니다!`);
