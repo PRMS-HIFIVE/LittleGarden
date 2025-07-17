@@ -26,6 +26,7 @@ const NoticePage = lazy(() => import("@/pages/Notice/NoticePage"));
 
 const AppRouter = () => {
   const token = useAuthStore((state) => state.token);
+  console.log("AppRouter token:", token);
 
   return (
     <Suspense fallback={<Loading />}>
