@@ -37,6 +37,7 @@ export const getDiary = async (userId: number) => {
     //const token = getAuthToken();
 
     const response = await fetch(`${API_BASE_URL}/posts?userId=${userId}&state=1`, {
+        credentials: 'include',
         headers: {
             //"Authorization": `Bearer ${token ?? ""}`,
         }
@@ -64,6 +65,7 @@ export const postDiary = async (payload: PostDiaryPayload) => {
 
     const response = await fetch(`${API_BASE_URL}/posts`, {
         method: "POST",
+        credentials: 'include',
         headers: {
             "Content-Type": "application/json",
             //"Authorization": `Bearer ${token ?? ""}`,
@@ -94,6 +96,7 @@ export const putDiary = async (payload: PutDiaryPayload) => {
     //const token = getAuthToken();
     const response = await fetch(`${API_BASE_URL}/posts/${payload.postId}`, {
         method: "PUT",
+        credentials: 'include',
         headers: {
             "Content-Type": "application/json",
             //"Authorization": `Bearer ${token ?? ""}`,
@@ -121,6 +124,7 @@ export const deleteDiary = async (postId: number) => {
     //const token = getAuthToken();
     const response = await fetch(`${API_BASE_URL}/posts/${postId}`, {
         method: "DELETE",
+        credentials: 'include',
         headers:{
             //Authorization: `Bearer ${token ?? ""}`,
         }
