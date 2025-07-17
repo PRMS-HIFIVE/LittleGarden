@@ -4,7 +4,8 @@ import pushService from "../service/pushService";
 import { arrayBufferToBase64Url, isDuplicateSubscription } from '../utils/utils';
 
 export const subscribeDevice = async (req: Request, res: Response) => {
-    const { subscription, userId, deviceType, deviceName } = req.body;
+    const userId = req.user?.id;
+    const { subscription, deviceType, deviceName } = req.body;
     try {
         const result = await pushService.getSubscription(userId);
 
