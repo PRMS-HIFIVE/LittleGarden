@@ -1,18 +1,11 @@
 import styled from "styled-components";
 
 export const RegistrationWrapper = styled.div`
+    width: 360px;
+    margin: 0 auto;
     height: 100vh;
     display: flex;
     flex-direction: column;
-
-    margin-left: 16px;
-    margin-right: 16px;
-
-    @media screen and (min-width: 1024px){ 
-        width: 360px;
-        margin: 0 auto;
-        border: 1px solid black;
-    }
 `;
 
 export const RegistrationHeader = styled.header`

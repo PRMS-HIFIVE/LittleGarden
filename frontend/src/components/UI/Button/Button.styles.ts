@@ -34,9 +34,27 @@ export const StyledButton = styled.button<{
   $height?: string;
   $padding?: string;
   $margin?: string;
+  $isActive?: boolean;
 }>`
-  background-color: ${({ color, $styleType }) =>
-    $styleType === "filled"
+  background-color: ${({ color, $styleType, $isActive }) =>
+    $isActive
+      ? (() => {
+          switch (color) {
+            case "navyBlue":
+              return "darkblue";
+            case "white":
+              return "#dcdcdc";
+            case "tertiary":
+              return "#27AE60";
+            case "lightGray":
+              return "Gray";
+            case "primary":
+              return "darkgreen";
+            default:
+              return "darkgreen";
+          }
+        })()
+      : $styleType === "filled"
       ? buttonColors[color]
       : $styleType === "outline"
       ? "transparent"

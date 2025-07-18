@@ -10,27 +10,25 @@ import MainpageHeader from "@/common/Header/HeaderVariants/MainpageHeader";
 const Community = () => {
   const navigate = useNavigate();
 
-  // const { filteredPosts } = usePostStore();
+  const { init, filterLatest, filterMyPosts, isMyPostFiltered, isLatestSorted } = usePostFilter(2);
 
-  const { init, filterLatest, filterMyPosts } = usePostFilter(2);
-
-    useEffect(() => {
+  useEffect(() => {
     init();
   }, []);
 
-  // 글쓰기 버튼 클릭 시 이동
   const handleWritePost = () => navigate("/community/write");
 
   return (
-    <>
-      <S.Container>
-        <MainpageHeader />
+    <S.Container>
+      <S.ContentWrapper>
 
+        <MainpageHeader />
         <S.Title>커뮤니티</S.Title>
         <S.ButtonWrapper>
           <Button
             variant="diaryMenu"
             width="50%"
+            isActive={isLatestSorted}   
             onClick={filterLatest}
           >
             최신순
@@ -40,6 +38,7 @@ const Community = () => {
             variant="diaryMenu"
             width="50%"
             color="white"
+            isActive={isMyPostFiltered}  
             onClick={filterMyPosts}
           >
             내 글 보기
@@ -55,13 +54,14 @@ const Community = () => {
           </Button>
         </S.ButtonWrapper>
 
-      <S.ScrollableCardList>
-      <CommunityList />
-      </S.ScrollableCardList>
-
-      </S.Container>
-    </>
+        <S.ScrollableCardList>
+          <CommunityList />
+        </S.ScrollableCardList>
+      </S.ContentWrapper>
+      
+    </S.Container>
   );
 };
+
 
 export default Community;

@@ -40,7 +40,6 @@ const MainpageHeader = () => {
             backgroundColor='primary'
             borderBottom='none'
             padding='20px 16px'
-            maxWidth="393px"
             // 이전에 있었던 페이지가 존재할 경우만 뒤로가기 아이콘 렌더링되게 추가할 것
             left={hasBack 
                 ? <IconArrowLeft onClick={handleBack} /> 

@@ -24,9 +24,8 @@ const IndexWrapper = styled.div`
     margin-right: 16px;
 
     @media screen and (min-width: 1024px){ 
-        width: 360px;
+        width: 1024px;
         margin: 0 auto;
-        border: 1px solid black;
     }
 `
 

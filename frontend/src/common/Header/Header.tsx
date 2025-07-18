@@ -13,6 +13,7 @@ export interface HeaderProps {
     minWidth?: string;
     maxWidth?: string;
     height?: string;
+    maxHeight?: string;
     padding?: string;
     leftPadding?: string;
     rightPadding?: string;
@@ -29,6 +30,7 @@ const Header = ({
     minWidth,
     maxWidth = '100%',
     height,
+    maxHeight,
     padding,
     leftPadding,
     rightPadding,
@@ -44,6 +46,7 @@ const Header = ({
                 minWidth={minWidth}
                 maxWidth={maxWidth}
                 height={height}
+                maxHeight={maxHeight}
                 padding={padding}
                 margin={margin}
                 borderBottom={borderBottom}

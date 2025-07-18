@@ -46,7 +46,7 @@ const CommunityWrite = () => {
         state: 2,
       });
 
-      const newPost = response.data;
+      const newPost = response.data ?? response;
 
       if (newPost) {
         addPost(newPost);
