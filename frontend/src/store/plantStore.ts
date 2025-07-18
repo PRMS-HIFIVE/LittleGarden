@@ -7,7 +7,7 @@ export interface Plant {
     thumbnailUrl?: string;
     name?: string;
     watercycleNm: string;
-    lastWateredDate?: string | null;
+    last_watering?: string | null;
     plntbneNm?: string;
     fmlCodeNm?: string;
     postngplaceCodeNm?: string;
