@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import * as postAPI from "@/apis/post.api";
 import { useAuthStore } from "@/store/authStore";
 import type { PlantNameRequest } from "@/components/UI/Select/SelectMyPlant2";
+import { usePostStore } from "@/store/postStore";
 
 const CommunityWrite = () => {
   const userId = useAuthStore((state) => state.userId);
@@ -17,6 +18,9 @@ const CommunityWrite = () => {
   const [images, setImages] = useState<(File | null)[]>([null, null, null]);
 
   const navigate = useNavigate();
+
+  const addPost = usePostStore((state) => state.addPost);
+  const setAllPosts = usePostStore((state) => state.setAllPosts);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,7 +37,7 @@ const CommunityWrite = () => {
     }
 
     try {
-      await postAPI.createPost({
+      const response = await postAPI.createPost({
         userId,
         title,
         content,
@@ -41,6 +45,17 @@ const CommunityWrite = () => {
         image: undefined,
         state: 2,
       });
+
+      const newPost = response.data;
+
+      if (newPost) {
+        addPost(newPost);
+      } else {
+        const all = await postAPI.fetchPostsByState(2);
+        setAllPosts(all);
+      }
+      console.log("등록 후 newPost.id:", newPost.id);
+
       alert("등록되었습니다");
       navigate("/community");
     } catch (error) {
