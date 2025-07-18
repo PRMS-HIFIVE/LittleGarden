@@ -121,6 +121,7 @@ function PlantRegistrationPage() {
                             onChange={(e) => setWateringCycle(e.target.value)}
                             placeholder='예: 7'
                         />
+                        <S.HelperText>비워두시면 식물 정보에 따라 자동으로 설정됩니다.</S.HelperText>
                     </S.FormGroup>
                 </S.FormWrapper>
                 <Button
