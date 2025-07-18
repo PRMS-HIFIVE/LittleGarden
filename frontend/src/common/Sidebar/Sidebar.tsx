@@ -4,7 +4,11 @@ import { SidebarProfile, SidebarProfileImage, SidebarProfileName } from "@/commo
 import type { BackgroundColors, SidebarBorderColors, TextColors } from "@/styles/paletteMapping";
 import { useEffect, useState, type ReactNode } from "react";
 import useSidebarStore from "@/store/sidebarStore";
+import { useAuthStore } from "@/store/authStore";
 import { useNavigate } from "react-router-dom";
+import { IconEdit } from "@/assets/icons/IconList";
+import { logout as logoutAPI } from "@/apis/auth.api";
+import defaultUser from "@/assets/images/DefaultUsers.png";
 
 
 interface MenuItemsType {
@@ -33,7 +37,6 @@ const menuItemList: MenuItemsType[] = [
     {id: 'alert', text: '알림 설정', path: '/alert'},
 ]
 
-
 const Sidebar = ({
     //isOpen = false,
     //onClose = () => {},
@@ -53,11 +56,25 @@ const Sidebar = ({
 
     const isOpen = useSidebarStore((state) => state.isSidebarOpen);
     const toggleSidebar = useSidebarStore((state) => state.toggleSidebar);
+    const { resetAuth, user } = useAuthStore();
     const navigate = useNavigate();
-    //로그아웃
-    const handleLogout = () => {
 
-    };
+    const nickname = user?.nickname || "";
+    
+    //로그아웃
+    const handleLogout = async () => {
+        try {
+            await logoutAPI();
+        } catch (error) {
+            console.error('로그아웃 API 호출 실패 : ', error);
+            alert('로그아웃 중 문제가 발생했습니다.');
+        } finally {
+            resetAuth();
+            localStorage.removeItem('user');
+            toggleSidebar();
+            navigate('/login', { replace: true });
+        }
+    }
     // 메뉴 아이템 클릭관련
     const menuItemsClickHandler = menuItems.map(item => ({
         ...item,
@@ -111,8 +128,9 @@ const Sidebar = ({
                 </button>
 
                 <SidebarProfile>
-                    <SidebarProfileImage src="" />
-                    <SidebarProfileName>아이디</SidebarProfileName>
+                    <SidebarProfileImage src={defaultUser} />
+                    <SidebarProfileName>{nickname} 님</SidebarProfileName>
+                    <IconEdit />
                 </SidebarProfile>
 
                 <SidebarDivider />

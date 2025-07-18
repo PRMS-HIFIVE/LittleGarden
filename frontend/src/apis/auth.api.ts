@@ -57,6 +57,20 @@ export const login = async (data: LoginRequest): Promise<LoginResponse> => {
   return response.json();
 };
 
+export const logout = async () => {
+  const response = await fetch(`${BASE_URL}/users/logout`,{
+    method: "POST",
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    const result = await response.json();
+    throw new Error(result.message || "로그아웃 실패");
+  }
+
+  return response.json();
+}
+
 export const checkAuth = async () => {
   const response = await fetch(`${BASE_URL}/users/check`, {
     method: "GET",
