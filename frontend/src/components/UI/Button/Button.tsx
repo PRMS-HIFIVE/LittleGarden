@@ -18,6 +18,7 @@ export interface ButtonProps {
     onClick?: () => void;
     type?: 'button' | 'submit' | 'reset';
     disabled?: boolean;
+    isActive?: boolean; 
 }
 
 const Button = ({
@@ -32,7 +33,8 @@ const Button = ({
     radius,
     children,
     onClick,
-    type = 'button'
+    type = 'button',
+    isActive = false,
 }: ButtonProps) => {
     const variantStyle = ButtonVariantStyleMap[variant] ?? ButtonVariantStyleMap['default'];
 
@@ -48,6 +50,7 @@ const Button = ({
             $radius = {radius ?? variantStyle.radius}
             onClick = {onClick}
             type = {type}
+            $isActive={isActive}
         >
             {children}
         </StyledButton>
