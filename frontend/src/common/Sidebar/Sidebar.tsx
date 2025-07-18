@@ -6,6 +6,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import useSidebarStore from "@/store/sidebarStore";
 import { useNavigate } from "react-router-dom";
 import { IconEdit } from "@/assets/icons/IconList";
+import defaultUser from "@/assets/images/DefaultUsers.png";
 
 
 interface MenuItemsType {
@@ -114,7 +115,7 @@ const Sidebar = ({
                 </button>
 
                 <SidebarProfile>
-                    <SidebarProfileImage src="" />
+                    <SidebarProfileImage src={defaultUser} />
                     <SidebarProfileName>{nickname} 님</SidebarProfileName>
                     <IconEdit />
                 </SidebarProfile>
