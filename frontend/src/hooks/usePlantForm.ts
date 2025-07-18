@@ -23,8 +23,8 @@ export const usePlantForm = ({ imageFile, plantDetail }: UsePlantFormProps) => {
     }, [plantDetail]);
 
     const handleSubmit = async () => {
-        if (!plantName || !wateringCycle || !imageFile) {
-            alert('모든 정보를 입력해주세요.');
+        if (!plantName || !imageFile) {
+            alert('식물 이름과 이미지는 필수 항목입니다.');
             return;
         }
 
@@ -34,7 +34,7 @@ export const usePlantForm = ({ imageFile, plantDetail }: UsePlantFormProps) => {
 
             const payload: Record<string, any> = {
                 cntntsSj: plantName,
-                watercycle: wateringCycle,
+                ...(wateringCycle && { watercycle: wateringCycle }),
                 imgUrl: imageUrl,
 
                 cntntsNo: plantDetail?.contentNo || '정보 없음',
