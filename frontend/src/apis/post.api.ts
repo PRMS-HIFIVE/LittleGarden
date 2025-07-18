@@ -61,7 +61,7 @@ export interface PostCreatePayload {
   content: string;
   state: number;         
   plantTag?: string[];
-  image?: string;
+  img?: string;
   isHealth?: number;
 }
 

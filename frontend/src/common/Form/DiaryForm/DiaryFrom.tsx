@@ -20,6 +20,7 @@ interface DiaryFormProps {
   onChangeSelectedPlants: (plants: MyPlantTag[]) => void;
   onChangeImages: (files: (File | null)[]) => void;
   onSubmit: (e: React.FormEvent) => void;
+  onImageUrlChange: (url: string | null) => void;
 }
 
 const DiaryForm =({
@@ -33,6 +34,7 @@ const DiaryForm =({
     //onChangeTag,
     onChangeSelectedPlants,
     onSubmit,
+    onImageUrlChange,
     }: DiaryFormProps) => {
     //const { plants } = usePlantStore();
 
@@ -78,7 +80,7 @@ const DiaryForm =({
                         </TagList>
                     )}
 
-                    <ImageUploadBox />
+                    <ImageUploadBox onUrlChange={onImageUrlChange} />
 
                     <Button 
                         color="navyBlue" 

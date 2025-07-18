@@ -15,8 +15,9 @@ export interface IPost {
     content: string,
     is_health?:string,
     state?:number,
-    plantTag?: string[]
-    isHealth?:number
+    plantTag?: string[],
+    isHealth?:number,
+    img?: string,
 }
 
 export interface IPlant {

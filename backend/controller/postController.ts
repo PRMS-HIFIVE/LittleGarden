@@ -4,12 +4,13 @@ import { Request, Response } from "express";
 
 export const postPosts = async (req:Request, res:Response) : Promise<void> => {
     const userId = req.user?.id;
-    const { title, content, plantTag, state, isHealth } = req.body;
+    const { title, content, plantTag, state, isHealth, img } = req.body;
 
     try {
-        const newPost = await postService.posts({userId, title, content,state, isHealth});
+        const newPost = await postService.posts({userId, title, content,state, isHealth, img});
         if(plantTag) {
-            await postService.tags(newPost.insertId,plantTag);
+            console.log(plantTag);
+            await postService.tags(newPost.insertId, plantTag);
         }
         res.status(StatusCodes.CREATED).json({
             message : "게시글이 성공적으로 작성되었습니다.",

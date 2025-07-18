@@ -9,20 +9,21 @@ import Input from "@/components/UI/Input/Input";
 //import { usePlantStore } from "@/store/plantStore";
 
 interface DiaryFormProps {
-  formTitle?: string;
-  title: string;
-  content: string;
-  //tag: string;
-  //selectedPlants: MyPlantTag[];
-  //2
-  //selectedPlants: PlantNameRequest[];
-  images: (File | null)[];
-  onChangeTitle: (value: string) => void;
-  onChangeContent: (value: string) => void;
-  //onChangeTag: (value: string) => void;
-  //onChangeSelectedPlants: (plants: /*MyPlantTag[]*/PlantNameRequest[]) => void;
-  onChangeImages: (files: (File | null)[]) => void;
-  onSubmit: (e: React.FormEvent) => void;
+    formTitle?: string;
+    title: string;
+    content: string;
+    //tag: string;
+    //selectedPlants: MyPlantTag[];
+    //2
+    //selectedPlants: PlantNameRequest[];
+    //images: (File | null)[];
+    onImageUrlChange: (url: string | null) => void;
+    onChangeTitle: (value: string) => void;
+    onChangeContent: (value: string) => void;
+    //onChangeTag: (value: string) => void;
+    //onChangeSelectedPlants: (plants: /*MyPlantTag[]*/PlantNameRequest[]) => void;
+    // onChangeImages: (files: (File | null)[]) => void;
+    onSubmit: (e: React.FormEvent) => void;
 }
 
 const CommunityForm =({
@@ -35,6 +36,7 @@ const CommunityForm =({
     onChangeContent,
     //onChangeTag,
     //onChangeSelectedPlants,
+    onImageUrlChange,
     onSubmit,
     }: DiaryFormProps) => {
     //const { plants } = usePlantStore();
@@ -58,7 +60,7 @@ const CommunityForm =({
                         onChange={(e) => onChangeContent(e.target.value)}
                     />
 
-                    <ImageUploadBox />
+                    <ImageUploadBox onUrlChange={onImageUrlChange}/>
 
                     <Button 
                         color="navyBlue" 
