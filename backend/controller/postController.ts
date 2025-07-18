@@ -8,7 +8,7 @@ export const postPosts = async (req:Request, res:Response) : Promise<void> => {
 
     try {
         const newPost = await postService.posts({userId, title, content,state, isHealth});
-        if(plantTag.length > 0) {
+        if(plantTag) {
             await postService.tags(newPost.insertId,plantTag);
         }
         res.status(StatusCodes.CREATED).json({
@@ -87,7 +87,7 @@ export const updatePosts = async (req:Request, res:Response) : Promise<void> => 
 
     try {
         const updatePost = await postService.updatePosts(postId,{userId, title, content,state,isHealth});
-        if(plantTag.length > 0) {
+        if(plantTag) {
             await postService.updateTags(postId,plantTag);
         }
         
