@@ -7,6 +7,27 @@ export const postPosts = async (req:Request, res:Response) : Promise<void> => {
     const { title, content, plantTag, state, isHealth } = req.body;
 
     try {
+        const newPost = await postService.posts({userId, title, content,state, isHealth});
+        const newtag = await postService.tags(newPost.insertId,plantTag);
+        res.status(StatusCodes.CREATED).json({
+            message : "게시글이 성공적으로 작성되었습니다.",
+            postData : newPost,
+            tagData : newtag
+        });
+        return;
+    } catch (error){
+        console.error("Error creating post:", error);
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            message: "게시글 작성 중 오류가 발생했습니다."
+        });
+        return;
+    }
+};
+
+export const getPosts = async (req:Request, res:Response) : Promise<void> => {
+    const { plantTag, state } =  req.body?req.body:0;
+
+    try {
         const newPost = await postService.getPosts(plantTag, state);
 
         const postMap = new Map<number, any>();
@@ -24,25 +45,6 @@ export const postPosts = async (req:Request, res:Response) : Promise<void> => {
         res.status(StatusCodes.CREATED).json({
             message : "게시글이 성공적으로 조회되었습니다.",
             data : mergedPosts
-        })
-        return;
-    } catch (error){
-        console.error("Error creating post:", error);
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-            message: "게시글 작성 중 오류가 발생했습니다."
-        });
-        return;
-    }
-};
-
-export const getPosts = async (req:Request, res:Response) : Promise<void> => {
-    const { plantTag, state } =  req.body?req.body:0;
-
-    try {
-        const newPost = await postService.getPosts(plantTag,state);
-        res.status(StatusCodes.CREATED).json({
-            message : "게시글이 성공적으로 조회되었습니다.",
-            data : newPost
         })
         return;
     } catch (error){
