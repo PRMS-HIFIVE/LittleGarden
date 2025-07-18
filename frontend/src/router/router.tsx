@@ -105,7 +105,7 @@ useEffect(() => {
         <Route path="/community/write" element={<CommunityWrite />} />
         
         <Route path="/diary" element={<Diary />}>
-          <Route path="latest" element={<DiaryList />} />
+          <Route path="latest" element={<DiaryList viewMode="latest" />} />
           {/* <Route path="photo" element={<PhotoOnly />} /> */}
         </Route>
         <Route path="/diary/write" element={<DiaryWrite />} />
