@@ -238,7 +238,7 @@ export const updatePlant = async (plantId: number, data: { nickName?: string; wa
     }
 };
 
-const NONGSARO_BASE_URL = "/nongsaro-api/service/garden";
+const NONGSARO_BASE_URL = "http://api.nongsaro.go.kr/service/garden";
 
 export const searchPlantByNameOnNongsaro = async (name: string): Promise<NongsaroListResponse> => {
     const apiKey = import.meta.env.VITE_NONGSARO_API_KEY;
