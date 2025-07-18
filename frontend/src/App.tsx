@@ -8,7 +8,7 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      <div style={{ maxWidth: '393px', margin: '0 auto', position: 'relative' }}>
+      <div style={{ maxWidth: '393px', margin: '0 auto',}}>
         {isSidebarOpen && <Sidebar />}
       </div>
       <AppRouter/>
