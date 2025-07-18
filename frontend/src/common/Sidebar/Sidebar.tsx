@@ -5,6 +5,7 @@ import type { BackgroundColors, SidebarBorderColors, TextColors } from "@/styles
 import { useEffect, useState, type ReactNode } from "react";
 import useSidebarStore from "@/store/sidebarStore";
 import { useNavigate } from "react-router-dom";
+import { IconEdit } from "@/assets/icons/IconList";
 
 
 interface MenuItemsType {
@@ -113,6 +114,7 @@ const Sidebar = ({
                 <SidebarProfile>
                     <SidebarProfileImage src="" />
                     <SidebarProfileName>아이디</SidebarProfileName>
+                    <IconEdit />
                 </SidebarProfile>
 
                 <SidebarDivider />
