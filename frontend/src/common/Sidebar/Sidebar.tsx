@@ -34,6 +34,8 @@ const menuItemList: MenuItemsType[] = [
     {id: 'alert', text: '알림 설정', path: '/alert'},
 ]
 
+const userData = localStorage.getItem('user');
+const nickname : string = userData ? JSON.parse(userData).nickname : '';
 
 const Sidebar = ({
     //isOpen = false,
@@ -113,7 +115,7 @@ const Sidebar = ({
 
                 <SidebarProfile>
                     <SidebarProfileImage src="" />
-                    <SidebarProfileName>아이디</SidebarProfileName>
+                    <SidebarProfileName>{nickname} 님</SidebarProfileName>
                     <IconEdit />
                 </SidebarProfile>
 
