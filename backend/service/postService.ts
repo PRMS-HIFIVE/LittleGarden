@@ -1,12 +1,6 @@
 import { ResultSetHeader, RowDataPacket } from "mysql2";
 import { IPost } from "../types/types";
 import { executeQuery } from "../utils/executeQuery";
-import { platform } from "os";
-
-interface IFilterPost {
-  plantTag?: string;
-  state?: number;
-}
 
 const posts = async (post: IPost) => {
   const sql =
@@ -21,10 +15,8 @@ const posts = async (post: IPost) => {
   return await executeQuery(sql, values);
 };
 
-const getPosts = async (plantTag?: IFilterPost, state?: IFilterPost) => {
-  let sql;
-  let values = [];
-  sql = `
+const getPosts = async (state: number, userId : number, plantTag?: number) => {
+  let sql = `
         SELECT 
             posts.*, 
             plants.cntntsSj AS plantTag
@@ -32,17 +24,18 @@ const getPosts = async (plantTag?: IFilterPost, state?: IFilterPost) => {
             posts
         INNER JOIN post_tags ON posts.id = post_tags.post_id
         INNER JOIN plants ON post_tags.plant_id = plants.id
+        WHERE posts.state = ?
     `;
+  let values = [state];
 
-  if (plantTag && state) {
-    sql += " WHERE plants.cntntsSj = ? AND posts.state = ?";
-    values.push(plantTag, state);
-  } else if (plantTag) {
-    sql += " WHERE plants.cntntsSj = ?";
+  if(plantTag) {
+    sql += " AND plants.id = ?";
     values.push(plantTag);
-  } else if (state) {
-    sql += " WHERE posts.state = ?";
-    values.push(state);
+  }
+
+  if(state === 1) {
+    sql += " AND posts.user_id = ?";
+    values.push(userId);
   }
 
   sql += " ORDER BY posts.created_at DESC";

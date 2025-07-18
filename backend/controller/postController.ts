@@ -25,11 +25,11 @@ export const postPosts = async (req:Request, res:Response) : Promise<void> => {
 };
 
 export const getPosts = async (req:Request, res:Response) : Promise<void> => {
+    const userId = req.user?.id;
     const { plantTag, state } =  req.body?req.body:0;
 
     try {
-        const newPost = await postService.getPosts(plantTag, state);
-
+        const newPost = await postService.getPosts(state, userId, plantTag);
         const postMap = new Map<number, any>();
 
         newPost.forEach(post => {
