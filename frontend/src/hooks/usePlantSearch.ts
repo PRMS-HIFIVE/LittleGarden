@@ -95,6 +95,7 @@ export const usePlantSearch = () => {
                 isLoading: false,
             }));
         } catch (err) {
+            console.log("Error fetching plant details:", err);
             const errorMessage = err instanceof Error ? err.message : "상세 정보를 가져오는데 실패했습니다.";
             setState((prev) => ({ ...prev, isLoading: false, error: errorMessage }));
         }
