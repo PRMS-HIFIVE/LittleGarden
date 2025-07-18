@@ -12,10 +12,10 @@ export default defineConfig({
   server: {
     host: true,
     proxy: {
-      '/nongsaro-api': {
+      '/nongsaro': {
         target: 'http://api.nongsaro.go.kr',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/nongsaro-api/, ''),
+        rewrite: (path) => path.replace(/^\/nongsaro/, '/service/garden'),
       },
     },
   },

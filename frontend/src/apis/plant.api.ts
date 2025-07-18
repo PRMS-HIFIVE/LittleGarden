@@ -238,7 +238,7 @@ export const updatePlant = async (plantId: number, data: { nickName?: string; wa
     }
 };
 
-const NONGSARO_BASE_URL = "http://api.nongsaro.go.kr/service/garden";
+// const NONGSARO_BASE_URL = "http://api.nongsaro.go.kr/service/garden";
 
 export const searchPlantByNameOnNongsaro = async (name: string): Promise<NongsaroListResponse> => {
     const apiKey = import.meta.env.VITE_NONGSARO_API_KEY;
@@ -250,7 +250,7 @@ export const searchPlantByNameOnNongsaro = async (name: string): Promise<Nongsar
         sText: name,
     });
 
-    const response = await fetch(`${NONGSARO_BASE_URL}/gardenList?${queryParams}`);
+    const response = await fetch(`/nongsaro/gardenList?${queryParams}`);
 
     if (!response.ok) throw new Error("농사로 식물 목록 조회에 실패했습니다.");
 
@@ -273,7 +273,7 @@ export const getPlantDetailFromNongsaro = async (cntntsNo: string): Promise<Nong
         cntntsNo: cntntsNo,
     });
 
-    const response = await fetch(`${NONGSARO_BASE_URL}/gardenDtl?${queryParams}`);
+    const response = await fetch(`/nongsaro/gardenDtl?${queryParams}`);
 
     if (!response.ok) throw new Error("농사로 식물 상세 정보 조회에 실패했습니다.");
 
