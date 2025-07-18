@@ -2,15 +2,20 @@ import { IconArrowLeft, IconBell, IconMenu } from "@/assets/icons/IconList";
 import Header, { type HeaderProps } from "@/common/Header/Header"
 import { HeaderTopRow } from "@/common/Header/Header.styles";
 import useSidebarStore from "@/store/sidebarStore";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 
 const DiaryHeader = ({...rest}: HeaderProps) => {
     const toggleSidebar = useSidebarStore((state) => state.toggleSidebar);
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleBack = () => {
-        navigate('/diary', {replace: true});
+        if (location.pathname.startsWith("/community")) {
+            navigate("/community", { replace: true });
+        } else {
+            navigate("/diary", { replace: true });
+        }
     };
     const handleBell = () => {
 
