@@ -36,3 +36,9 @@ export const ScrollableCardList = styled(CardListContainer)`
     display: none; 
   }
 `;
+
+export const ContentWrapper = styled.div`
+  position: relative;
+  top: 120px;
+  height: 100%;
+`;

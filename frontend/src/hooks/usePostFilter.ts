@@ -28,6 +28,7 @@ export const usePostFilter = (stateType: 1 | 2) => {
   console.log("필터 로그인 유저ID:", userId, "isInitialized:", isInitialized);
 
   const [isMyPostFiltered, setIsMyPostFiltered] = useState(false);
+  const [isPhotoFiltered, setIsPhotoFiltered] = useState(false);
     if (!isInitialized) {
     return {
       init: async () => {},
@@ -68,5 +69,17 @@ export const usePostFilter = (stateType: 1 | 2) => {
     }
   };
 
-  return { init, filterLatest, filterMyPosts };
+  // 사진만 출력
+  const filterPhotoPosts = () => {
+    if (isPhotoFiltered) {
+      setFilteredPosts(allPosts);
+      setIsPhotoFiltered(false);
+    } else {
+      const photoOnly = allPosts.filter((post) => !!post.img) 
+        setFilteredPosts(photoOnly);
+        setIsPhotoFiltered(false);
+    }
+  }
+
+  return { init, filterLatest, filterMyPosts, filterPhotoPosts };
 };

@@ -24,40 +24,42 @@ const Community = () => {
   return (
     <>
       <S.Container>
-        <MainpageHeader />
+          <S.ContentWrapper>
+              <MainpageHeader />
+              <S.Title>커뮤니티</S.Title>
+              <S.ButtonWrapper>
+                <Button
+                  variant="diaryMenu"
+                  width="50%"
+                  onClick={filterLatest}
+                >
+                  최신순
+                </Button>
 
-        <S.Title>커뮤니티</S.Title>
-        <S.ButtonWrapper>
-          <Button
-            variant="diaryMenu"
-            width="50%"
-            onClick={filterLatest}
-          >
-            최신순
-          </Button>
+                <Button
+                  variant="diaryMenu"
+                  width="50%"
+                  color="white"
+                  onClick={filterMyPosts}
+                >
+                  내 글 보기
+                </Button>
 
-          <Button
-            variant="diaryMenu"
-            width="50%"
-            color="white"
-            onClick={filterMyPosts}
-          >
-            내 글 보기
-          </Button>
+                <Button
+                  variant="diaryMenu"
+                  width="50%"
+                  color="navyBlue"
+                  onClick={handleWritePost}
+                >
+                  글쓰기
+                </Button>
+              </S.ButtonWrapper>
 
-          <Button
-            variant="diaryMenu"
-            width="50%"
-            color="navyBlue"
-            onClick={handleWritePost}
-          >
-            글쓰기
-          </Button>
-        </S.ButtonWrapper>
+            <S.ScrollableCardList>
+            <CommunityList />
+            </S.ScrollableCardList>
+          </S.ContentWrapper>
 
-      <S.ScrollableCardList>
-      <CommunityList />
-      </S.ScrollableCardList>
 
       </S.Container>
     </>
