@@ -1,6 +1,5 @@
 import { type BackgroundColors, backgroundColors } from "@/styles/paletteMapping";
 import { type TextColors, textColors } from "@/styles/paletteMapping";
-import { type SidebarBorderColors, sidebarBorderColors } from "@/styles/paletteMapping";
 
 import styled from "styled-components";
 
@@ -58,7 +57,7 @@ export const SidebarMenuItem = styled.button<{
 }>`
     background: none;
     color: inherit;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     text-align: left;
     width: 100%;
     padding: 20px 20px;
@@ -69,7 +68,7 @@ export const SidebarMenuItem = styled.button<{
     gap: ${({ hasIcon }) => hasIcon ? '10px' : '0'};
     border-bottom: 1px solid #ECF0F1;
 
-    ${({isFirst}) => isFirst && `margin-bottom: 80px;`}
+    ${({isFirst}) => isFirst && `margin-bottom: 10vh;`}
     ${({ marginTopAuto }) => marginTopAuto && `margin-top: auto;`}
 
     &:hover {
@@ -88,16 +87,6 @@ export const SidebarLogoutButton = styled(SidebarMenuItem)<{
         background-color: ${({backgroundColor = 'gray'}) => backgroundColors[backgroundColor] || 'gray'};
     }
 `
-
-export const SidebarDivider = styled.hr<{
-    borderColor?: SidebarBorderColors;
-}>`
-    width: 100%;
-    margin: 15px 0px 40px 0px;
-    padding: 0 20px;
-    border: none;
-    border-top: 1px solid ${({borderColor = 'primary'}) => sidebarBorderColors[borderColor] ?? sidebarBorderColors.primary};
-`;
 
 export const SidebarContent = styled.div`
     display: flex;

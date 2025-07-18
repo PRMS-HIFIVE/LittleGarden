@@ -4,7 +4,9 @@ export const SidebarProfile = styled.div`
     display: flex;
     align-items: center;
     padding: 20px;
+    padding-top: 10vh;
     gap: 20px;
+    border-bottom: 1px solid #ECF0F1;
 `;
 
 export const SidebarProfileImage = styled.img`

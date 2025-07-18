@@ -1,4 +1,4 @@
-import { StyledSidebar, SidebarDivider, SidebarLogoutButton } from "@/common/Sidebar/Sidebar.styles";
+import { StyledSidebar, SidebarLogoutButton } from "@/common/Sidebar/Sidebar.styles";
 import { SidebarMenuItem, type SidebarWidth } from "@/common/Sidebar/Sidebar.styles";
 import { SidebarProfile, SidebarProfileImage, SidebarProfileName } from "@/common/Sidebar/SidebarProfile";
 import type { BackgroundColors, SidebarBorderColors, TextColors } from "@/styles/paletteMapping";
@@ -112,30 +112,11 @@ const Sidebar = ({
                 textColor={textColor}
                 padding={padding}
             >
-                <button
-                    onClick={toggleSidebar}
-                    aria-label="닫기"
-                    style={{
-                    background: "none",
-                    border: "none",
-                    color: "inherit",
-                    cursor: "pointer",
-                    fontSize: "1rem",
-                    alignSelf: "flex-end",
-                    }}
-                >
-                    &times;
-                </button>
-
                 <SidebarProfile>
                     <SidebarProfileImage src={defaultUser} />
                     <SidebarProfileName>{nickname} 님</SidebarProfileName>
                     <IconEdit />
                 </SidebarProfile>
-
-                <SidebarDivider />
-
-
                 {menuItemsClickHandler.map((item, index) => (
                     <SidebarMenuItem
                         key={item.id}
