@@ -10,9 +10,8 @@ export const DetailWrapper = styled.div`
     align-items: center;
 
     @media screen and (min-width: 1024px){ 
-        width: 360px;
+        width: 1024px;
         margin: 0 auto;
-        border: 1px solid black;
     }
 
     header{
@@ -69,11 +68,11 @@ export const DetailImageContainer = styled.div`
 `
 
 export const InfoWrapper = styled.div`
-    width: 100vw;
+    width: 100%;
     flex: 1;
     background: #A9DFBF;
     border-top-right-radius: 30px;
     border-top-left-radius: 30px;
     padding: 24px 16px;
-    padding-bottom: 70px;
+    padding-bottom: 86px;
 `
