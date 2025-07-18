@@ -1,9 +1,9 @@
-import DiaryForm from "@/common/Form/DiaryForm/DiaryForm";
+import CommunityForm from "@/common/Form/CommunityForm/CommunityForm";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as postAPI from "@/apis/post.api";
 import { useAuthStore } from "@/store/authStore";
-import type { PlantNameRequest } from "@/components/UI/Select/SelectMyPlant2";
+//import type { PlantNameRequest } from "@/components/UI/Select/SelectMyPlant2";
 import { usePostStore } from "@/store/postStore";
 
 const CommunityWrite = () => {
@@ -12,9 +12,9 @@ const CommunityWrite = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
-  const [selectedPlants, setSelectedPlants] = useState<
-    /*MyPlantTag[]*/ PlantNameRequest[]
-  >([]);
+  //const [selectedPlants, setSelectedPlants] = useState<
+  //  /*MyPlantTag[]*/ PlantNameRequest[]
+  //>([]);
   const [images, setImages] = useState<(File | null)[]>([null, null, null]);
 
   const navigate = useNavigate();
@@ -41,7 +41,7 @@ const CommunityWrite = () => {
         userId,
         title,
         content,
-        plantTag: selectedPlants.map((plant) => plant.cntntsNo),
+        //plantTag: selectedPlants.map((plant) => plant.cntntsNo),
         image: undefined,
         state: 2,
       });
@@ -65,15 +65,15 @@ const CommunityWrite = () => {
   };
 
   return (
-    <DiaryForm
+    <CommunityForm
       formTitle="커뮤니티 글 작성"
       title={title}
       content={content}
-      selectedPlants={selectedPlants}
+      //selectedPlants={selectedPlants}
       images={images}
       onChangeTitle={setTitle}
       onChangeContent={setContent}
-      onChangeSelectedPlants={setSelectedPlants}
+      //onChangeSelectedPlants={setSelectedPlants}
       onChangeImages={setImages}
       onSubmit={handleSubmit}
     />

@@ -4,8 +4,8 @@ import DiaryHeader from "@/common/Header/HeaderVariants/DiaryHeader";
 import Button from "@/components/UI/Button/Button";
 import Input from "@/components/UI/Input/Input";
 //import /*PlantSelector,*/ { type MyPlantTag } from "@/components/UI/Select/SelectMyPlant";
-import { AddedTag, TagList } from "@/components/UI/Select/SelectMyPlant.styles";
-import PlantSelector2, { type PlantNameRequest } from "@/components/UI/Select/SelectMyPlant2";
+//import { AddedTag, TagList } from "@/components/UI/Select/SelectMyPlant.styles";
+//import PlantSelector2, { type PlantNameRequest } from "@/components/UI/Select/SelectMyPlant2";
 //import { usePlantStore } from "@/store/plantStore";
 
 interface DiaryFormProps {
@@ -15,26 +15,26 @@ interface DiaryFormProps {
   //tag: string;
   //selectedPlants: MyPlantTag[];
   //2
-  selectedPlants: PlantNameRequest[];
+  //selectedPlants: PlantNameRequest[];
   images: (File | null)[];
   onChangeTitle: (value: string) => void;
   onChangeContent: (value: string) => void;
   //onChangeTag: (value: string) => void;
-  onChangeSelectedPlants: (plants: /*MyPlantTag[]*/PlantNameRequest[]) => void;
+  //onChangeSelectedPlants: (plants: /*MyPlantTag[]*/PlantNameRequest[]) => void;
   onChangeImages: (files: (File | null)[]) => void;
   onSubmit: (e: React.FormEvent) => void;
 }
 
-const DiaryForm =({
-    formTitle = '작성하기',
+const CommunityForm =({
+    formTitle = '공유하기',
     title,
     content,
     //tag,
-    selectedPlants,
+    //selectedPlants,
     onChangeTitle,
     onChangeContent,
     //onChangeTag,
-    onChangeSelectedPlants,
+    //onChangeSelectedPlants,
     onSubmit,
     }: DiaryFormProps) => {
     //const { plants } = usePlantStore();
@@ -57,35 +57,8 @@ const DiaryForm =({
                         value={content}
                         onChange={(e) => onChangeContent(e.target.value)}
                     />
-                    {/* <Input 
-                        placeholder="태그" 
-                        radius="8px" 
-                        margin='0px 0px 10px 0px'
-                        value={tag}
-                        onChange={(e) => onChangeTag(e.target.value)}
-                    /> */}
 
-                    <PlantSelector2
-                        //plants={plants}
-                        //onChange={onChangeSelectedPlants}
-                        onChange={onChangeSelectedPlants}
-
-                    />
-                    
-                    {selectedPlants.length > 0 && (
-                        <TagList>
-                            {selectedPlants.map((plant) => (
-                                <AddedTag key={plant.cntntsNo}>
-                                    {plant.cntntsSj}
-                                </AddedTag>
-                            ))}
-                        </TagList>
-                    )}
-
-                    <ImageUploadBox
-                        //images={images}
-                        //onChangeImages={onChangeImage}
-                    />
+                    <ImageUploadBox />
 
                     <Button 
                         color="navyBlue" 
@@ -102,4 +75,4 @@ const DiaryForm =({
     );
 };
 
-export default DiaryForm;
+export default CommunityForm;

@@ -14,7 +14,13 @@ export interface DiaryData {
     profileImage?: string;
 }
 
-const DiaryList = () => {
+interface DiaryListProps {
+  viewMode: "latest" | "photoOnly";
+}
+
+const DiaryList = ({
+    viewMode
+}: DiaryListProps ) => {
     const userId = useAuthStore((s) => s.userId);
     const filteredPosts = usePostStore((s) => s.filteredPosts);
 
@@ -44,8 +50,10 @@ const DiaryList = () => {
             {cards.length === 0 ? (
                 <S.textContainer>
                     <S.noDataText>
-                        아직 작성된 글이 없습니다 <br />
-                        식물과의 이야기를 남겨보세요
+                        {viewMode === "latest"
+                            ? "아직 작성된 글이 없습니다 \n 식물과의 이야기를 남겨보세요"
+                            : "사진이 포함된 게시물이 없습니다"
+                        }
                     </S.noDataText>
                 </S.textContainer>
             ) : (

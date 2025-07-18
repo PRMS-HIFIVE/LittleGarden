@@ -3,14 +3,15 @@ import { useNavigate, /*Outlet*/ } from "react-router-dom";
 import Button from "@/components/UI/Button/Button";
 import MainpageHeader from "@/common/Header/HeaderVariants/MainpageHeader";
 import { usePostFilter } from "@/hooks/usePostFilter";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import DiaryList from "@/pages/Diary/DiaryList/DiaryList";
 
 
 const Diary = () => {
     const navigate = useNavigate();
 
-    const { init, /*filterMyPosts,*/ filterLatest, filterPhotoPosts } = usePostFilter(1);
+    const { init, /*filterMyPosts,*/ filterLatest, /*filterPhotoPosts*/ } = usePostFilter(1);
+    const [viewMode, setViewMode] = useState<"latest" | "photoOnly">("latest");
 
     // useEffect(() => {
     //     init();
@@ -35,20 +36,25 @@ useEffect(() => {
     }
     return (
         <>
-            <S.Container>
-                <S.ContentWrapper>     
+            <S.Container>  
                     <MainpageHeader />   
                     <S.Title>성장일기</S.Title>
                     <S.ButtonWrapper>
                         <Button 
                             variant="diaryMenu"
-                            onClick={filterLatest}
+                            onClick={() => {
+                                filterLatest();
+                                setViewMode("latest");
+                            }}    
                             width="50%"
                         > 최신순
                         </Button>
                         <Button 
                             variant="diaryMenu"
-                            onClick={filterPhotoPosts}
+                            onClick={() => {
+                            //filterPhotoPosts();
+                            setViewMode("photoOnly");
+                            }}
                             width="50%"
                             color="white"
                         > 사진만 보기
@@ -63,10 +69,8 @@ useEffect(() => {
                     </S.ButtonWrapper>
 
                     <S.ScrollableCardList>
-                        <DiaryList />
+                        <DiaryList viewMode={viewMode} />
                     </S.ScrollableCardList>
-
-                </S.ContentWrapper>
 
             </S.Container>
         </>

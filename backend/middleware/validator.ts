@@ -64,7 +64,6 @@ export const updateNickNameValidator : (ValidationChain | RequestHandler)[] = [
 export const postPostsValidator : (ValidationChain | RequestHandler)[] = [
     body("title").notEmpty().withMessage("제목은 필수 입력 항목입니다."),
     body("content").notEmpty().withMessage("내용은 필수 입력 항목입니다."),
-    body("plantTag").notEmpty().withMessage("태그는 필수 입력 항목입니다."),
     body("state").notEmpty().withMessage("게시글 상태는 필수 입력 항목입니다."),
     handleValidation
 ];

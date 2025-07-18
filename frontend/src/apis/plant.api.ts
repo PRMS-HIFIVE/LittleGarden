@@ -252,10 +252,21 @@ export const searchPlantByNameOnNongsaro = async (name: string): Promise<Nongsar
 
     const response = await fetch(`/nongsaro/gardenList?${queryParams}`);
 
+    console.log("==========response==========")
+    console.log(response)
+    console.log("==========response==========")
+
     if (!response.ok) throw new Error("농사로 식물 목록 조회에 실패했습니다.");
 
     const xmlText = await response.text();
+    console.log("==========xml==========")
+    console.log(xmlText)
+    console.log("==========xml==========")
+
     const jsonData = xmlToJson<NongsaroListResponse>(xmlText);
+    console.log("==========jsonData==========")
+    console.log(jsonData)
+    console.log("==========jsonData==========")
 
     if (jsonData.response.header.resultCode._text !== "00") {
         throw new Error(jsonData.response.header.resultMsg._text || "농사로 식물 목록 조회 중 오류가 발생했습니다.");
