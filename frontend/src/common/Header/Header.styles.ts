@@ -25,8 +25,8 @@ export const StyledHeader = styled.div<{
     width: ${({width}) => width || '100%'};
     min-width: ${({minWidth}) => minWidth || 'auto'};
     max-width: ${({maxWidth}) => maxWidth || '393px'};
-    height: ${({height}) => height || '100px'};
-    maxHeight: ${({maxHeight}) => maxHeight || '100px'}
+    height: ${({height}) => height || '10vh'};
+    max-height: ${({maxHeight}) => maxHeight || '100px'};
     padding: ${({padding = '0'}) => padding};
     margin: ${({margin = '0'}) => margin};
     border-bottom: ${({borderBottom = 'none'}) => headerBorderBottomStyles[borderBottom]};
