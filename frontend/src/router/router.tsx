@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import { Suspense, lazy, useEffect, useState } from "react";
 import Loading from "@/pages/Loading/Loading";
 import { useAuthStore } from "@/store/authStore";
@@ -19,7 +19,9 @@ const Join = lazy(() => import("@/pages/Join/Join"));
 const Password = lazy(() => import("@/pages/Password/Password"));
 const Community = lazy(() => import("@/pages/Community/Community"));
 const CommunityDetail = lazy(() => import("@/pages/Community/Detail/Detail"));
-const CommunityWrite = lazy(() => import("@/pages/Community/CommunityWrite/CommunityWrite"));
+const CommunityWrite = lazy(
+  () => import("@/pages/Community/CommunityWrite/CommunityWrite")
+);
 const Diary = lazy(() => import("@/pages/Diary/Diary"));
 const DiaryList = lazy(() => import("@/pages/Diary/DiaryList/DiaryList"));
 const DiaryWrite = lazy(() => import("@/pages/Diary/DiaryWrite/DiaryWrite"));
@@ -28,30 +30,30 @@ const AlertSetting = lazy(() => import("@/pages/AlertSetting/AlertSetting"));
 
 const AppRouter = () => {
   const { setAuthenticated, resetAuth, isAuthenticated } = useAuthStore();
-
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
 
-// useEffect(() => {
-//   const verify = async () => {
-//     try {
-//       const localUser = localStorage.getItem("user");
-//       if (localUser) {
-//         const parsedUser = JSON.parse(localUser);
-//         useAuthStore.getState().setUser(parsedUser);
-//       }
+  // useEffect(() => {
+  //   const verify = async () => {
+  //     try {
+  //       const localUser = localStorage.getItem("user");
+  //       if (localUser) {
+  //         const parsedUser = JSON.parse(localUser);
+  //         useAuthStore.getState().setUser(parsedUser);
+  //       }
 
-//       await checkAuth();
-//       setAuthenticated(true);
-//     } catch (err) {
-//       console.error("인증 실패:", err);
-//       resetAuth();
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
+  //       await checkAuth();
+  //       setAuthenticated(true);
+  //     } catch (err) {
+  //       console.error("인증 실패:", err);
+  //       resetAuth();
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-//   verify();
-// }, []);
+  //   verify();
+  // }, []);
 
 useEffect(() => {
   const verify = async () => {
@@ -64,17 +66,28 @@ useEffect(() => {
 
       await checkAuth();
       setAuthenticated(true);
-    } catch (err) {
-      console.error("인증 실패:", err);
+    } catch (error: unknown) {
+      console.error("인증 실패:", error);
+
+      if (error instanceof Error) {
+        const errWithStatus = error as Error & { status?: number };
+
+        if (errWithStatus.status === 409 || errWithStatus.message.includes("인증토큰이 없습니다")) {
+          resetAuth();
+          navigate("/login", { replace: true });
+          return;
+        }
+      }
+
       resetAuth();
     } finally {
-      useAuthStore.getState().setInitialized(true);  // 여기서 초기화 완료 상태 설정
+      useAuthStore.getState().setInitialized(true);
       setLoading(false);
     }
   };
 
   verify();
-}, []);
+}, [navigate, resetAuth, setAuthenticated]);
 
 
   if (loading) return <div>로딩 중...</div>;
@@ -103,7 +116,7 @@ useEffect(() => {
         <Route path="/community" element={<Community />} />
         <Route path="/community/:id" element={<CommunityDetail />} />
         <Route path="/community/write" element={<CommunityWrite />} />
-        
+
         <Route path="/diary" element={<Diary />}>
           <Route path="latest" element={<DiaryList viewMode="latest" />} />
           {/* <Route path="photo" element={<PhotoOnly />} /> */}

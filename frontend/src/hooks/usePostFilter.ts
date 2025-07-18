@@ -21,7 +21,8 @@ export interface Post {
 
 // state에 따라 성장일기(1), 커뮤니티(2) 게시글 구분
 export const usePostFilter = (stateType: 1 | 2) => {
-  const { setAllPosts, setFilteredPosts, filteredPosts, allPosts } = usePostStore();
+  const { setAllPosts, setFilteredPosts, filteredPosts, allPosts } =
+    usePostStore();
 
   const userId = useAuthStore((s) => s.userId);
   const isInitialized = useAuthStore((s) => s.isInitialized);
@@ -32,7 +33,6 @@ export const usePostFilter = (stateType: 1 | 2) => {
   const [isPhotoFiltered, setIsPhotoFiltered] = useState(false);
 
   if (!isInitialized) {
-
     return {
       init: async () => {},
       filterLatest: () => {},
@@ -44,48 +44,45 @@ export const usePostFilter = (stateType: 1 | 2) => {
     };
   }
 
-  
-
-
   const filterPhotoPosts = () => {
     if (isPhotoFiltered) {
       setFilteredPosts(allPosts);
       setIsPhotoFiltered(false);
     } else {
-      const photoOnly = allPosts.filter((post) => !!post.img) 
-        setFilteredPosts(photoOnly);
-        setIsPhotoFiltered(false);
+      const photoOnly = allPosts.filter((post) => !!post.img);
+      setFilteredPosts(photoOnly);
+      setIsPhotoFiltered(false);
     }
-  }
+  };
 
-const init = async () => {
-  const posts = await fetchPostsByState(stateType);
-  setAllPosts(posts);
-  setFilteredPosts(posts);
-  setIsMyPostFiltered(false);
-  setIsLatestSorted(true); 
-};
+  const init = async () => {
+    const posts = await fetchPostsByState(stateType);
+    setAllPosts(posts);
+    setFilteredPosts(posts);
+    setIsMyPostFiltered(false);
+    setIsLatestSorted(true);
+  };
 
 const filterLatest = () => {
-  const source = isMyPostFiltered ? filteredPosts : allPosts;
-  const sorted = [...source].sort(
+  const sorted = [...allPosts].sort(
     (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
   );
   setFilteredPosts(sorted);
   setIsLatestSorted(true);
-  setIsMyPostFiltered(false);
+  setIsMyPostFiltered(false);  
+  setIsPhotoFiltered(false);
 };
 
-const filterMyPosts = () => {
-  if (!userId) return;
+  const filterMyPosts = () => {
+    if (!userId) return;
 
-  if (!isMyPostFiltered) {
-    const mine = allPosts.filter((post) => post.user_id === userId);
-    setFilteredPosts(mine);
-    setIsMyPostFiltered(true);
-    setIsLatestSorted(false);
-  }
-};
+    if (!isMyPostFiltered) {
+      const mine = allPosts.filter((post) => post.user_id === userId);
+      setFilteredPosts(mine);
+      setIsMyPostFiltered(true);
+      setIsLatestSorted(false);
+    }
+  };
   return {
     init,
     filterLatest,
