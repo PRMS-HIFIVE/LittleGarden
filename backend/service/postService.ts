@@ -45,6 +45,8 @@ const getPosts = async (plantTag?: IFilterPost, state?: IFilterPost) => {
     values.push(state);
   }
 
+  sql += " ORDER BY posts.created_at DESC";
+
   return await executeQuery<RowDataPacket[]>(sql, values);
 };
 
