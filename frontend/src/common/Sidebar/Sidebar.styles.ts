@@ -67,6 +67,7 @@ export const SidebarMenuItem = styled.button<{
     display: flex;
     align-items: center;
     gap: ${({ hasIcon }) => hasIcon ? '10px' : '0'};
+    border-bottom: 1px solid #ECF0F1;
 
     ${({isFirst}) => isFirst && `margin-bottom: 80px;`}
     ${({ marginTopAuto }) => marginTopAuto && `margin-top: auto;`}
