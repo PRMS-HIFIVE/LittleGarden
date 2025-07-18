@@ -3,6 +3,17 @@ import CardList from "./../../../common/Card/CardList/CardList";
 import { usePostStore } from "@/store/postStore";
 import * as S from "./../Diary.styles";
 
+export interface DiaryData {
+    userId: number;
+    postId: number;
+    title: string;
+    content: string;
+    createdAt: string;
+    image?: string;
+    plantTag?: string[];
+    profileImage?: string;
+}
+
 const DiaryList = () => {
     const userId = useAuthStore((s) => s.userId);
     const filteredPosts = usePostStore((s) => s.filteredPosts);
