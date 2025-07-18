@@ -19,6 +19,7 @@ export interface Plant {
     dlthtsCodeNm?: string;
     comment?: string;
     watercycle?: number;
+    day?: number;
 }
 
 interface PlantStoreState {

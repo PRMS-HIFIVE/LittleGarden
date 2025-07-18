@@ -36,7 +36,7 @@ function Main(){
                                             <S.PlantName>{plant.cntntsSj}</S.PlantName>
                                         </S.PlantNameArea>
                                         <S.PlantInfoWrapper>
-                                            <Droplet /> {plant.watercycle || '물주기 정보 없음'}
+                                            <Droplet /> {plant.watercycle || plant.day}
                                         </S.PlantInfoWrapper>
                                     </S.PlantWrapper>
                                 </S.PlantsList>
