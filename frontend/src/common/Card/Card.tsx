@@ -47,11 +47,13 @@ const Card = ({
             </CardHeader>
             <CardContent>{content}</CardContent>
             {image && <CardThumbnail src={image} />}
+            {tag && tag.length > 0 && (
             <TagContainer>
                 {tag.map((t, i) => (
-                    <Tag key={i}>{t}</Tag>
+                <Tag key={i}>{t}</Tag>
                 ))}
             </TagContainer>
+            )}
         </CardContainer>
     );
 };
