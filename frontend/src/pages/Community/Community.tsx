@@ -20,8 +20,6 @@ const Community = () => {
 
   return (
     <S.Container>
-      <S.ContentWrapper>
-
         <MainpageHeader />
         <S.Title>커뮤니티</S.Title>
         <S.ButtonWrapper>
@@ -57,7 +55,6 @@ const Community = () => {
         <S.ScrollableCardList>
           <CommunityList />
         </S.ScrollableCardList>
-      </S.ContentWrapper>
       
     </S.Container>
   );

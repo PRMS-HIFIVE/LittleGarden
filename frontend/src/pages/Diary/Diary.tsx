@@ -35,8 +35,7 @@ useEffect(() => {
     }
     return (
         <>
-            <S.Container>
-                <S.ContentWrapper>     
+            <S.Container>  
                     <MainpageHeader />   
                     <S.Title>성장일기</S.Title>
                     <S.ButtonWrapper>
@@ -65,8 +64,6 @@ useEffect(() => {
                     <S.ScrollableCardList>
                         <DiaryList />
                     </S.ScrollableCardList>
-
-                </S.ContentWrapper>
 
             </S.Container>
         </>
