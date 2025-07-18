@@ -17,9 +17,9 @@ const Diary = () => {
     // }, [])
 
 useEffect(() => {
-  const initialize = async () => {
-    await init();
-    filterMyPosts();
+  const initialize = /*async*/ () => {
+    /*await*/ init();
+    //filterMyPosts();
   };
   initialize();
 }, []);
