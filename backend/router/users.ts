@@ -1,13 +1,13 @@
 import express from 'express';
-import { emailValidator, updateNickNameValidator, updatePasswordValidator, userValidator } from '../middleware/validator';
+import { emailValidator, updateNickNameValidator, updatePasswordValidator, userJoinValidator, userLoginValidator } from '../middleware/validator';
 import { authenticateToken } from '../middleware/authMiddleware';
 import { join, login, emailCertify, updateNickName, requestResetPassword, resetPassword, logout, authCheck } from '../controller/userController';
 import { likePost, deleteLikePost} from '../controller/likeController';
 
 const router = express.Router();
 
-router.post('/join', userValidator, join);
-router.post('/login', userValidator, login);
+router.post('/join', userJoinValidator, join);
+router.post('/login', userLoginValidator, login);
 router.post('/logout', authenticateToken, logout);
 router.get('/check', authenticateToken, authCheck);
 
