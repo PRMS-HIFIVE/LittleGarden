@@ -7,8 +7,10 @@ import useSidebarStore from "@/store/sidebarStore";
 import { useAuthStore } from "@/store/authStore";
 import { useNavigate } from "react-router-dom";
 import { IconEdit } from "@/assets/icons/IconList";
-import { logout as logoutAPI } from "@/apis/auth.api";
+import { logout as logoutAPI, updateNickname } from "@/apis/auth.api";
 import defaultUser from "@/assets/images/DefaultUsers.png";
+import Modal from "../Modal/Modal";
+import Input from "@/components/UI/Input/Input";
 
 
 interface MenuItemsType {
@@ -50,13 +52,17 @@ const Sidebar = ({
     // 사이드바 상태관리
     const isSidebarOpen = useSidebarStore((state) => state.isSidebarOpen);
     const [hasMounted, sethasMounted] = useState(false);
+
+    const [isNicknameModalOpen, setIsNicknameModalOpen] = useState(false);
+    const [newNickname, setNewNickname] = useState('');
+
     useEffect(() => {
         sethasMounted(true);
     }, []);
 
     const isOpen = useSidebarStore((state) => state.isSidebarOpen);
     const toggleSidebar = useSidebarStore((state) => state.toggleSidebar);
-    const { resetAuth, user } = useAuthStore();
+    const { resetAuth, user, setUser } = useAuthStore();
     const navigate = useNavigate();
 
     const nickname = user?.nickname || "";
@@ -75,6 +81,33 @@ const Sidebar = ({
             navigate('/login', { replace: true });
         }
     }
+
+    const handleOpenNicknameModal = () => {
+        setNewNickname(user?.nickname || '');
+        setIsNicknameModalOpen(true);
+    }
+
+    const handleUpdateNickname = async () => {
+        if(!newNickname.trim()){
+            alert('변경할 닉네임을 입력해주세요.');
+            return;
+        }
+        try{
+            if (!user || !user.email) {
+                alert('사용자 정보가 올바르지 않습니다. 다시 로그인해주세요.');
+                return;
+            }
+            await updateNickname(user.email, newNickname.trim());
+            if (user) setUser({ ...user, nickname: newNickname.trim() });
+
+            alert('닉네임이 성공적으로 변경되었습니다.');
+            setIsNicknameModalOpen(false);
+        }catch(error){
+            const message = error instanceof Error ? error.message : '닉네임 변경 중 오류가 발생했습니다.';
+            alert(message);
+        }
+    }
+
     // 메뉴 아이템 클릭관련
     const menuItemsClickHandler = menuItems.map(item => ({
         ...item,
@@ -115,7 +148,7 @@ const Sidebar = ({
                 <SidebarProfile>
                     <SidebarProfileImage src={defaultUser} />
                     <SidebarProfileName>{nickname} 님</SidebarProfileName>
-                    <IconEdit />
+                    <IconEdit onClick={handleOpenNicknameModal} />
                 </SidebarProfile>
                 {menuItemsClickHandler.map((item, index) => (
                     <SidebarMenuItem
@@ -138,6 +171,18 @@ const Sidebar = ({
                 </SidebarLogoutButton>
 
             </StyledSidebar>
+            <Modal
+                isOpen={isNicknameModalOpen}
+                onClose={() => setIsNicknameModalOpen(false)}
+                onConfirm={handleUpdateNickname}
+                title="닉네임 변경"
+            >
+                <Input
+                    value={newNickname}
+                    onChange={(e) => setNewNickname(e.target.value)}
+                    placeholder="새 닉네임을 입력하세요"
+                />
+            </Modal>
         </>
     );
 };

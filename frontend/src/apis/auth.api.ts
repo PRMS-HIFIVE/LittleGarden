@@ -146,14 +146,14 @@ export const requestEmailCertification = async (email: string) => {
   return response.json();
 };
 
-export const updateNickname = async (nickName: string) => {
+export const updateNickname = async (email: string, nickName: string) => {
   const response = await fetch(`${BASE_URL}/users`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ nickName }),
-    //credentials: "include",
+    body: JSON.stringify({ email, nickName }),
+    credentials: "include",
   });
 
   if (!response.ok) {
