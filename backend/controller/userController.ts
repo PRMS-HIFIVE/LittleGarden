@@ -133,10 +133,9 @@ export const emailCertify = async (req: Request, res: Response): Promise<void> =
 }
 
 export const updateNickName = async (req: Request, res: Response): Promise<void> => {
-    const {email, nickName} = req.body;
+    const userId = req.user?.id;
+    const {nickName} = req.body;
     try {
-        const user = await userService.findUserByLoginId(email);
-        const userId = user[0].id;
         await userService.updateNickName(userId, nickName);
         res.status(StatusCodes.OK).json({ message : "닉네임이 변경되었습니다. "});
         return;
