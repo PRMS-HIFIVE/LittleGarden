@@ -24,6 +24,7 @@ const Diary = lazy(() => import("@/pages/Diary/Diary"));
 const DiaryList = lazy(() => import("@/pages/Diary/DiaryList/DiaryList"));
 const DiaryWrite = lazy(() => import("@/pages/Diary/DiaryWrite/DiaryWrite"));
 const NoticePage = lazy(() => import("@/pages/Notice/NoticePage"));
+const AlertSetting = lazy(() => import("@/pages/AlertSetting/AlertSetting"));
 
 const AppRouter = () => {
   const { setAuthenticated, resetAuth, isAuthenticated } = useAuthStore();
@@ -109,6 +110,7 @@ useEffect(() => {
         </Route>
         <Route path="/diary/write" element={<DiaryWrite />} />
         <Route path="/notice" element={<NoticePage />} />
+        <Route path="/alert" element={<AlertSetting />} />
       </Routes>
     </Suspense>
   );
