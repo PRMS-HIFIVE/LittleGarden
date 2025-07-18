@@ -82,10 +82,20 @@ const getTargetUsers = async () => {
     const currentMonth = new Date().getMonth() + 1;
     const watercycleColumn = getWatercycleColumn(currentMonth);
 
-    const sql = `SELECT P.user_id, P.cntntsSj, PS.subscription
-                FROM (plants P JOIN push_subscriptions PS ON P.user_id = PS.user_id)
-                LEFT JOIN watercycle W ON P.${watercycleColumn} = W.watercycleCode 
-                WHERE U.push_enabled = 1 AND PS.is_enabled = 1 
-                AND (last_watering IS NULL OR DATE(last_watering) <= DATE_SUB(DATE(NOW()), INTERVAL W.day DAY))`;
+    const sql = `
+            SELECT P.user_id, P.cntntsSj, PS.subscription
+            FROM (plants P JOIN push_subscriptions PS ON P.user_id = PS.user_id)
+            LEFT JOIN watercycle W ON P.${watercycleColumn} = W.watercycleCode
+            WHERE U.push_enabled = 1
+            AND PS.is_enabled = 1
+            AND (
+                    last_watering IS NULL OR DATE(last_watering) <= DATE_SUB(DATE(NOW()),
+                        INTERVAL 
+                        CASE WHEN P.watercycle IS NOT NULL AND P.watercycle <> '' THEN P.watercycle
+                             ELSE W.day
+                        END DAY
+                    )
+                )
+            `;
     return await executeQuery<RowDataPacket[]>(sql, []);
 }

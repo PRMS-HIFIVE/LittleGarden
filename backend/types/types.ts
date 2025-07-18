@@ -63,5 +63,6 @@ export interface IPlantData {
     managedemanddoCodeNm?: string;
     managelevelCodeNm?: string;
     postngplaceCodeNm?: string;
+    watercycle?: string;
     watercycleNm?: string;
 }
