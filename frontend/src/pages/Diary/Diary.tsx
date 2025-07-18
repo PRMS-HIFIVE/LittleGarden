@@ -10,11 +10,19 @@ import DiaryList from "@/pages/Diary/DiaryList/DiaryList";
 const Diary = () => {
     const navigate = useNavigate();
 
-    const { init, filterLatest, filterPhotoPosts } = usePostFilter(1);
+    const { init, filterMyPosts, filterLatest, filterPhotoPosts } = usePostFilter(1);
 
-    useEffect(() => {
-        init();
-    }, [])
+    // useEffect(() => {
+    //     init();
+    // }, [])
+
+useEffect(() => {
+  const initialize = async () => {
+    await init();
+    filterMyPosts();
+  };
+  initialize();
+}, []);
     
     // const handleLatest = () => {
     //     navigate('/diary/latest')
