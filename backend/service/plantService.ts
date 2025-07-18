@@ -8,7 +8,7 @@ const getPlants = async (userId : number, plantId : number | undefined) => {
     const watercycleColumn = getWatercycleColumn(currentMonth);
 
     let sql = `
-        SELECT P.*, W.watercycleNm
+        SELECT P.*, W.watercycleNm, W.day
         FROM plants P
         LEFT JOIN watercycle W
             ON P.${watercycleColumn} = W.watercycleCode
