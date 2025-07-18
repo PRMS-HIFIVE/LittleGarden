@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import pushService from "../service/pushService";
-import { arrayBufferToBase64Url, isDuplicateSubscription } from '../utils/utils';
+import { isDuplicateSubscription } from '../utils/utils';
 
 export const subscribeDevice = async (req: Request, res: Response) => {
     const userId = req.user?.id;
@@ -15,13 +15,7 @@ export const subscribeDevice = async (req: Request, res: Response) => {
             return;
         };
 
-        const sub = {
-            endpoint: subscription.endpoint,
-            keys: {
-                p256dh: arrayBufferToBase64Url(subscription.getKey('p256dh')),
-                auth: arrayBufferToBase64Url(subscription.getKey('auth'))
-            }
-        }
+        const sub = subscription;
 
         await pushService.createSubscription(userId, JSON.stringify(sub), deviceType, deviceName);
         res.status(201).json({ message: '구독 정보 저장 성공' });
