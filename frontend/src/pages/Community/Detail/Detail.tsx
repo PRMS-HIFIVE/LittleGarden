@@ -179,7 +179,7 @@ const CommunityDetail = () => {
                     )}
                     <S.Nickname>
                       {cmt.nickName}
-                      {cmt.isAuthor === "1" && (
+                      {cmt.isAuthor && (
                         <S.AuthorBadge>작성자</S.AuthorBadge>
                       )}
                     </S.Nickname>

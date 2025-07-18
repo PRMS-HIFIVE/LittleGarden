@@ -33,9 +33,16 @@ const handleValidation = (req : Request, res : Response, next : NextFunction) : 
     next();
 };
 
-export const userValidator : (ValidationChain | RequestHandler)[] = [
+export const userLoginValidator : (ValidationChain | RequestHandler)[] = [
     body("email").notEmpty().withMessage("이메일은 필수 입력 항목입니다."),
     body("pwd").notEmpty().withMessage("비밀번호는 필수 입력 항목입니다."),
+    handleValidation
+];
+
+export const userJoinValidator : (ValidationChain | RequestHandler)[] = [
+    body("email").notEmpty().withMessage("이메일은 필수 입력 항목입니다."),
+    body("pwd").notEmpty().withMessage("비밀번호는 필수 입력 항목입니다."),
+    body("nickName").notEmpty().withMessage("비밀번호는 필수 입력 항목입니다."),
     handleValidation
 ];
 

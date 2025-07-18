@@ -10,10 +10,15 @@ dotenv.config();
 interface IUserRequestBody {
     email: string;
     pwd: string;
-    nickName?: string
 }
 
-export const join = async (req: TypedRequest<IUserRequestBody>, res: Response) : Promise<void> => {
+interface IJoinRequestBody {
+    email: string;
+    pwd: string;
+    nickName: string
+}
+
+export const join = async (req: TypedRequest<IJoinRequestBody>, res: Response) : Promise<void> => {
     const {email, pwd, nickName} = req.body;
     
     try {
@@ -23,15 +28,10 @@ export const join = async (req: TypedRequest<IUserRequestBody>, res: Response) :
             res.status(StatusCodes.CONFLICT).json({ message : "이미 존재하는 아이디입니다." });
             return;
         }
-
-        if(!nickName) {
-            res.status(StatusCodes.BAD_REQUEST).json({ message : "닉네임을 입력해주세요." });
-            return;
-        } else {
-            await userService.joinUser(email, pwd, nickName);
-            res.status(StatusCodes.CREATED).json({ message : "성공적으로 회원가입 되었습니다. "})
-            return;
-        }
+       
+        await userService.joinUser(email, pwd, nickName);
+        res.status(StatusCodes.CREATED).json({ message : "성공적으로 회원가입 되었습니다. "})
+        return;
     } catch(err) {
         console.log(err)
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message : "서버에서 오류가 발생했습니다. 관리자에게 문의해주세요." });

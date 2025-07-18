@@ -17,14 +17,19 @@ interface CardListProps {
 }
 
 const CardList = ({cards, navigatePath = "/community"}: CardListProps) => {
+    console.log("CardList cards:", cards.map(card => card.postId));
+
 
     return (
         <CardListContainer>
             {cards.map((card) => (
                 <Card key={card.postId} {...card} navigatePath={navigatePath}/>
+                
             ))}
         </CardListContainer>
+        
     )
 }
+
 
 export default CardList;

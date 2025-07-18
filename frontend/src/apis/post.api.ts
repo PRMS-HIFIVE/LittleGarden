@@ -36,6 +36,8 @@ export const fetchPostsByState = async (stateType: number): Promise<Post[]> => {
   return data.data;
 };
 
+
+
 // 게시글 상세조회
 export const fetchPostDetail = async (id: number): Promise<Post> => {
   const response = await fetch(`${BASE_URL}/posts/${id}`, {
