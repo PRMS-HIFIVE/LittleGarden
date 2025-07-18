@@ -3,6 +3,7 @@
 import { useAuthStore } from '@/store/authStore';
 import CardList from './../../../common/Card/CardList/CardList';
 import { usePostStore } from "@/store/postStore";
+import * as S from './../Diary.styles';
 
 export interface DiaryData {
     userId: number;
@@ -69,6 +70,7 @@ const DiaryList = () => {
     // }))
 
     const cards = myPosts.map(post => ({
+        userId: post.user_id,
         postId: post.id,
         title: post.title,
         content: post.content,
@@ -82,7 +84,12 @@ const DiaryList = () => {
     return (
         <>
             {cards.length === 0
-                ? <div>아직 작성된 글이 없습니다. 다른 사람들과 이야기를 나눠보세요</div>
+                ? <S.textContainer>
+                    <S.noDataText>
+                        아직 작성된 글이 없습니다 <br/>
+                        식물과의 이야기를 남겨보세요
+                    </S.noDataText>
+                </S.textContainer>
                 : <CardList cards={cards} navigatePath="/diary" /> //<CardList cards={cards} />
             }
         </>

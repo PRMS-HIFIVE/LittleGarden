@@ -55,6 +55,7 @@ export const ButtonWrapper = styled.div`
   gap: 0.5rem;
 `;
 export const ScrollableCardList = styled(CardListContainer)`
+  height: 100%;
   flex: 1;
   overflow-y: auto;
   padding: 1rem;

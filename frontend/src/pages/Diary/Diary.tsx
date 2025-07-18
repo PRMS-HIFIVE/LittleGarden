@@ -1,9 +1,10 @@
 import * as S from "./Diary.styles";
-import { useNavigate, Outlet } from "react-router-dom";
+import { useNavigate, /*Outlet*/ } from "react-router-dom";
 import Button from "@/components/UI/Button/Button";
 import MainpageHeader from "@/common/Header/HeaderVariants/MainpageHeader";
 import { usePostFilter } from "@/hooks/usePostFilter";
 import { useEffect } from "react";
+import DiaryList from "@/pages/Diary/DiaryList/DiaryList";
 
 
 const Diary = () => {
@@ -52,14 +53,11 @@ const Diary = () => {
                         > 글쓰기
                         </Button>
                     </S.ButtonWrapper>
-                    <S.textContainer>
-                        <S.noDataText>
-                            아직 작성된 글이 없습니다<br/>
-                            식물과의 이야기를 남겨보세요
-                        </S.noDataText>
-                        <Outlet></Outlet>
-                    </S.textContainer>
-                        
+
+                    <S.ScrollableCardList>
+                        <DiaryList />
+                    </S.ScrollableCardList>
+
                 </S.ContentWrapper>
 
             </S.Container>
