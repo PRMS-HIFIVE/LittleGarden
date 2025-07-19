@@ -97,7 +97,7 @@ const Sidebar = ({
                 alert('사용자 정보가 올바르지 않습니다. 다시 로그인해주세요.');
                 return;
             }
-            await updateNickname(user.email, newNickname.trim());
+            await updateNickname( newNickname.trim());
             if (user) setUser({ ...user, nickname: newNickname.trim() });
 
             alert('닉네임이 성공적으로 변경되었습니다.');
