@@ -1,6 +1,7 @@
 import { usePostStore } from "@/store/postStore";
 import CardList from "@/common/Card/CardList/CardList";
 import { useAuthStore } from "@/store/authStore";
+import * as S from "../../Diary/Diary.styles"
 
 const CommunityList = () => {
   const userId = useAuthStore((state) => state.userId);
@@ -11,7 +12,13 @@ const CommunityList = () => {
     return <div>로그인 정보를 불러오는 중입니다...</div>;
   }
 
-  if (!filteredPosts.length) return <div>작성된 글이 없습니다.</div>;
+  if (!filteredPosts.length) return <div style={{height: "100%"}}>
+                    <S.textContainer>
+                      <S.noDataText>
+                        아직 작성된 글이 없습니다
+                      </S.noDataText>
+                    </S.textContainer>
+                  </div>;
 
   const cards = filteredPosts.map((post) => {
     const plantTag = post.plantTag as string | string[] | undefined;
