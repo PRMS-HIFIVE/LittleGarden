@@ -4,13 +4,14 @@ import { executeQuery } from "../utils/executeQuery";
 
 const posts = async (post: IPost) => {
   const sql =
-    "INSERT INTO posts (user_id, title, content, state,is_health) VALUES (?, ?, ?, ?,?)";
+    "INSERT INTO posts (user_id, title, content, state,is_health, img) VALUES (?, ?, ?, ?, ?, ?)";
   const values = [
     post.userId,
     post.title,
     post.content,
     post.state,
     post.isHealth,
+    post.img,
   ];
   return await executeQuery(sql, values);
 };

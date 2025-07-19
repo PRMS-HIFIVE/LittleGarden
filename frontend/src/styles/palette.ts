@@ -10,7 +10,7 @@ export const palette = {
     gray: '#95A5A6',
     lightGray: '#ECF0F1',
 
-    yellow: 'F1C40F',
+    yellow: '#F1C40F',
     warning: '#FE6D51',
     none: 'none',
 } as const

@@ -1,6 +1,20 @@
 import { backgroundColors, textColors, type BackgroundColors, type TextColors } from "@/styles/paletteMapping";
 import styled from "styled-components";
 
+export const ModalWrapper = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 99999;
+    background-color: rgba(0, 0, 0, 0.50);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+`
+
 export const ModalContainer = styled.div<{
     textColor?: TextColors;
     backgroundColor?: BackgroundColors;
@@ -40,4 +54,5 @@ export const ModalContent = styled.p<{textColor?: TextColors;}>`
     text-align: center;
     padding: 0px;
     margin: 0px;
+    margin-top: 20px;
 `;

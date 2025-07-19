@@ -4,15 +4,17 @@ import { Request, Response } from "express";
 
 export const postPosts = async (req:Request, res:Response) : Promise<void> => {
     const userId = req.user?.id;
-    const { title, content, plantTag, state, isHealth } = req.body;
+    const { title, content, plantTag, state, isHealth, img } = req.body;
 
     try {
-        const newPost = await postService.posts({userId, title, content,state, isHealth});
-        const newtag = await postService.tags(newPost.insertId,plantTag);
+        const newPost = await postService.posts({userId, title, content,state, isHealth, img});
+        if(plantTag) {
+            console.log(plantTag);
+            await postService.tags(newPost.insertId, plantTag);
+        }
         res.status(StatusCodes.CREATED).json({
             message : "게시글이 성공적으로 작성되었습니다.",
-            postData : newPost,
-            tagData : newtag
+            postData : newPost
         });
         return;
     } catch (error){
@@ -86,7 +88,9 @@ export const updatePosts = async (req:Request, res:Response) : Promise<void> => 
 
     try {
         const updatePost = await postService.updatePosts(postId,{userId, title, content,state,isHealth});
-        const updateTag = await postService.updateTags(postId,plantTag);
+        if(plantTag) {
+            await postService.updateTags(postId,plantTag);
+        }
         
         res.status(StatusCodes.CREATED).json({
             message : "게시글이 성공적으로 수정되었습니다.",

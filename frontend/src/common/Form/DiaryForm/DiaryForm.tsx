@@ -16,12 +16,12 @@ interface DiaryFormProps {
   //selectedPlants: MyPlantTag[];
   //2
   selectedPlants: PlantNameRequest[];
-  images: (File | null)[];
+//   images: (File | null)[];
   onChangeTitle: (value: string) => void;
   onChangeContent: (value: string) => void;
   //onChangeTag: (value: string) => void;
   onChangeSelectedPlants: (plants: /*MyPlantTag[]*/PlantNameRequest[]) => void;
-  onChangeImages: (files: (File | null)[]) => void;
+//   onChangeImages: (files: (File | null)[]) => void;
   onSubmit: (e: React.FormEvent) => void;
   onImageUrlChange: (url: string | null) => void;
 }
@@ -37,10 +37,9 @@ const DiaryForm =({
     //onChangeTag,
     onChangeSelectedPlants,
     onSubmit,
-    images,
-    onChangeImages,
-    //onImageUrlChange,
-
+    //images,
+    //onChangeImages,
+    onImageUrlChange,
     }: DiaryFormProps) => {
     //const { plants } = usePlantStore();
 
@@ -88,8 +87,9 @@ const DiaryForm =({
                     )}
 
                     <ImageUploadBox
-                        images={images}
-                        onChangeImages={onChangeImages}
+                        //images={images}
+                        //onChangeImages={onChangeImage}
+                        onUrlChange={onImageUrlChange}
                     />
 
                     <Button 

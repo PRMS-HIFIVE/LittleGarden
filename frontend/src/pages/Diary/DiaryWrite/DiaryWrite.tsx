@@ -113,11 +113,11 @@ const DiaryWrite = () => {
             title={title}
             content={content}
             selectedPlants={selectedPlants}
-            images={images}
+            // images={images}
             onChangeTitle={setTitle}
             onChangeContent={setContent}
             onChangeSelectedPlants={setSelectedPlants}
-            onChangeImages={setImages}
+            //onChangeImages={setImages}
             onImageUrlChange={setImageUrl}
             onSubmit={handleSubmit}
         />

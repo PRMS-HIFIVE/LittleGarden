@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { textColors } from "@/styles/paletteMapping"; 
 
 export const RegistrationWrapper = styled.div`
     width: 360px;
@@ -61,6 +62,14 @@ export const Input = styled.input`
         box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
     }
 `;
+
+export const HelperText = styled.p`
+    color: ${textColors.warning};
+    font-size: 0.8rem;
+    margin-top: 8px;
+    width: 100%;
+    text-align: left;
+`
 
 export const ImageThumbnail = styled.img`
     width: 300px;

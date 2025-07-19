@@ -1,3 +1,4 @@
+import { palette } from "@/styles/palette";
 import styled from "styled-components";
 
 export const MainWrap = styled.div`
@@ -80,3 +81,9 @@ export const PlantInfoWrapper = styled.div`
     align-items: center;
     gap: 10px;
 `
+
+export const DdayText = styled.span<{ isOverdue: boolean }>`
+    color: ${({ isOverdue }) => isOverdue ? palette.warning : 'inherit'};
+    font-weight: ${({ isOverdue }) => isOverdue ? 'bold' : 'normal'};
+    margin-left: 4px;
+`;

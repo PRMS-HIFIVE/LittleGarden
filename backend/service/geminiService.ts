@@ -23,7 +23,7 @@ const geminiComment = async (plantData:IPlantData) => {
     if (plantData.dlthtsCodeNm) detailsString += `주요 병충해: ${plantData.dlthtsCodeNm}\n`;
     if (plantData.postngplaceCodeNm) detailsString += `추천 배치 장소: ${plantData.postngplaceCodeNm}\n`;
     if (plantData.ignSeasonCodeNm) detailsString += `발화 계절: ${plantData.ignSeasonCodeNm}\n`;
-    if (plantData.watercycleNm) detailsString += `물 주기: ${plantData.watercycleNm}\n`;
+    if (plantData.watercycle) detailsString += `물 주기: ${plantData.watercycle}일\n`; else if (plantData.watercycleNm) detailsString += `물 주기: ${plantData.watercycleNm}일\n`;
 
     const promptText = `당신은 식물 백과사전 전문가입니다. 다음 식물 상세 정보를 바탕으로 이 식물에 대한 특징과 매력을 설명하고 키울때의 팁에 대한 코멘트를 100단어 이내로 작성해 주세요.
                         그리고 물 주기에 맞춰서 며칠마다 물줘야하는지도 알려주세요.

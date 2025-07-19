@@ -71,6 +71,24 @@ export const logout = async () => {
   return response.json();
 }
 
+// export const checkAuth = async () => {
+//   const response = await fetch(`${BASE_URL}/users/check`, {
+//     method: "GET",
+//     credentials: "include",
+//   });
+
+//   if (!response.ok) {
+//     throw new Error("Unauthorized");
+//   }
+
+//   const data = await response.json();
+//   return data.user;
+// };
+
+interface ErrorWithStatus extends Error {
+  status?: number;
+}
+
 export const checkAuth = async () => {
   const response = await fetch(`${BASE_URL}/users/check`, {
     method: "GET",
@@ -78,12 +96,19 @@ export const checkAuth = async () => {
   });
 
   if (!response.ok) {
-    throw new Error("Unauthorized");
+    const result = await response.json().catch(() => ({}));
+    if (response.status === 401 || result.message === "인증토큰이 없습니다") {
+      const error = new Error("Unauthorized or token missing") as ErrorWithStatus;
+      error.status = 401;
+      throw error;
+    }
+    throw new Error(result.message || "Unauthorized");
   }
 
   const data = await response.json();
   return data.user;
 };
+
 
 export const requestResetPassword = async (email: string) => {
   const response = await fetch(`${BASE_URL}/users/reset`, {
@@ -128,7 +153,7 @@ export const updateNickname = async (nickName: string) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ nickName }),
-    //credentials: "include",
+    credentials: "include",
   });
 
   if (!response.ok) {

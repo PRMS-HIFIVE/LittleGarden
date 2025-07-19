@@ -13,7 +13,7 @@ router.get('/check', authenticateToken, authCheck);
 
 router.post('/certify', emailValidator, emailCertify)
 
-router.put('/', updateNickNameValidator, updateNickName);
+router.put('/', authenticateToken, updateNickNameValidator, updateNickName);
 
 router.route('/reset')
     .post(emailValidator, requestResetPassword)

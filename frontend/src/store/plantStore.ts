@@ -7,7 +7,7 @@ export interface Plant {
     thumbnailUrl?: string;
     name?: string;
     watercycleNm: string;
-    lastWateredDate?: string | null;
+    last_watering?: string | null;
     plntbneNm?: string;
     fmlCodeNm?: string;
     postngplaceCodeNm?: string;
@@ -19,6 +19,7 @@ export interface Plant {
     dlthtsCodeNm?: string;
     comment?: string;
     watercycle?: number;
+    day?: number;
 }
 
 interface PlantStoreState {

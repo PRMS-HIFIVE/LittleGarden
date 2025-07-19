@@ -15,7 +15,8 @@ const CommunityWrite = () => {
   //const [selectedPlants, setSelectedPlants] = useState<
   //  /*MyPlantTag[]*/ PlantNameRequest[]
   //>([]);
-  const [images, setImages] = useState<(File | null)[]>([null, null, null]);
+  // const [images, setImages] = useState<(File | null)[]>([null, null, null]);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   const navigate = useNavigate();
 
@@ -42,7 +43,7 @@ const CommunityWrite = () => {
         title,
         content,
         //plantTag: selectedPlants.map((plant) => plant.cntntsNo),
-        image: undefined,
+        img: imageUrl || undefined,
         state: 2,
       });
 
@@ -70,11 +71,12 @@ const CommunityWrite = () => {
       title={title}
       content={content}
       //selectedPlants={selectedPlants}
-      images={images}
+      // images={images}
       onChangeTitle={setTitle}
       onChangeContent={setContent}
       //onChangeSelectedPlants={setSelectedPlants}
-      onChangeImages={setImages}
+      //onChangeImages={setImages}
+      onImageUrlChange={setImageUrl}
       onSubmit={handleSubmit}
     />
   );
