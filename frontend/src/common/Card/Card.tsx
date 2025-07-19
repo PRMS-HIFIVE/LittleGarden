@@ -9,7 +9,7 @@ export interface CardProps {
     title: string;
     content: string;
     date: string;
-    image?: string;
+    images?: string[];
     tag?: string[];
     profileImage?: string;
     navigatePath?: string; // 경로 (diary | community)
@@ -20,7 +20,7 @@ const Card = ({
     title,
     content,
     date,
-    image,
+    images = [],
     tag = ['태그', '확인용', '임시태그', '식물이름'],
     profileImage,
     navigatePath = "/community",
@@ -46,7 +46,9 @@ const Card = ({
                 </CardTitleDateWrapper>
             </CardHeader>
             <CardContent>{content}</CardContent>
-            {image && <CardThumbnail src={image} />}
+            {images.length > 0 && (
+                <CardThumbnail src={images[0]} />
+            )}
             {tag && tag.length > 0 && (
             <TagContainer>
                 {tag.map((t, i) => (
