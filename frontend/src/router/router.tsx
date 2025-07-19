@@ -3,6 +3,7 @@ import { Suspense, lazy, useEffect, useState } from "react";
 import Loading from "@/pages/Loading/Loading";
 import { useAuthStore } from "@/store/authStore";
 import { checkAuth } from "@/apis/auth.api";
+import MyPage from "@/pages/MyPage/MyPage";
 
 const Index = lazy(() => import("@/pages/Index"));
 const UploadPreviewPage = lazy(
@@ -124,6 +125,7 @@ useEffect(() => {
         <Route path="/diary/write" element={<DiaryWrite />} />
         <Route path="/notice" element={<NoticePage />} />
         <Route path="/alert" element={<AlertSetting />} />
+        <Route path="/mypage" element={<MyPage />} />
       </Routes>
     </Suspense>
   );

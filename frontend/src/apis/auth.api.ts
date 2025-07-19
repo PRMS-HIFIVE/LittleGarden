@@ -128,6 +128,24 @@ export const requestResetPassword = async (email: string) => {
   return response.json();
 };
 
+export const updatePassword = async (newPassword: string) => {
+  const response = await fetch(`${BASE_URL}/users/reset`,{
+    method: 'PUT',
+    headers:{
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ newPassword }),
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    const result = await response.json();
+    throw new Error(result.message || "패스워드 변경 실패");
+  }
+
+  return response.json();
+}
+
 export const requestEmailCertification = async (email: string) => {
   const response = await fetch(`${BASE_URL}/users/certify`, {
     method: "POST",
