@@ -6,6 +6,6 @@ export const CardListContainer = styled.div`
     gap: 18px;
     justify-content: flex-start;
     margin: 1rem auto;
-    height: clac(100vh - 0px);
+    height: calc(100vh - 0px);
     overflow-y: auto;
 `;
