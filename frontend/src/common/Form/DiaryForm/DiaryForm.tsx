@@ -36,6 +36,8 @@ const DiaryForm =({
     //onChangeTag,
     onChangeSelectedPlants,
     onSubmit,
+    images,
+    onChangeImages,
     }: DiaryFormProps) => {
     //const { plants } = usePlantStore();
 
@@ -83,8 +85,8 @@ const DiaryForm =({
                     )}
 
                     <ImageUploadBox
-                        //images={images}
-                        //onChangeImages={onChangeImage}
+                        images={images}
+                        onChangeImages={onChangeImages}
                     />
 
                     <Button 

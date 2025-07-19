@@ -36,6 +36,8 @@ const CommunityForm =({
     //onChangeTag,
     //onChangeSelectedPlants,
     onSubmit,
+    images,
+    onChangeImages,
     }: DiaryFormProps) => {
     //const { plants } = usePlantStore();
 
@@ -58,7 +60,10 @@ const CommunityForm =({
                         onChange={(e) => onChangeContent(e.target.value)}
                     />
 
-                    <ImageUploadBox />
+                    <ImageUploadBox
+                        images={images}
+                        onChangeImages={onChangeImages}
+                    />
 
                     <Button 
                         color="navyBlue" 

@@ -97,5 +97,6 @@ const filterMyPosts = () => {
     isMyPostFiltered,
     isLatestSorted,
     filterPhotoPosts,
+    isPhotoFiltered,
   };
 };
