@@ -19,7 +19,9 @@ const useHasBack = (): boolean => {
 const MainpageHeader = () => {
     const toggleSidebar = useSidebarStore((state) => state.toggleSidebar);
     const navigate = useNavigate();
+    const location = useLocation();
     const hasBack = useHasBack();
+    const isCommunityPage = location.pathname.startsWith('/community/');
 
      const handleBack = () => {
         if (window.history.length > 1) {
@@ -37,7 +39,7 @@ const MainpageHeader = () => {
 
     return (
         <Header
-            backgroundColor='primary'
+            backgroundColor={isCommunityPage ? 'white' : "primary"}
             borderBottom='none'
             padding='20px 16px'
             // 이전에 있었던 페이지가 존재할 경우만 뒤로가기 아이콘 렌더링되게 추가할 것
