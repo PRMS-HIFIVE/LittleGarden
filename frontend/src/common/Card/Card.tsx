@@ -30,6 +30,8 @@ const Card = ({
     const handleCardClick = () => {
         navigate(`${navigatePath}/${postId}`);
     }
+
+    console.log('tag:', tag);
     
     return (
         <CardContainer onClick={handleCardClick} style={{cursor: "pointer"}}>
@@ -49,9 +51,9 @@ const Card = ({
             {images.length > 0 && (
                 <CardThumbnail src={images[0]} />
             )}
-            {tag && tag.length > 0 && (
+            {Array.isArray(tag) && tag.filter(Boolean).length > 0 && (
             <TagContainer>
-                {tag.map((t, i) => (
+                {tag.filter(Boolean).map((t, i) => (
                 <Tag key={i}>{t}</Tag>
                 ))}
             </TagContainer>
