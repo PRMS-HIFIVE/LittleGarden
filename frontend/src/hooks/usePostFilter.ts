@@ -37,6 +37,7 @@ export const usePostFilter = (stateType: 1 | 2) => {
       init: async () => {},
       filterLatest: () => {},
       filterMyPosts: () => {},
+      filterPhotoPosts: () => {},
       filteredPosts,
       allPosts,
       isMyPostFiltered,
@@ -44,16 +45,17 @@ export const usePostFilter = (stateType: 1 | 2) => {
     };
   }
 
-  const filterPhotoPosts = () => {
-    if (isPhotoFiltered) {
-      setFilteredPosts(allPosts);
-      setIsPhotoFiltered(false);
-    } else {
-      const photoOnly = allPosts.filter((post) => !!post.img);
+const filterPhotoPosts = () => {
+  // if (isPhotoFiltered) {
+  //   setFilteredPosts(allPosts);
+  //   setIsPhotoFiltered(false);
+  // } else {
+    const photoOnly = allPosts.filter((post) => !!post.img) 
       setFilteredPosts(photoOnly);
-      setIsPhotoFiltered(false);
-    }
-  };
+      setIsPhotoFiltered(true);
+  //}
+}
+
 
   const init = async () => {
     const posts = await fetchPostsByState(stateType);
@@ -64,6 +66,8 @@ export const usePostFilter = (stateType: 1 | 2) => {
   };
 
 const filterLatest = () => {
+  //const source = isMyPostFiltered ? filteredPosts : allPosts;
+  //const sorted = [...source].sort(
   const sorted = [...allPosts].sort(
     (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
   );
@@ -92,5 +96,6 @@ const filterLatest = () => {
     isMyPostFiltered,
     isLatestSorted,
     filterPhotoPosts,
+    isPhotoFiltered,
   };
 };

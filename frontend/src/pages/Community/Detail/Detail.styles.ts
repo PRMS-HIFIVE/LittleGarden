@@ -225,5 +225,7 @@ export const CommentEditActions = styled.div`
   }
 `;
 
-
+export const PostSpacer = styled.div`
+  height: 100px;
+`
 

@@ -61,15 +61,20 @@ export interface PostCreatePayload {
   content: string;
   state: number;         
   plantTag?: string[];
-  img?: string;
+  image?: string | string[];
   isHealth?: number;
 }
 
-export const createPost = async (payload: PostCreatePayload) => {
+export const createPost = async (payload: PostCreatePayload | FormData) => {
+  const isFormData = payload instanceof FormData;
   const response = await fetch(`${BASE_URL}/posts`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
+    headers: isFormData
+      ? undefined //-> 자동으로 'Content-Type' 자동 설정됨
+      : { "Content-Type": "application/json" },
+    body: isFormData
+      ? payload
+      : JSON.stringify(payload),
     credentials: "include",
   });
   console.log("게시글 등록 요청:", payload);
