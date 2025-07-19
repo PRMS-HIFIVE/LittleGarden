@@ -23,8 +23,8 @@ const getPosts = async (state: number, userId : number, plantTag?: number) => {
             plants.cntntsSj AS plantTag
         FROM 
             posts
-        INNER JOIN post_tags ON posts.id = post_tags.post_id
-        INNER JOIN plants ON post_tags.plant_id = plants.id
+        LEFT JOIN post_tags ON posts.id = post_tags.post_id
+        LEFT JOIN plants ON post_tags.plant_id = plants.id
         WHERE posts.state = ?
     `;
   let values = [state];
