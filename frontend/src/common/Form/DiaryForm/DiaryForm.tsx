@@ -23,6 +23,7 @@ interface DiaryFormProps {
   onChangeSelectedPlants: (plants: /*MyPlantTag[]*/PlantNameRequest[]) => void;
   onChangeImages: (files: (File | null)[]) => void;
   onSubmit: (e: React.FormEvent) => void;
+  onImageUrlChange: (url: string | null) => void;
 }
 
 const DiaryForm =({
@@ -38,6 +39,8 @@ const DiaryForm =({
     onSubmit,
     images,
     onChangeImages,
+    //onImageUrlChange,
+
     }: DiaryFormProps) => {
     //const { plants } = usePlantStore();
 
