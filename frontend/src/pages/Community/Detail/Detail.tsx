@@ -131,6 +131,7 @@ const CommunityDetail = () => {
     <S.Container>
       <S.ScrollArea>
         <MainpageHeader />
+        <S.PostSpacer />
         <S.SectionDivider />
 
         <S.PostHeader>

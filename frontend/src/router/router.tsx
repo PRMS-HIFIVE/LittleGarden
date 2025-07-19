@@ -23,6 +23,7 @@ const CommunityWrite = lazy(() => import("@/pages/Community/CommunityWrite/Commu
 const Diary = lazy(() => import("@/pages/Diary/Diary"));
 const DiaryList = lazy(() => import("@/pages/Diary/DiaryList/DiaryList"));
 const DiaryWrite = lazy(() => import("@/pages/Diary/DiaryWrite/DiaryWrite"));
+const DiaryDetail = lazy(() => import("@/pages/Diary/DiaryDetail/DiaryDetail"))
 const NoticePage = lazy(() => import("@/pages/Notice/NoticePage"));
 const AlertSetting = lazy(() => import("@/pages/AlertSetting/AlertSetting"));
 
@@ -108,6 +109,7 @@ useEffect(() => {
           <Route path="latest" element={<DiaryList viewMode="latest" />} />
           {/* <Route path="photo" element={<PhotoOnly />} /> */}
         </Route>
+        <Route path="/diary/:id" element={<DiaryDetail />} />
         <Route path="/diary/write" element={<DiaryWrite />} />
         <Route path="/notice" element={<NoticePage />} />
         <Route path="/alert" element={<AlertSetting />} />
