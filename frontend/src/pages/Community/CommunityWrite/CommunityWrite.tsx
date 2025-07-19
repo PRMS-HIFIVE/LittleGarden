@@ -5,6 +5,7 @@ import * as postAPI from "@/apis/post.api";
 import { useAuthStore } from "@/store/authStore";
 //import type { PlantNameRequest } from "@/components/UI/Select/SelectMyPlant2";
 import { usePostStore } from "@/store/postStore";
+import { uploadImage } from "@/apis/image.api";
 
 const CommunityWrite = () => {
   const userId = useAuthStore((state) => state.userId);
@@ -15,7 +16,7 @@ const CommunityWrite = () => {
   //const [selectedPlants, setSelectedPlants] = useState<
   //  /*MyPlantTag[]*/ PlantNameRequest[]
   //>([]);
-  // const [images, setImages] = useState<(File | null)[]>([null, null, null]);
+  const [images, setImages] = useState<(File | null)[]>([null, null, null]);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   const navigate = useNavigate();
@@ -38,6 +39,7 @@ const CommunityWrite = () => {
     }
 
     try {
+      /*
       const response = await postAPI.createPost({
         userId,
         title,
@@ -48,8 +50,32 @@ const CommunityWrite = () => {
       });
 
       const newPost = response.data ?? response;
+      */
+      const uploadedImageUrls = await Promise.all(
+        images
+          .filter((file): file is File => file !== null)
+          .map((file) => uploadImage(file))
+      );
 
-      if (newPost) {
+      const payload = {
+        userId,
+        title,
+        content,
+        // plantTag는 아예 빼거나 빈 배열로 보내도 됨
+        // plantTag: [],
+        img: imageUrl || undefined,
+        state: 2,
+        image: uploadedImageUrls.length > 0 ? uploadedImageUrls : undefined,
+      };
+
+      const response = await postAPI.createPost(payload);
+
+      let newPost = response.data ?? response;
+      if (newPost && !newPost.id && newPost.postData) {
+        newPost = newPost.postData;
+      }
+
+      if (newPost && newPost.id) {
         addPost(newPost);
       } else {
         const all = await postAPI.fetchPostsByState(2);
@@ -64,6 +90,8 @@ const CommunityWrite = () => {
       else alert("글 등록 실패");
     }
   };
+
+  console.log("setImages in DiaryWrite:", setImages);
 
   return (
     <CommunityForm

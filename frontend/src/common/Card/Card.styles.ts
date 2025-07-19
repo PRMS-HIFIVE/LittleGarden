@@ -34,6 +34,7 @@ export const CardContent = styled.p<{contentColor?: TextColors;}>`
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    padding-top: 10px;
 `;
 export const CardThumbnail = styled.div<{src?: string, noImage?: BackgroundColors;}>`
     width: 90px;

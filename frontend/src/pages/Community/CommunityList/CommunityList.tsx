@@ -1,9 +1,10 @@
 import { usePostStore } from "@/store/postStore";
-import CardList from "@/common/Card/CardList/CardList";
+//import CardList from "@/common/Card/CardList/CardList";
 import { useAuthStore } from "@/store/authStore";
 import * as S from "../../Diary/Diary.styles"
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import CardListNoTag from "@/common/Card/CardList/CardListNoTag";
 
 
 const CommunityList = () => {
@@ -67,7 +68,7 @@ const CommunityList = () => {
     };
   });
 
-  return <CardList cards={cards} />;
+  return <CardListNoTag cards={cards} />;
 };
 
 export default CommunityList;
