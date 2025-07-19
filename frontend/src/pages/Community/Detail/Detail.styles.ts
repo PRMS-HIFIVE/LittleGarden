@@ -7,7 +7,6 @@ export const Container = styled.div`
   height: 100vh;
   max-width: 393px;
   margin: 0 auto;
-  padding-top: 10px;
   background-color: ${backgroundColors.white};
 `;
 
@@ -80,6 +79,7 @@ export const ScrollArea = styled.div`
   flex: 1;
   overflow-y: auto;
   padding: 1.5rem;
+  padding-top: 10vh;
 `;
 
 export const CommentForm = styled.form`

@@ -24,6 +24,13 @@ const DiaryDetail = () => {
     const [post, setPost] = useState<DiaryDetail | null>(null);
 
     useEffect(() => {
+        document.body.style.backgroundColor = 'white';
+        return () => {
+            document.body.style.backgroundColor = '#ECF0F1';
+        };
+    }, []);
+
+    useEffect(() => {
         const init = async() => {
             try {
                 const postData = await fetchPostDetail(postId);
@@ -59,7 +66,6 @@ const DiaryDetail = () => {
         <S.Container>
             <S.ScrollArea>
                 <MainpageHeader />
-                <S.PostSpacer />
                 <S.SectionDivider />
                 <S.PostHeader>
                     {post.profileImage ? (
@@ -74,19 +80,19 @@ const DiaryDetail = () => {
                 <S.Content>{post.content}</S.Content>
 
                 <S.ImageWrapper>
-                          {post.images.map((img, idx) => (
-                            <S.Image key={idx} src={img} alt={`img-${idx}`} />
-                          ))}
-                        </S.ImageWrapper>
-                
-                        <S.TagWrapper>
-                          {post.plantTags.map((tag, idx) => (
-                            <Tag key={idx}>{tag}</Tag>
-                          ))}
-                        </S.TagWrapper>
-                
-                        <S.Date>{post.createdAt}</S.Date>
-                        <S.SectionDivider />
+                    {post.images.map((img, idx) => (
+                    <S.Image key={idx} src={img} alt={`img-${idx}`} />
+                    ))}
+                </S.ImageWrapper>
+        
+                <S.TagWrapper>
+                    {post.plantTags.map((tag, idx) => (
+                    <Tag key={idx}>{tag}</Tag>
+                    ))}
+                </S.TagWrapper>
+        
+                <S.Date>{post.createdAt}</S.Date>
+                <S.SectionDivider />
 
             </S.ScrollArea>
         </S.Container>

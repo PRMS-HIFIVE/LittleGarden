@@ -10,7 +10,6 @@ import { FiEdit, FiTrash2 } from "react-icons/fi";
 import MainpageHeader from "@/common/Header/HeaderVariants/MainpageHeader";
 import { FaUserCircle } from "react-icons/fa";
 
-// 게시글 데이터 타입
 interface PostDetail {
   profileImage: string;
   nickname: string;
@@ -43,7 +42,13 @@ const CommunityDetail = () => {
     deleteComment,
   } = useComment(postId);
 
-  // 게시글 + 댓글 불러오기
+  useEffect(() => {
+    document.body.style.backgroundColor = 'white';
+    return () => {
+      document.body.style.backgroundColor = '#ECF0F1';
+    };
+  }, []);
+
   useEffect(() => {
     const init = async () => {
       try {
@@ -131,7 +136,6 @@ const CommunityDetail = () => {
     <S.Container>
       <S.ScrollArea>
         <MainpageHeader />
-        <S.PostSpacer />
         <S.SectionDivider />
 
         <S.PostHeader>
