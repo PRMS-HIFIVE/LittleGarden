@@ -67,8 +67,9 @@ const init = async () => {
 };
 
 const filterLatest = () => {
-  const source = isMyPostFiltered ? filteredPosts : allPosts;
-  const sorted = [...source].sort(
+  //const source = isMyPostFiltered ? filteredPosts : allPosts;
+  //const sorted = [...source].sort(
+  const sorted = [...allPosts].sort(
     (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
   );
   setFilteredPosts(sorted);
