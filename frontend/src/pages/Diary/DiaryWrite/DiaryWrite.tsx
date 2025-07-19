@@ -13,8 +13,8 @@ const DiaryWrite = () => {
     const [content, setContent] = useState("");
     const [selectedPlants, setSelectedPlants] = useState<PlantNameRequest[]>([]);
     const [images, setImages] = useState<(File | null)[]>([null, null, null]);
+    const [imageUrl, setImageUrl] = useState<string | null>(null);
     const navigate = useNavigate();
-
     const addPost = usePostStore((state) => state.addPost);
     const setAllPosts = usePostStore((state) => state.setAllPosts);
 
@@ -43,8 +43,9 @@ const DiaryWrite = () => {
                 userId,
                 title,
                 content,
+                plantTag: selectedPlants.map((plant) => plant.cntntsNo),
+                img: imageUrl || undefined,
                 state: 1,
-                plantTag: selectedPlants.map((p) => p.cntntsNo),
                 image: uploadedImageUrls.length > 0 ? uploadedImageUrls : undefined,
             };
 
@@ -117,6 +118,7 @@ const DiaryWrite = () => {
             onChangeContent={setContent}
             onChangeSelectedPlants={setSelectedPlants}
             onChangeImages={setImages}
+            onImageUrlChange={setImageUrl}
             onSubmit={handleSubmit}
         />
     );
